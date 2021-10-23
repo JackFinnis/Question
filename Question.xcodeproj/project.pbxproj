@@ -13,7 +13,6 @@
 		0495E2F62722FB9300F53132 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E2F52722FB9300F53132 /* Answer.swift */; };
 		0495E2FA2722FF3300F53132 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E2F92722FF3300F53132 /* ViewModel.swift */; };
 		0495E3032723415800F53132 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0495E3022723415800F53132 /* FirebaseAnalytics */; };
-		0495E3052723415800F53132 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0495E3042723415800F53132 /* FirebaseAuth */; };
 		0495E3072723415800F53132 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0495E3062723415800F53132 /* FirebaseFirestore */; };
 		0495E309272341AA00F53132 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E308272341AA00F53132 /* FirebaseHelper.swift */; };
 		0495E30B2723426D00F53132 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0495E30A2723426D00F53132 /* GoogleService-Info.plist */; };
@@ -42,7 +41,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0495E3032723415800F53132 /* FirebaseAnalytics in Frameworks */,
-				0495E3052723415800F53132 /* FirebaseAuth in Frameworks */,
 				0495E3072723415800F53132 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,7 +123,6 @@
 			name = Question;
 			packageProductDependencies = (
 				0495E3022723415800F53132 /* FirebaseAnalytics */,
-				0495E3042723415800F53132 /* FirebaseAuth */,
 				0495E3062723415800F53132 /* FirebaseFirestore */,
 			);
 			productName = Question;
@@ -414,11 +411,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0495E3012723415800F53132 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
-		};
-		0495E3042723415800F53132 /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0495E3012723415800F53132 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
 		};
 		0495E3062723415800F53132 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;

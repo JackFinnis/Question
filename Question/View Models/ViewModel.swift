@@ -5,15 +5,19 @@
 //  Created by Jack Finnis on 22/09/2021.
 //
 
-import FirebaseAuth
+import Foundation
 import FirebaseFirestore
 
 @MainActor
 class ViewModel: ObservableObject {
     // MARK: - Properties
+    // General
+    @Published var user: User?
+    @Published var loading: Bool = false
+    
+    // Create Account
     @Published var username: String = ""
     @Published var errorMessage: String?
-    @Published var loading: Bool = false
     
     let db = Firestore.firestore()
     let helper = FirebaseHelper()
