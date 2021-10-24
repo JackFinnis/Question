@@ -90,8 +90,8 @@
 		0495E2E42722F79000F53132 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0495E30C2723439800F53132 /* RootView.swift */,
 				0495E3112723462000F53132 /* SignUpView.swift */,
+				0495E30C2723439800F53132 /* RootView.swift */,
 				0495E3172724928100F53132 /* UserView.swift */,
 				0495E31F27254D7B00F53132 /* MyQuestionView.swift */,
 				0495E31D2724A95D00F53132 /* RoomView.swift */,

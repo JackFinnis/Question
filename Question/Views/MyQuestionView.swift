@@ -14,6 +14,18 @@ struct MyQuestionView: View {
     let questionID: String
     
     var body: some View {
-        Text("Hello, World!")
+        Group {
+            if vm.question == nil {
+                ProgressView("Loading question...")
+            } else {
+                Text("todo")
+            }
+        }
+        .onAppear {
+            vm.addQuestionListener(questionID: questionID)
+        }
+        .onDisappear {
+            vm.removeQuestionListener()
+        }
     }
 }

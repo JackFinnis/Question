@@ -72,14 +72,6 @@ class ViewModel: ObservableObject {
             joinUserListener = helper.addUserListener(userID: joinUsername!) { user in
                 self.joinUser = user
                 self.loading = false
-                
-                if user.liveQuestion != nil && user.liveQuestion! != self.questionID {
-                    self.addQuestionListener(questionID: user.liveQuestion!)
-                    self.questionID = user.liveQuestion!
-                } else {
-                    self.questionListener?.remove()
-                    self.questionID = nil
-                }
             }
         }
     }
@@ -91,6 +83,10 @@ class ViewModel: ObservableObject {
             self.question = Question(id: questionID, data: data)
             self.loading = false
         }
+    }
+    
+    func removeQuestionListener() {
+        questionListener?.remove()
     }
     
     // MARK: - Methods
