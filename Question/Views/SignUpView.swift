@@ -13,8 +13,8 @@ struct SignUpView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(footer: Text(vm.errorMessage ?? "")) {
-                    TextField("Username", text: $vm.username)
+                Section(footer: Text(vm.createUsernameError ?? "")) {
+                    TextField("Username", text: $vm.createUsername)
                         .disableAutocorrection(true)
                         .textContentType(.name)
                         .submitLabel(.join)

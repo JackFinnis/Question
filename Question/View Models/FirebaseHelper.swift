@@ -144,10 +144,4 @@ struct FirebaseHelper {
         }
         return nil
     }
-    
-    func getGroupIDsWhere(field: String, equalTo: Any) async -> [String] {
-        (await getDocumentsWhere(collection: "groups", field: field, equalTo: equalTo)).map { document -> String in
-            document.documentID
-        }
-    }
 }

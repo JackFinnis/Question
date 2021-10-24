@@ -19,6 +19,11 @@
 		0495E30D2723439800F53132 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E30C2723439800F53132 /* RootView.swift */; };
 		0495E3122723462000F53132 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E3112723462000F53132 /* SignUpView.swift */; };
 		0495E31627234E0500F53132 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31527234E0500F53132 /* User.swift */; };
+		0495E3182724928100F53132 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E3172724928100F53132 /* UserView.swift */; };
+		0495E31A2724933000F53132 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E3192724933000F53132 /* QuestionView.swift */; };
+		0495E31C2724A88100F53132 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31B2724A88100F53132 /* Field.swift */; };
+		0495E31E2724A95D00F53132 /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31D2724A95D00F53132 /* RoomView.swift */; };
+		0495E32027254D7B00F53132 /* MyQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31F27254D7B00F53132 /* MyQuestionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +38,11 @@
 		0495E30C2723439800F53132 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		0495E3112723462000F53132 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		0495E31527234E0500F53132 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0495E3172724928100F53132 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		0495E3192724933000F53132 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
+		0495E31B2724A88100F53132 /* Field.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
+		0495E31D2724A95D00F53132 /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
+		0495E31F27254D7B00F53132 /* MyQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyQuestionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,8 +80,8 @@
 				0495E2D62722F75800F53132 /* QuestionApp.swift */,
 				0495E2DA2722F75A00F53132 /* Assets.xcassets */,
 				0495E30A2723426D00F53132 /* GoogleService-Info.plist */,
-				0495E2EE2722F81300F53132 /* View Models */,
 				0495E2E42722F79000F53132 /* Views */,
+				0495E2EE2722F81300F53132 /* View Models */,
 				0495E2ED2722F80D00F53132 /* Models */,
 			);
 			path = Question;
@@ -82,6 +92,10 @@
 			children = (
 				0495E30C2723439800F53132 /* RootView.swift */,
 				0495E3112723462000F53132 /* SignUpView.swift */,
+				0495E3172724928100F53132 /* UserView.swift */,
+				0495E31F27254D7B00F53132 /* MyQuestionView.swift */,
+				0495E31D2724A95D00F53132 /* RoomView.swift */,
+				0495E3192724933000F53132 /* QuestionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -92,6 +106,7 @@
 				0495E31527234E0500F53132 /* User.swift */,
 				0495E2F32722F9C700F53132 /* Question.swift */,
 				0495E2F52722FB9300F53132 /* Answer.swift */,
+				0495E31B2724A88100F53132 /* Field.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -182,14 +197,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0495E31A2724933000F53132 /* QuestionView.swift in Sources */,
 				0495E309272341AA00F53132 /* FirebaseHelper.swift in Sources */,
 				0495E2D72722F75800F53132 /* QuestionApp.swift in Sources */,
 				0495E2F62722FB9300F53132 /* Answer.swift in Sources */,
 				0495E2FA2722FF3300F53132 /* ViewModel.swift in Sources */,
+				0495E32027254D7B00F53132 /* MyQuestionView.swift in Sources */,
 				0495E31627234E0500F53132 /* User.swift in Sources */,
+				0495E3182724928100F53132 /* UserView.swift in Sources */,
 				0495E30D2723439800F53132 /* RootView.swift in Sources */,
 				0495E2F42722F9C700F53132 /* Question.swift in Sources */,
+				0495E31E2724A95D00F53132 /* RoomView.swift in Sources */,
 				0495E3122723462000F53132 /* SignUpView.swift in Sources */,
+				0495E31C2724A88100F53132 /* Field.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
