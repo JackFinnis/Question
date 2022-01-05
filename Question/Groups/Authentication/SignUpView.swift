@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @EnvironmentObject var vm: ViewModel
+    @EnvironmentObject var authVM: AuthVM
     
     var body: some View {
         Form {
             Section {
-                TextField("Username", text: $vm.createUsername)
+                TextField("Username", text: $authVM.createUsername)
                     .disableAutocorrection(true)
                     .textContentType(.name)
                     .submitLabel(.join)
@@ -24,7 +24,7 @@ struct SignUpView: View {
             Section {
                 Button {
                     Task {
-                        await vm.createAccount()
+                        await authVM.createAccount()
                     }
                 } label: {
                     HStack {
@@ -36,18 +36,18 @@ struct SignUpView: View {
                 .foregroundColor(.white)
                 .listRowBackground(Color.accentColor)
             } footer: {
-                Text(vm.createUsernameError ?? "")
+                Text(authVM.createUsernameError ?? "")
             }
         }
         .navigationTitle("Sign Up")
         .onSubmit {
             Task {
-                await vm.createAccount()
+                await authVM.createAccount()
             }
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
-                if vm.loading {
+                if authVM.loading {
                     ProgressView()
                 }
             }

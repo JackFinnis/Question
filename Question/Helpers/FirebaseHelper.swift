@@ -204,4 +204,10 @@ struct FirebaseHelper {
     func deleteDocument(collection: String, documentID: String) async {
         try? await database.collection(collection).document(documentID).delete()
     }
+    
+    // MARK: - App Specific
+    func isInUse(username: String) async -> Bool {
+        let data = await getDocumentData(collection: "users", documentID: username)
+        return data != nil
+    }
 }

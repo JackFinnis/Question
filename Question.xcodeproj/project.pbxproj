@@ -24,6 +24,12 @@
 		0495E31E2724A95D00F53132 /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31D2724A95D00F53132 /* RoomView.swift */; };
 		0495E32027254D7B00F53132 /* MyQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31F27254D7B00F53132 /* MyQuestionView.swift */; };
 		04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */; };
+		04F5FF812786188A00E0EF9D /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF802786188A00E0EF9D /* CreateView.swift */; };
+		04F5FF83278618D600E0EF9D /* AuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF82278618D600E0EF9D /* AuthVM.swift */; };
+		04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8927861D2900E0EF9D /* UserVM.swift */; };
+		04F5FF8C27861D6F00E0EF9D /* MyRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8B27861D6F00E0EF9D /* MyRoom.swift */; };
+		04F5FF8E27861D9C00E0EF9D /* MyRoomVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8D27861D9C00E0EF9D /* MyRoomVM.swift */; };
+		04F5FF9027861DB100E0EF9D /* RoomVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8F27861DB100E0EF9D /* RoomVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +49,12 @@
 		0495E31D2724A95D00F53132 /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
 		0495E31F27254D7B00F53132 /* MyQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyQuestionView.swift; sourceTree = "<group>"; };
 		04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		04F5FF802786188A00E0EF9D /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
+		04F5FF82278618D600E0EF9D /* AuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVM.swift; sourceTree = "<group>"; };
+		04F5FF8927861D2900E0EF9D /* UserVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVM.swift; sourceTree = "<group>"; };
+		04F5FF8B27861D6F00E0EF9D /* MyRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoom.swift; sourceTree = "<group>"; };
+		04F5FF8D27861D9C00E0EF9D /* MyRoomVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoomVM.swift; sourceTree = "<group>"; };
+		04F5FF8F27861DB100E0EF9D /* RoomVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,24 +92,12 @@
 				0495E2D62722F75800F53132 /* QuestionApp.swift */,
 				0495E2DA2722F75A00F53132 /* Assets.xcassets */,
 				0495E30A2723426D00F53132 /* GoogleService-Info.plist */,
-				0495E2E42722F79000F53132 /* Views */,
-				0495E2EE2722F81300F53132 /* View Models */,
+				0495E2F92722FF3300F53132 /* ViewModel.swift */,
+				04F5FF9127861DC400E0EF9D /* Groups */,
+				04F5FF8827861CDD00E0EF9D /* Helpers */,
 				0495E2ED2722F80D00F53132 /* Models */,
 			);
 			path = Question;
-			sourceTree = "<group>";
-		};
-		0495E2E42722F79000F53132 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				0495E3112723462000F53132 /* SignUpView.swift */,
-				0495E30C2723439800F53132 /* RootView.swift */,
-				0495E3172724928100F53132 /* UserView.swift */,
-				0495E31F27254D7B00F53132 /* MyQuestionView.swift */,
-				0495E31D2724A95D00F53132 /* RoomView.swift */,
-				0495E3192724933000F53132 /* QuestionView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		0495E2ED2722F80D00F53132 /* Models */ = {
@@ -111,13 +111,63 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		0495E2EE2722F81300F53132 /* View Models */ = {
+		04F5FF8427861C2900E0EF9D /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				0495E2F92722FF3300F53132 /* ViewModel.swift */,
+				0495E30C2723439800F53132 /* RootView.swift */,
+				0495E3112723462000F53132 /* SignUpView.swift */,
+				04F5FF82278618D600E0EF9D /* AuthVM.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		04F5FF8527861C5F00E0EF9D /* User */ = {
+			isa = PBXGroup;
+			children = (
+				0495E3172724928100F53132 /* UserView.swift */,
+				04F5FF802786188A00E0EF9D /* CreateView.swift */,
+				04F5FF8927861D2900E0EF9D /* UserVM.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		04F5FF8627861C6C00E0EF9D /* MyRoom */ = {
+			isa = PBXGroup;
+			children = (
+				04F5FF8B27861D6F00E0EF9D /* MyRoom.swift */,
+				0495E31F27254D7B00F53132 /* MyQuestionView.swift */,
+				04F5FF8D27861D9C00E0EF9D /* MyRoomVM.swift */,
+			);
+			path = MyRoom;
+			sourceTree = "<group>";
+		};
+		04F5FF8727861CAF00E0EF9D /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				0495E31D2724A95D00F53132 /* RoomView.swift */,
+				0495E3192724933000F53132 /* QuestionView.swift */,
+				04F5FF8F27861DB100E0EF9D /* RoomVM.swift */,
+			);
+			path = Room;
+			sourceTree = "<group>";
+		};
+		04F5FF8827861CDD00E0EF9D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
 				04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */,
 			);
-			path = "View Models";
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		04F5FF9127861DC400E0EF9D /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				04F5FF8427861C2900E0EF9D /* Authentication */,
+				04F5FF8527861C5F00E0EF9D /* User */,
+				04F5FF8627861C6C00E0EF9D /* MyRoom */,
+				04F5FF8727861CAF00E0EF9D /* Room */,
+			);
+			path = Groups;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,17 +247,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04F5FF83278618D600E0EF9D /* AuthVM.swift in Sources */,
+				04F5FF8C27861D6F00E0EF9D /* MyRoom.swift in Sources */,
 				0495E31A2724933000F53132 /* QuestionView.swift in Sources */,
 				0495E2D72722F75800F53132 /* QuestionApp.swift in Sources */,
 				0495E2F62722FB9300F53132 /* Answer.swift in Sources */,
 				0495E2FA2722FF3300F53132 /* ViewModel.swift in Sources */,
+				04F5FF812786188A00E0EF9D /* CreateView.swift in Sources */,
 				0495E32027254D7B00F53132 /* MyQuestionView.swift in Sources */,
 				0495E31627234E0500F53132 /* User.swift in Sources */,
 				0495E3182724928100F53132 /* UserView.swift in Sources */,
+				04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */,
 				0495E30D2723439800F53132 /* RootView.swift in Sources */,
 				0495E2F42722F9C700F53132 /* Question.swift in Sources */,
+				04F5FF8E27861D9C00E0EF9D /* MyRoomVM.swift in Sources */,
 				04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */,
 				0495E31E2724A95D00F53132 /* RoomView.swift in Sources */,
+				04F5FF9027861DB100E0EF9D /* RoomVM.swift in Sources */,
 				0495E3122723462000F53132 /* SignUpView.swift in Sources */,
 				0495E31C2724A88100F53132 /* Field.swift in Sources */,
 			);

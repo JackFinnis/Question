@@ -13,10 +13,6 @@ class ViewModel: ObservableObject {
     // MARK: - Properties
     // General
     @Published var loading: Bool = false
-    @Published var username: String? { didSet {
-        UserDefaults.standard.set(username, forKey: "username")
-        addUserListener()
-    }}
     @Published var user: User?
     @Published var joinUsername: String? { didSet {
         UserDefaults.standard.set(joinUsername, forKey: "joinUsername")
@@ -27,8 +23,6 @@ class ViewModel: ObservableObject {
     @Published var question: Question?
     
     // Inputs
-    @Published var createUsername: String = ""
-    @Published var createUsernameError: String?
     @Published var inputJoinUsername: String = ""
     @Published var joinUserError: String?
     @Published var minutes: Double?
@@ -44,7 +38,6 @@ class ViewModel: ObservableObject {
     
     // MARK: - Initialiser
     init() {
-        username = UserDefaults.standard.string(forKey: "username")
         joinUsername = UserDefaults.standard.string(forKey: "joinUsername")
     }
     
@@ -91,31 +84,11 @@ class ViewModel: ObservableObject {
     }
     
     // MARK: - Methods
-    func createAccount() async {
-        createUsernameError = nil
-        loading = true
-        // Validate username
-        if createUsername.isEmpty {
-            createUsernameError = "Please enter a username"
-        } else if await !usernameInUse(username: createUsername) {
-            await helper.addDocument(collection: "users", documentID: createUsername)
-            username = createUsername
-        } else {
-            createUsernameError = "Username is already taken"
-        }
-        loading = false
-    }
-    
-    func usernameInUse(username: String) async -> Bool {
-        let data = await helper.getDocumentData(collection: "users", documentID: username)
-        return data != nil && !data!.isEmpty
-    }
-    
     func submitJoinUser() async {
         loading = true
         if inputJoinUsername.isEmpty {
             joinUserError = "Please enter a username"
-        } else if await usernameInUse(username: inputJoinUsername) {
+        } else if await helper.usernameInUse(username: inputJoinUsername) {
             joinUsername = inputJoinUsername
         } else {
             joinUserError = "User does not exist"
