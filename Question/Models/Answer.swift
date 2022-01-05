@@ -10,15 +10,15 @@ import Foundation
 struct Answer: Identifiable {
     let id: String
     let answer: String?
-    let username: String?
-    let question: String?
+    let questionID: String?
     let askerUsername: String?
+    let answerUsername: String?
     
     init(id: String, data: [String: Any]) {
         self.id = id
         self.answer = data["answer"] as? String
-        self.username = data["username"] as? String
-        self.question = data["question"] as? String
+        self.questionID = data["questionID"] as? String
         self.askerUsername = data["askerUsername"] as? String
+        self.answerUsername = data["answerUsername"] as? String
     }
 }

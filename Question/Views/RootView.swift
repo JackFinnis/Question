@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct RootView: View {
-    @EnvironmentObject var vm: ViewModel
+    @StateObject var vm = ViewModel()
     
     var body: some View {
-        if vm.username == nil {
-            SignUpView()
-        } else if vm.joinUsername != nil {
-            RoomView(username: vm.username!, joinUsername: vm.joinUsername!)
-        } else {
-            UserView(username: vm.username!)
+        NavigationView {
+            if vm.username == nil {
+                SignUpView()
+            } else if vm.joinUsername != nil {
+                RoomView(username: vm.username!, joinUsername: vm.joinUsername!)
+            } else {
+                UserView(username: vm.username!)
+            }
         }
+        .environmentObject(vm)
     }
 }

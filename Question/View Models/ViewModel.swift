@@ -46,15 +46,13 @@ class ViewModel: ObservableObject {
     init() {
         username = UserDefaults.standard.string(forKey: "username")
         joinUsername = UserDefaults.standard.string(forKey: "joinUsername")
-        createUsernameError = "This username cannot be changed and is public"
     }
     
     // MARK: - Listeners
     func addUserListener() {
         user = nil
-        if username == nil {
-            userListener?.remove()
-        } else {
+        userListener?.remove()
+        if username != nil {
             loading = true
             userListener = helper.addUserListener(userID: username!) { user in
                 self.user = user
@@ -65,9 +63,8 @@ class ViewModel: ObservableObject {
     
     func addJoinUserListener() {
         joinUser = nil
-        if joinUsername == nil {
-            joinUserListener?.remove()
-        } else {
+        joinUserListener?.remove()
+        if joinUsername != nil {
             loading = true
             joinUserListener = helper.addUserListener(userID: joinUsername!) { user in
                 self.joinUser = user
@@ -80,8 +77,12 @@ class ViewModel: ObservableObject {
         question = nil
         loading = true
         questionListener = helper.addDocumentListener(collection: "questions", documentID: questionID) { data in
-            self.question = Question(id: questionID, data: data)
             self.loading = false
+            if let data = data {
+                self.question = Question(id: questionID, data: data)
+            } else {
+                self.question = nil
+            }
         }
     }
     
@@ -97,12 +98,10 @@ class ViewModel: ObservableObject {
         if createUsername.isEmpty {
             createUsernameError = "Please enter a username"
         } else if await !usernameInUse(username: createUsername) {
-            await helper.addDocument(collection: "users", documentID: createUsername, data: [
-                "username": [createUsername]
-            ])
+            await helper.addDocument(collection: "users", documentID: createUsername)
             username = createUsername
         } else {
-            createUsernameError = "Username taken"
+            createUsernameError = "Username is already taken"
         }
         loading = false
     }
@@ -137,7 +136,6 @@ class ViewModel: ObservableObject {
             }
             
             await helper.addDocument(collection: "questions", documentID: id, data: [
-                "id": [id],
                 "share": false,
                 "end": endDate as Any,
                 "username": username,
@@ -150,5 +148,9 @@ class ViewModel: ObservableObject {
             questionID = id
             loading = false
         }
+    }
+    
+    func stopLiveQuestion(username: String) {
+        // todo
     }
 }

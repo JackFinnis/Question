@@ -18,15 +18,15 @@ struct RoomView: View {
             Group {
                 if vm.joinUser == nil {
                     ProgressView("Loading room...")
-                } else if vm.joinUser!.liveQuestion == nil {
+                } else if vm.joinUser!.liveQuestionID == nil {
                     ProgressView("Waiting for next question...")
                 } else {
-                    QuestionView(username: username, joinUsername: joinUsername, questionID: vm.joinUser!.liveQuestion!)
+                    QuestionView(username: username, joinUsername: joinUsername, questionID: vm.joinUser!.liveQuestionID!)
                 }
             }
             .navigationTitle(username)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button("Leave Room") {
                         vm.joinUsername = nil
                     }

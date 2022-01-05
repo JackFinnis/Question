@@ -11,12 +11,10 @@ import Firebase
 @main
 struct QuestionApp: App {
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
-    @StateObject var vm = ViewModel()
     
     var body: some Scene {
         WindowGroup {
             RootView()
-                .environmentObject(vm)
         }
     }
 }

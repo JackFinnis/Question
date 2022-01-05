@@ -19,7 +19,9 @@ struct QuestionView: View {
             if vm.question == nil {
                 ProgressView("Loading question...")
             } else {
-                Text("todo")
+                Form {
+                    Text(vm.question!.question ?? "No Question")
+                }
             }
         }
         .onAppear {

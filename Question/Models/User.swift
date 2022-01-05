@@ -10,15 +10,15 @@ import Foundation
 struct User: Identifiable {
     let id: String
     let username: String?
-    let liveQuestion: String?
-    let answers: [String]
-    let questions: [String]
+    let liveQuestionID: String?
+    let answerIDs: [String]
+    let questionIDs: [String]
     
     init(id: String, data: [String: Any]) {
         self.id = id
         self.username = data["username"] as? String
-        self.liveQuestion = data["liveQuestion"] as? String
-        self.answers = data["answers"] as? [String] ?? []
-        self.questions = data["questions"] as? [String] ?? []
+        self.liveQuestionID = data["liveQuestionID"] as? String
+        self.answerIDs = data["answerIDs"] as? [String] ?? []
+        self.questionIDs = data["questionIDs"] as? [String] ?? []
     }
 }

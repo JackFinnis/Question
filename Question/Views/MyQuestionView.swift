@@ -18,7 +18,16 @@ struct MyQuestionView: View {
             if vm.question == nil {
                 ProgressView("Loading question...")
             } else {
-                Text("todo")
+                Form {
+                    Text(vm.question!.question ?? "No Question")
+                }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Stop", role: .destructive) {
+                    vm.stopLiveQuestion(username: username)
+                }
             }
         }
         .onAppear {
