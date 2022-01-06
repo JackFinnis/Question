@@ -7,16 +7,14 @@
 
 import Foundation
 
-struct User: Identifiable {
-    let id: String
+struct User {
     let username: String?
     let liveQuestionID: String?
     let answerIDs: [String]
     let questionIDs: [String]
     
     init(id: String, data: [String: Any]) {
-        self.id = id
-        self.username = data["username"] as? String
+        self.username = id
         self.liveQuestionID = data["liveQuestionID"] as? String
         self.answerIDs = data["answerIDs"] as? [String] ?? []
         self.questionIDs = data["questionIDs"] as? [String] ?? []

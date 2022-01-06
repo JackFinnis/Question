@@ -1,5 +1,5 @@
 //
-//  CreateView.swift
+//  CreateGroup.swift
 //  Question
 //
 //  Created by Jack Finnis on 05/01/2022.
@@ -7,13 +7,16 @@
 
 import SwiftUI
 
-struct CreateView: View {
+struct CreateGroup: View {
+    @ObservedObject var userVM: UserVM
     @FocusState var focusedField: Field?
     
+    let username: String
+    
     var body: some View {
-        Form {
+        Group {
             Section {
-                TextField("Enter Username", text: $vm.inputJoinUsername)
+                TextField("Enter Username", text: $userVM.joinUsername)
                     .focused($focusedField, equals: .username)
                     .disableAutocorrection(true)
                     .textContentType(.username)
@@ -21,41 +24,47 @@ struct CreateView: View {
                 
                 Button("Join") {
                     Task {
-                        await vm.submitJoinUser()
+                        await userVM.submitJoinUser()
                     }
                 }
             } header: {
                 Text("Join a Room")
             } footer: {
-                Text(vm.joinUserError ?? "")
+                Text(userVM.joinUsernameError ?? "")
             }
             .headerProminence(.increased)
             
             Section {
-                TextEditor(text: $vm.newQuestion)
+                TextField("Enter Question", text: $userVM.newQuestion)
                     .focused($focusedField, equals: .question)
                     .submitLabel(.go)
                 
                 Button("Start") {
                     Task {
-                        await vm.startQuestion(username: username)
+                        await userVM.startQuestion(username: username)
                     }
                 }
             } header: {
                 Text("Start a Question")
             } footer: {
-                Text(vm.newQuestionError ?? "")
+                Text(userVM.newQuestionError ?? "")
             }
             .headerProminence(.increased)
         }
         .onSubmit {
             Task {
                 if focusedField == .username {
-                    await vm.submitJoinUser()
+                    await userVM.submitJoinUser()
                 } else {
-                    await vm.startQuestion(username: username)
+                    await userVM.startQuestion(username: username)
                 }
             }
+        }
+        .sheet(isPresented: $userVM.showRoomView) {
+            RoomView(username: username, joinUsername: userVM.joinUsername)
+        }
+        .sheet(isPresented: $userVM.showMyRoomView) {
+            MyRoom(username: username)
         }
     }
 }

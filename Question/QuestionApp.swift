@@ -14,7 +14,7 @@ struct QuestionApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RootView()
+            AuthView()
         }
     }
 }

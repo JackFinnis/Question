@@ -8,31 +8,37 @@
 import SwiftUI
 
 struct RoomView: View {
-    @EnvironmentObject var vm: ViewModel
+    @Environment(\.dismiss) var dismiss
+    @StateObject var roomVM = RoomVM()
     
     let username: String
     let joinUsername: String
     
     var body: some View {
         Group {
-            if vm.joinUser == nil {
+            if roomVM.user == nil {
                 ProgressView("Loading room...")
-            } else if vm.joinUser!.liveQuestionID == nil {
+            } else if roomVM.user!.liveQuestionID == nil {
                 ProgressView("Waiting for next question...")
             } else {
-                QuestionView(username: username, joinUsername: joinUsername, questionID: vm.joinUser!.liveQuestionID!)
+                QuestionView(username: username, questionID: roomVM.user!.liveQuestionID!)
             }
         }
         .navigationTitle(username)
+        .onAppear {
+            roomVM.addUserListener(username: joinUsername)
+        }
+        .onDisappear {
+            roomVM.removeListeners()
+        }
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
+            ToolbarItem(placement: .navigationBarLeading) {
                 Button("Leave Room") {
-                    vm.joinUsername = nil
+                    dismiss()
                 }
             }
-            
             ToolbarItem(placement: .principal) {
-                if vm.loading {
+                if roomVM.loading {
                     ProgressView()
                 }
             }

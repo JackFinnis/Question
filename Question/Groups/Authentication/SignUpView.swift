@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @EnvironmentObject var authVM: AuthVM
+    @ObservedObject var authVM: AuthVM
     
     var body: some View {
         Form {

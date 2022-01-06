@@ -11,11 +11,10 @@
 		0495E2DB2722F75A00F53132 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0495E2DA2722F75A00F53132 /* Assets.xcassets */; };
 		0495E2F42722F9C700F53132 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E2F32722F9C700F53132 /* Question.swift */; };
 		0495E2F62722FB9300F53132 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E2F52722FB9300F53132 /* Answer.swift */; };
-		0495E2FA2722FF3300F53132 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E2F92722FF3300F53132 /* ViewModel.swift */; };
 		0495E3032723415800F53132 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0495E3022723415800F53132 /* FirebaseAnalytics */; };
 		0495E3072723415800F53132 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0495E3062723415800F53132 /* FirebaseFirestore */; };
 		0495E30B2723426D00F53132 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0495E30A2723426D00F53132 /* GoogleService-Info.plist */; };
-		0495E30D2723439800F53132 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E30C2723439800F53132 /* RootView.swift */; };
+		0495E30D2723439800F53132 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E30C2723439800F53132 /* AuthView.swift */; };
 		0495E3122723462000F53132 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E3112723462000F53132 /* SignUpView.swift */; };
 		0495E31627234E0500F53132 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31527234E0500F53132 /* User.swift */; };
 		0495E3182724928100F53132 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E3172724928100F53132 /* UserView.swift */; };
@@ -24,12 +23,13 @@
 		0495E31E2724A95D00F53132 /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31D2724A95D00F53132 /* RoomView.swift */; };
 		0495E32027254D7B00F53132 /* MyQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31F27254D7B00F53132 /* MyQuestionView.swift */; };
 		04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */; };
-		04F5FF812786188A00E0EF9D /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF802786188A00E0EF9D /* CreateView.swift */; };
+		04F5FF812786188A00E0EF9D /* CreateGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF802786188A00E0EF9D /* CreateGroup.swift */; };
 		04F5FF83278618D600E0EF9D /* AuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF82278618D600E0EF9D /* AuthVM.swift */; };
 		04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8927861D2900E0EF9D /* UserVM.swift */; };
 		04F5FF8C27861D6F00E0EF9D /* MyRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8B27861D6F00E0EF9D /* MyRoom.swift */; };
-		04F5FF8E27861D9C00E0EF9D /* MyRoomVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8D27861D9C00E0EF9D /* MyRoomVM.swift */; };
 		04F5FF9027861DB100E0EF9D /* RoomVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8F27861DB100E0EF9D /* RoomVM.swift */; };
+		04F5FF9727864E2200E0EF9D /* QuestionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF9627864E2200E0EF9D /* QuestionVM.swift */; };
+		04F5FF9A278655B500E0EF9D /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF99278655B500E0EF9D /* Row.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,9 +38,8 @@
 		0495E2DA2722F75A00F53132 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0495E2F32722F9C700F53132 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		0495E2F52722FB9300F53132 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
-		0495E2F92722FF3300F53132 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		0495E30A2723426D00F53132 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		0495E30C2723439800F53132 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		0495E30C2723439800F53132 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		0495E3112723462000F53132 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		0495E31527234E0500F53132 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0495E3172724928100F53132 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
@@ -49,12 +48,13 @@
 		0495E31D2724A95D00F53132 /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
 		0495E31F27254D7B00F53132 /* MyQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyQuestionView.swift; sourceTree = "<group>"; };
 		04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
-		04F5FF802786188A00E0EF9D /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
+		04F5FF802786188A00E0EF9D /* CreateGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroup.swift; sourceTree = "<group>"; };
 		04F5FF82278618D600E0EF9D /* AuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVM.swift; sourceTree = "<group>"; };
 		04F5FF8927861D2900E0EF9D /* UserVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVM.swift; sourceTree = "<group>"; };
 		04F5FF8B27861D6F00E0EF9D /* MyRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoom.swift; sourceTree = "<group>"; };
-		04F5FF8D27861D9C00E0EF9D /* MyRoomVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoomVM.swift; sourceTree = "<group>"; };
 		04F5FF8F27861DB100E0EF9D /* RoomVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomVM.swift; sourceTree = "<group>"; };
+		04F5FF9627864E2200E0EF9D /* QuestionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionVM.swift; sourceTree = "<group>"; };
+		04F5FF99278655B500E0EF9D /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +92,7 @@
 				0495E2D62722F75800F53132 /* QuestionApp.swift */,
 				0495E2DA2722F75A00F53132 /* Assets.xcassets */,
 				0495E30A2723426D00F53132 /* GoogleService-Info.plist */,
-				0495E2F92722FF3300F53132 /* ViewModel.swift */,
+				04F5FF982786556F00E0EF9D /* General */,
 				04F5FF9127861DC400E0EF9D /* Groups */,
 				04F5FF8827861CDD00E0EF9D /* Helpers */,
 				0495E2ED2722F80D00F53132 /* Models */,
@@ -114,7 +114,7 @@
 		04F5FF8427861C2900E0EF9D /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				0495E30C2723439800F53132 /* RootView.swift */,
+				0495E30C2723439800F53132 /* AuthView.swift */,
 				0495E3112723462000F53132 /* SignUpView.swift */,
 				04F5FF82278618D600E0EF9D /* AuthVM.swift */,
 			);
@@ -125,27 +125,17 @@
 			isa = PBXGroup;
 			children = (
 				0495E3172724928100F53132 /* UserView.swift */,
-				04F5FF802786188A00E0EF9D /* CreateView.swift */,
+				04F5FF802786188A00E0EF9D /* CreateGroup.swift */,
 				04F5FF8927861D2900E0EF9D /* UserVM.swift */,
 			);
 			path = User;
-			sourceTree = "<group>";
-		};
-		04F5FF8627861C6C00E0EF9D /* MyRoom */ = {
-			isa = PBXGroup;
-			children = (
-				04F5FF8B27861D6F00E0EF9D /* MyRoom.swift */,
-				0495E31F27254D7B00F53132 /* MyQuestionView.swift */,
-				04F5FF8D27861D9C00E0EF9D /* MyRoomVM.swift */,
-			);
-			path = MyRoom;
 			sourceTree = "<group>";
 		};
 		04F5FF8727861CAF00E0EF9D /* Room */ = {
 			isa = PBXGroup;
 			children = (
 				0495E31D2724A95D00F53132 /* RoomView.swift */,
-				0495E3192724933000F53132 /* QuestionView.swift */,
+				04F5FF8B27861D6F00E0EF9D /* MyRoom.swift */,
 				04F5FF8F27861DB100E0EF9D /* RoomVM.swift */,
 			);
 			path = Room;
@@ -164,10 +154,28 @@
 			children = (
 				04F5FF8427861C2900E0EF9D /* Authentication */,
 				04F5FF8527861C5F00E0EF9D /* User */,
-				04F5FF8627861C6C00E0EF9D /* MyRoom */,
 				04F5FF8727861CAF00E0EF9D /* Room */,
+				04F5FF9527864E0600E0EF9D /* Question */,
 			);
 			path = Groups;
+			sourceTree = "<group>";
+		};
+		04F5FF9527864E0600E0EF9D /* Question */ = {
+			isa = PBXGroup;
+			children = (
+				0495E3192724933000F53132 /* QuestionView.swift */,
+				0495E31F27254D7B00F53132 /* MyQuestionView.swift */,
+				04F5FF9627864E2200E0EF9D /* QuestionVM.swift */,
+			);
+			path = Question;
+			sourceTree = "<group>";
+		};
+		04F5FF982786556F00E0EF9D /* General */ = {
+			isa = PBXGroup;
+			children = (
+				04F5FF99278655B500E0EF9D /* Row.swift */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,19 +260,19 @@
 				0495E31A2724933000F53132 /* QuestionView.swift in Sources */,
 				0495E2D72722F75800F53132 /* QuestionApp.swift in Sources */,
 				0495E2F62722FB9300F53132 /* Answer.swift in Sources */,
-				0495E2FA2722FF3300F53132 /* ViewModel.swift in Sources */,
-				04F5FF812786188A00E0EF9D /* CreateView.swift in Sources */,
+				04F5FF812786188A00E0EF9D /* CreateGroup.swift in Sources */,
 				0495E32027254D7B00F53132 /* MyQuestionView.swift in Sources */,
 				0495E31627234E0500F53132 /* User.swift in Sources */,
 				0495E3182724928100F53132 /* UserView.swift in Sources */,
 				04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */,
-				0495E30D2723439800F53132 /* RootView.swift in Sources */,
+				0495E30D2723439800F53132 /* AuthView.swift in Sources */,
 				0495E2F42722F9C700F53132 /* Question.swift in Sources */,
-				04F5FF8E27861D9C00E0EF9D /* MyRoomVM.swift in Sources */,
 				04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */,
 				0495E31E2724A95D00F53132 /* RoomView.swift in Sources */,
 				04F5FF9027861DB100E0EF9D /* RoomVM.swift in Sources */,
 				0495E3122723462000F53132 /* SignUpView.swift in Sources */,
+				04F5FF9727864E2200E0EF9D /* QuestionVM.swift in Sources */,
+				04F5FF9A278655B500E0EF9D /* Row.swift in Sources */,
 				0495E31C2724A88100F53132 /* Field.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
