@@ -30,6 +30,8 @@
 		04F5FF9027861DB100E0EF9D /* RoomVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8F27861DB100E0EF9D /* RoomVM.swift */; };
 		04F5FF9727864E2200E0EF9D /* QuestionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF9627864E2200E0EF9D /* QuestionVM.swift */; };
 		04F5FF9A278655B500E0EF9D /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF99278655B500E0EF9D /* Row.swift */; };
+		04F5FFA02787169F00E0EF9D /* JoinRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF9F2787169F00E0EF9D /* JoinRoom.swift */; };
+		04F5FFA2278716A800E0EF9D /* NewQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFA1278716A800E0EF9D /* NewQuestion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,8 @@
 		04F5FF8F27861DB100E0EF9D /* RoomVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomVM.swift; sourceTree = "<group>"; };
 		04F5FF9627864E2200E0EF9D /* QuestionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionVM.swift; sourceTree = "<group>"; };
 		04F5FF99278655B500E0EF9D /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
+		04F5FF9F2787169F00E0EF9D /* JoinRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRoom.swift; sourceTree = "<group>"; };
+		04F5FFA1278716A800E0EF9D /* NewQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewQuestion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +130,8 @@
 			children = (
 				0495E3172724928100F53132 /* UserView.swift */,
 				04F5FF802786188A00E0EF9D /* CreateGroup.swift */,
+				04F5FF9F2787169F00E0EF9D /* JoinRoom.swift */,
+				04F5FFA1278716A800E0EF9D /* NewQuestion.swift */,
 				04F5FF8927861D2900E0EF9D /* UserVM.swift */,
 			);
 			path = User;
@@ -265,11 +271,13 @@
 				0495E31627234E0500F53132 /* User.swift in Sources */,
 				0495E3182724928100F53132 /* UserView.swift in Sources */,
 				04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */,
+				04F5FFA02787169F00E0EF9D /* JoinRoom.swift in Sources */,
 				0495E30D2723439800F53132 /* AuthView.swift in Sources */,
 				0495E2F42722F9C700F53132 /* Question.swift in Sources */,
 				04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */,
 				0495E31E2724A95D00F53132 /* RoomView.swift in Sources */,
 				04F5FF9027861DB100E0EF9D /* RoomVM.swift in Sources */,
+				04F5FFA2278716A800E0EF9D /* NewQuestion.swift in Sources */,
 				0495E3122723462000F53132 /* SignUpView.swift in Sources */,
 				04F5FF9727864E2200E0EF9D /* QuestionVM.swift in Sources */,
 				04F5FF9A278655B500E0EF9D /* Row.swift in Sources */,

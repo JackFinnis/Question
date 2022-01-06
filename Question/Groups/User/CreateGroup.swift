@@ -15,41 +15,7 @@ struct CreateGroup: View {
     
     var body: some View {
         Group {
-            Section {
-                TextField("Enter Username", text: $userVM.joinUsername)
-                    .focused($focusedField, equals: .username)
-                    .disableAutocorrection(true)
-                    .textContentType(.username)
-                    .submitLabel(.join)
-                
-                Button("Join") {
-                    Task {
-                        await userVM.submitJoinUser()
-                    }
-                }
-            } header: {
-                Text("Join a Room")
-            } footer: {
-                Text(userVM.joinUsernameError ?? "")
-            }
-            .headerProminence(.increased)
             
-            Section {
-                TextField("Enter Question", text: $userVM.newQuestion)
-                    .focused($focusedField, equals: .question)
-                    .submitLabel(.go)
-                
-                Button("Start") {
-                    Task {
-                        await userVM.startQuestion(username: username)
-                    }
-                }
-            } header: {
-                Text("Start a Question")
-            } footer: {
-                Text(userVM.newQuestionError ?? "")
-            }
-            .headerProminence(.increased)
         }
         .onSubmit {
             Task {
