@@ -11,6 +11,7 @@ struct UserView: View {
     @StateObject var userVM = UserVM()
     
     let username: String
+    let formatting = FormattingHelper()
     
     var body: some View {
         NavigationView {
@@ -20,10 +21,19 @@ struct UserView: View {
                 } else {
                     Form {
                         Section {
-                            TextField("Enter Username", text: $userVM.joinUsername)
-                                .disableAutocorrection(true)
-                                .textContentType(.username)
-                                .submitLabel(.join)
+                            HStack {
+                                TextField("Enter Username", text: $userVM.joinUsername)
+                                    .disableAutocorrection(true)
+                                    .textContentType(.username)
+                                    .submitLabel(.join)
+                                if !userVM.recentUsernames.isEmpty {
+                                    Picker("", selection: $userVM.joinUsername) {
+                                        ForEach(userVM.recentUsernames, id: \.self) { username in
+                                            Text(username)
+                                        }
+                                    }
+                                }
+                            }
                             
                             Button("Join") {
                                 Task {
@@ -45,30 +55,31 @@ struct UserView: View {
                             RoomView(username: username, joinUsername: userVM.joinUsername)
                         }
                         
-                        NewQuestion(loading: $userVM.loading, finished: $userVM.showMyRoomView, username: username)
+                        NewQuestionView(loading: $userVM.loading, finished: $userVM.showMyRoomView, username: username)
                             .sheet(isPresented: $userVM.showMyRoomView) {
-                                MyRoom(username: username)
+                                MyRoomView(username: username)
                             }
                         
                         Section {
                             //todo
                         } header: {
-                            Row(leading: "Your Questions", trailing: String(userVM.user!.questionIDs.count))
+                            Text(formatting.singularPlural(singularWord: "Question", count: userVM.user!.questionIDs.count))
                         }
                         .headerProminence(.increased)
                         
                         Section {
                             //todo
                         } header: {
-                            Row(leading: "Your Answers", trailing: String(userVM.user!.answerIDs.count))
+                            Text(formatting.singularPlural(singularWord: "Answer", count: userVM.user!.answerIDs.count))
                         }
                         .headerProminence(.increased)
                     }
                 }
             }
             .navigationTitle(username)
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                userVM.addUserListener(username: username)
+                userVM.addListeners(username: username)
             }
             .onDisappear {
                 userVM.removeListeners()

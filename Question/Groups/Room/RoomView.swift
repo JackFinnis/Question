@@ -25,7 +25,8 @@ struct RoomView: View {
                     QuestionView(username: username, questionID: roomVM.user!.liveQuestionID!)
                 }
             }
-            .navigationTitle(username)
+            .navigationTitle(joinUsername)
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 roomVM.addUserListener(username: joinUsername)
             }

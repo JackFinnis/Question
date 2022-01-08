@@ -1,5 +1,5 @@
 //
-//  MyRoom.swift
+//  MyRoomView.swift
 //  Question
 //
 //  Created by Jack Finnis on 05/01/2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyRoom: View {
+struct MyRoomView: View {
     @StateObject var roomVM = RoomVM()
     
     let username: String

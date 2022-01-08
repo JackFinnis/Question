@@ -8,9 +8,10 @@
 import Foundation
 import FirebaseFirestore
 
-struct Question: Identifiable {
+struct Question: Identifiable, Hashable {
     let id: String
     let end: Date?
+    let minutes: Int?
     let question: String?
     let answerIDs: [String]
     let askerUsername: String?
@@ -20,6 +21,7 @@ struct Question: Identifiable {
     
     init(id: String, data: [String: Any]) {
         self.id = id
+        self.minutes = data["minutes"] as? Int
         self.question = data["question"] as? String
         self.answerIDs = data["answerIDs"] as? [String] ?? []
         self.askerUsername = data["askerUsername"] as? String

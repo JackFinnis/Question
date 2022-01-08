@@ -6,17 +6,30 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 @MainActor
 class AuthVM: ObservableObject {
     // MARK: - Properties
-    @Published var username: String? = UserDefaults.standard.string(forKey: "username")
+    @Published var username: String?
     @Published var loading = false
     
     @Published var createUsername: String = ""
     @Published var createUsernameError: String?
     
     let helper = FirebaseHelper()
+    let auth = Auth.auth()
+    
+    // MARK: - Initialisers
+    init() {
+        Task {
+            await signIn()
+        }
+    }
+    
+    deinit {
+        try? auth.signOut()
+    }
     
     // MARK: - Methods
     func createAccount() async {
@@ -31,6 +44,17 @@ class AuthVM: ObservableObject {
             UserDefaults.standard.set(username, forKey: "username")
         } else {
             createUsernameError = "Username is already taken"
+        }
+        loading = false
+    }
+    
+    func signIn() async {
+        loading = true
+        do {
+            try await auth.signInAnonymously()
+            username = UserDefaults.standard.string(forKey: "username")
+        } catch {
+            createUsernameError = error.localizedDescription
         }
         loading = false
     }

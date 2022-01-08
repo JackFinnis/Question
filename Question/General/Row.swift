@@ -16,6 +16,7 @@ struct Row: View {
             Text(leading)
             Spacer()
             Text(trailing)
+                .font(.none)
                 .foregroundColor(.secondary)
         }
     }

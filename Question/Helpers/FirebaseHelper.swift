@@ -12,6 +12,7 @@ struct FirebaseHelper {
     // MARK: - Properties
     // Firebase database helper
     let database = Firestore.firestore()
+    var nothing: String?
     
     // MARK: - Document Listeners
     // Setup a listener for the given document in a collection
@@ -196,7 +197,7 @@ struct FirebaseHelper {
     // Delete field from given document in collection
     func deleteField(collection: String, documentID: String, field: String) async {
         await updateData(collection: collection, documentID: documentID, data: [
-            field: nil as String? as Any
+            field: nothing as Any
         ])
     }
     
