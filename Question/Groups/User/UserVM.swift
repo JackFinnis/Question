@@ -14,15 +14,11 @@ class UserVM: ObservableObject {
     @Published var user: User?
     @Published var loading = false
     
-    @Published var joinUsername = ""
-    @Published var joinUsernameError: String?
-    
-    @Published var newQuestion = ""
-    @Published var newQuestionMinutes: Double?
-    @Published var newQuestionError: String?
-    
     @Published var showRoomView = false
     @Published var showMyRoomView = false
+    
+    @Published var joinUsername = ""
+    @Published var joinUsernameError: String?
     
     let helper = FirebaseHelper()
     
@@ -33,8 +29,8 @@ class UserVM: ObservableObject {
         loading = true
         userListener?.remove()
         userListener = helper.addUserListener(userID: username) { user in
+            self.loading = true
             self.user = user
-            self.loading = false
         }
     }
     
@@ -54,32 +50,5 @@ class UserVM: ObservableObject {
             joinUsernameError = "User does not exist"
         }
         loading = false
-    }
-    
-    func startQuestion(username: String) async {
-        newQuestionError = nil
-        if newQuestion.isEmpty {
-            newQuestionError = "Please enter a question"
-        } else {
-            loading = true
-            let newQuestionID = helper.getUniqueID()
-            var endDate: Date?
-            if newQuestionMinutes != nil {
-                endDate = Date().addingTimeInterval(newQuestionMinutes! * 60)
-            }
-            
-            await helper.addDocument(collection: "questions", documentID: newQuestionID, data: [
-                "end": endDate as Any,
-                "askerUsername": username,
-                "question": newQuestion
-            ])
-            await helper.updateData(collection: "users", documentID: username, data: [
-                "liveQuestion": newQuestionID
-            ])
-            await helper.addElement(collection: "users", documentID: username, arrayName: "questionIDs", element: newQuestionID)
-            
-            loading = false
-            showMyRoomView = true
-        }
     }
 }

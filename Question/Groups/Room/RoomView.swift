@@ -15,31 +15,33 @@ struct RoomView: View {
     let joinUsername: String
     
     var body: some View {
-        Group {
-            if roomVM.user == nil {
-                ProgressView("Loading room...")
-            } else if roomVM.user!.liveQuestionID == nil {
-                ProgressView("Waiting for next question...")
-            } else {
-                QuestionView(username: username, questionID: roomVM.user!.liveQuestionID!)
-            }
-        }
-        .navigationTitle(username)
-        .onAppear {
-            roomVM.addUserListener(username: joinUsername)
-        }
-        .onDisappear {
-            roomVM.removeListeners()
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Leave Room") {
-                    dismiss()
+        NavigationView {
+            Group {
+                if roomVM.user == nil {
+                    ProgressView("Loading room...")
+                } else if roomVM.user!.liveQuestionID == nil {
+                    ProgressView("Waiting for next question...")
+                } else {
+                    QuestionView(username: username, questionID: roomVM.user!.liveQuestionID!)
                 }
             }
-            ToolbarItem(placement: .principal) {
-                if roomVM.loading {
-                    ProgressView()
+            .navigationTitle(username)
+            .onAppear {
+                roomVM.addUserListener(username: joinUsername)
+            }
+            .onDisappear {
+                roomVM.removeListeners()
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Leave Room") {
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .principal) {
+                    if roomVM.loading {
+                        ProgressView()
+                    }
                 }
             }
         }

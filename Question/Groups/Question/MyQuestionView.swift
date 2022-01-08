@@ -19,8 +19,36 @@ struct MyQuestionView: View {
                 ProgressView("Loading question...")
             } else {
                 Form {
-                    Text("My Question")
-                    Text(questionVM.question!.question ?? "No Question")
+                    Section {
+                        TextField(questionVM.question!.question ?? "No Question", text: $questionVM.newQuestion)
+                            .submitLabel(.go)
+                        Button("Resubmit") {
+                            Task {
+                                await questionVM.submitNewQuestion()
+                            }
+                        }
+                    } header: {
+                        Text("Question")
+                    } footer: {
+                        Text(questionVM.newQuestionError ?? "")
+                    }
+                    .headerProminence(.increased)
+                    
+                    Section {
+                        //todo
+                    } header: {
+                        Text("Answers")
+                    }
+                }
+                .onSubmit {
+                    Task {
+                        await questionVM.submitNewQuestion()
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Countdown(question: questionVM.question!)
+                    }
                 }
             }
         }

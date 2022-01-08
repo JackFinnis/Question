@@ -11,10 +11,24 @@ import FirebaseFirestore
 @MainActor
 class QuestionVM: ObservableObject {
     // MARK: - Properties
-    @Published var question: Question?
+    @Published var question: Question? { didSet {
+        Task {
+            if (question?.finished ?? false) && unsavedChanges {
+                await submitAnswer()
+            }
+        }
+    }}
     
     @Published var loading = false
     @Published var error = false
+    
+    @Published var answer = ""
+    @Published var answerError: String?
+    @Published var oldAnswer = ""
+    var unsavedChanges: Bool { oldAnswer != answer }
+    
+    @Published var newQuestion = ""
+    @Published var newQuestionError: String?
     
     let helper = FirebaseHelper()
     
@@ -40,4 +54,26 @@ class QuestionVM: ObservableObject {
     }
     
     // MARK: - Methods
+    func submitAnswer() async {
+        answerError = nil
+        if answer.isEmpty {
+            answerError = "Please enter an answer"
+        } else {
+            loading = true
+            //todo
+            oldAnswer = answer
+            loading = false
+        }
+    }
+    
+    func submitNewQuestion() async {
+        newQuestionError = nil
+        if newQuestion.isEmpty {
+            newQuestionError = "Please enter a new question"
+        } else {
+            loading = true
+            //todo
+            loading = false
+        }
+    }
 }

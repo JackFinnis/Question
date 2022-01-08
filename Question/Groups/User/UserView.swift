@@ -19,7 +19,36 @@ struct UserView: View {
                     ProgressView("Loading profile...")
                 } else {
                     Form {
-                        CreateGroup(userVM: userVM, username: username)
+                        Section {
+                            TextField("Enter Username", text: $userVM.joinUsername)
+                                .disableAutocorrection(true)
+                                .textContentType(.username)
+                                .submitLabel(.join)
+                            
+                            Button("Join") {
+                                Task {
+                                    await userVM.submitJoinUser()
+                                }
+                            }
+                        } header: {
+                            Text("Join a Room")
+                        } footer: {
+                            Text(userVM.joinUsernameError ?? "")
+                        }
+                        .headerProminence(.increased)
+                        .onSubmit {
+                            Task {
+                                await userVM.submitJoinUser()
+                            }
+                        }
+                        .sheet(isPresented: $userVM.showRoomView) {
+                            RoomView(username: username, joinUsername: userVM.joinUsername)
+                        }
+                        
+                        NewQuestion(loading: $userVM.loading, finished: $userVM.showMyRoomView, username: username)
+                            .sheet(isPresented: $userVM.showMyRoomView) {
+                                MyRoom(username: username)
+                            }
                         
                         Section {
                             //todo
