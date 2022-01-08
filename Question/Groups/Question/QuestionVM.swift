@@ -11,13 +11,8 @@ import FirebaseFirestore
 @MainActor
 class QuestionVM: ObservableObject {
     // MARK: - Properties
-    @Published var question: Question? { didSet {
-        Task {
-            if (question?.finished ?? false) && unsavedChanges {
-                await submitAnswer()
-            }
-        }
-    }}
+    @Published var question: Question?
+    @Published var answers = [Answer]()
     
     @Published var loading = false
     @Published var error = false
@@ -33,6 +28,7 @@ class QuestionVM: ObservableObject {
     let helper = FirebaseHelper()
     
     var questionListener: ListenerRegistration?
+    var answersListener: ListenerRegistration?
     
     // MARK: - Listeners
     func addQuestionListener(questionID: String) {
@@ -49,8 +45,23 @@ class QuestionVM: ObservableObject {
         }
     }
     
+    func addAnswersListener(questionID: String) {
+        answersListener?.remove()
+        answersListener = helper.addCollectionListener(collection: "answers", field: "questionID", isEqualTo: questionID) { documents in
+            self.answers = documents.map { document -> Answer in
+                Answer(id: document.documentID, data: document.data())
+            }.sorted { $0.date > $1.date }
+        }
+    }
+    
     func removeListeners() {
         questionListener?.remove()
+        answersListener?.remove()
+    }
+    
+    func addListeners(questionID: String) {
+        addQuestionListener(questionID: questionID)
+        addAnswersListener(questionID: questionID)
     }
     
     // MARK: - Methods
@@ -66,7 +77,7 @@ class QuestionVM: ObservableObject {
         }
     }
     
-    func submitNewQuestion() async {
+    func resubmitQuestion() async {
         newQuestionError = nil
         if newQuestion.isEmpty {
             newQuestionError = "Please enter a new question"
@@ -75,5 +86,29 @@ class QuestionVM: ObservableObject {
             //todo
             loading = false
         }
+    }
+    
+    // MARK: - Methods
+    func stopQuestion(username: String) async {
+        loading = true
+        if let question = question {
+            if question.end == nil {
+                await helper.updateData(collection: "questions", documentID: question.id, data: [
+                    "end": Date()
+                ])
+            }
+        }
+        await helper.deleteField(collection: "users", documentID: username, field: "liveQuestionID")
+        loading = false
+    }
+    
+    func toggleSharedAnswer(questionID: String, answerID: String, shared: Bool) async {
+        loading = true
+        if shared {
+            await helper.removeElement(collection: "questions", documentID: questionID, arrayName: "sharedAnswerIDs", element: answerID)
+        } else {
+            await helper.addElement(collection: "questions", documentID: questionID, arrayName: "sharedAnswerIDs", element: answerID)
+        }
+        loading = false
     }
 }

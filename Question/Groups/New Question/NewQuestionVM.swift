@@ -41,7 +41,7 @@ class NewQuestionVM: ObservableObject {
         questionsListener = helper.addCollectionListener(collection: "questions", field: "askerUsername", isEqualTo: username) { documents in
             self.questions = documents.map { document -> Question in
                 Question(id: document.documentID, data: document.data())
-            }
+            }.sorted { $0.end ?? Date() > $1.end ?? Date() }
         }
     }
     

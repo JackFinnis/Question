@@ -14,37 +14,55 @@ struct NewQuestionView: View {
     @Binding var finished: Bool
     
     let username: String
+    let showRecentQuestions: Bool
     
     let formatting = FormattingHelper()
     
     var body: some View {
-        Section {
-            NavigationLink {
-                SelectQuestionView(selectedQuestion: $newQuestionVM.selectedRecentQuestion, questions: newQuestionVM.questions)
-            } label: {
-                HStack {
-                    TextField("Enter Question", text: $newQuestionVM.newQuestion)
-                        .submitLabel(.go)
-                    Text("Recent")
+        Group {
+            Section {
+                NavigationLink {
+                    SelectQuestionView(selectedQuestion: $newQuestionVM.selectedRecentQuestion, questions: newQuestionVM.questions)
+                } label: {
+                    HStack {
+                        TextField("Enter Question", text: $newQuestionVM.newQuestion)
+                            .submitLabel(.go)
+                            .onSubmit {
+                                startQuestion()
+                            }
+                        Text("Recent")
+                    }
                 }
+                
+                Toggle("Timed Question", isOn: $newQuestionVM.timedQuestion.animation())
+                if newQuestionVM.timedQuestion {
+                    Stepper(formatting.singularPlural(singularWord: "Minute", count: newQuestionVM.newQuestionMinutes), value: $newQuestionVM.newQuestionMinutes, in: 1...60)
+                }
+                
+                Button("Start") {
+                    startQuestion()
+                }
+            } header: {
+                Text("Start a Question")
+            } footer: {
+                Text(newQuestionVM.newQuestionError ?? "")
             }
+            .headerProminence(.increased)
             
-            Toggle("Timed Question", isOn: $newQuestionVM.timedQuestion.animation())
-            if newQuestionVM.timedQuestion {
-                Stepper(formatting.singularPlural(singularWord: "Minute", count: newQuestionVM.newQuestionMinutes), value: $newQuestionVM.newQuestionMinutes, in: 1...60)
+            if showRecentQuestions {
+                Section {
+                    List(newQuestionVM.questions) { question in
+                        NavigationLink {
+                            QuestionView(username: username, questionID: question.id)
+                        } label: {
+                            Text(question.question ?? "No Question")
+                        }
+                    }
+                } header: {
+                    Text(formatting.singularPlural(singularWord: "Question", count: newQuestionVM.questions.count))
+                }
+                .headerProminence(.increased)
             }
-            
-            Button("Start") {
-                startQuestion()
-            }
-        } header: {
-            Text("Start a Question")
-        } footer: {
-            Text(newQuestionVM.newQuestionError ?? "")
-        }
-        .headerProminence(.increased)
-        .onSubmit {
-            startQuestion()
         }
         .onAppear {
             newQuestionVM.addQuestionsListener(username: username)

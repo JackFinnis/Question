@@ -24,7 +24,7 @@ struct MyQuestionView: View {
                             .submitLabel(.go)
                         Button("Resubmit") {
                             Task {
-                                await questionVM.submitNewQuestion()
+                                await questionVM.resubmitQuestion()
                             }
                         }
                     } header: {
@@ -35,14 +35,22 @@ struct MyQuestionView: View {
                     .headerProminence(.increased)
                     
                     Section {
-                        //todo
+                        List(questionVM.answers) { answer in
+                            HStack {
+                                AnswerRow(answer: answer)
+                                ToggleShareButton(questionVM: questionVM, question: questionVM.question!, answerID: answer.id)
+                            }
+                            .swipeActions {
+                                ToggleShareButton(questionVM: questionVM, question: questionVM.question!, answerID: answer.id)
+                            }
+                        }
                     } header: {
                         Text("Answers")
                     }
                 }
                 .onSubmit {
                     Task {
-                        await questionVM.submitNewQuestion()
+                        await questionVM.resubmitQuestion()
                     }
                 }
                 .toolbar {
@@ -53,10 +61,25 @@ struct MyQuestionView: View {
             }
         }
         .onAppear {
-            questionVM.addQuestionListener(questionID: questionID)
+            questionVM.addListeners(questionID: questionID)
         }
         .onDisappear {
             questionVM.removeListeners()
+        }
+        .interactiveDismissDisabled()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Stop Question") {
+                    Task {
+                        await questionVM.stopQuestion(username: username)
+                    }
+                }
+            }
+            ToolbarItem(placement: .principal) {
+                if questionVM.loading {
+                    ProgressView()
+                }
+            }
         }
     }
 }

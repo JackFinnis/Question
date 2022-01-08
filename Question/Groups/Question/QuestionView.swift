@@ -13,15 +13,17 @@ struct QuestionView: View {
     let username: String
     let questionID: String
     
+    let formatting = FormattingHelper()
+    
     var body: some View {
         Group {
             if questionVM.question == nil {
                 ProgressView("Loading question...")
-            } else if questionVM.question!.finished {
-                if questionVM.question!.sharedAnswerID == nil {
-                    ProgressView("Waiting for results...")
-                } else {
-                    AnswerView(username: username, answerID: questionVM.question!.sharedAnswerID!)
+            } else if questionVM.error {
+                HStack {
+                    Image(systemName: "questionmark")
+                        .font(.title)
+                    Text("This question has been deleted")
                 }
             } else {
                 Form {
@@ -34,6 +36,7 @@ struct QuestionView: View {
                     
                     Section {
                         TextEditor(text: $questionVM.answer)
+                            .disabled(questionVM.question!.finished)
                     } header: {
                         Text("Answer")
                     } footer: {
@@ -63,6 +66,15 @@ struct QuestionView: View {
                         .foregroundColor(.white)
                         .listRowBackground(Color.accentColor)
                     }
+                    
+                    Section {
+                        List(questionVM.answers.filter { questionVM.question!.sharedAnswerIDs.contains($0.id) }) { answer in
+                            AnswerRow(answer: answer)
+                        }
+                    } header: {
+                        Text(formatting.singularPlural(singularWord: "Answer", count: questionVM.question!.sharedAnswerIDs.count))
+                    }
+                    .headerProminence(.increased)
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -72,7 +84,7 @@ struct QuestionView: View {
             }
         }
         .onAppear {
-            questionVM.addQuestionListener(questionID: questionID)
+            questionVM.addListeners(questionID: questionID)
         }
         .onDisappear {
             questionVM.removeListeners()

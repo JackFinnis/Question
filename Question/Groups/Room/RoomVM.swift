@@ -33,9 +33,4 @@ class RoomVM: ObservableObject {
     func removeListeners() {
         userListener?.remove()
     }
-    
-    // MARK: - Methods
-    func stopLiveQuestion(username: String) async {
-        //todo
-    }
 }

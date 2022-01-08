@@ -15,7 +15,7 @@ struct Question: Identifiable, Hashable {
     let question: String?
     let answerIDs: [String]
     let askerUsername: String?
-    let sharedAnswerID: String?
+    let sharedAnswerIDs: [String]
     
     var finished: Bool { end ?? Date() < Date() }
     
@@ -25,7 +25,7 @@ struct Question: Identifiable, Hashable {
         self.question = data["question"] as? String
         self.answerIDs = data["answerIDs"] as? [String] ?? []
         self.askerUsername = data["askerUsername"] as? String
-        self.sharedAnswerID = data["sharedAnswerID"] as? String
         self.end = (data["end"] as? Timestamp)?.dateValue() ?? Date()
+        self.sharedAnswerIDs = data["sharedAnswerIDs"] as? [String] ?? []
     }
 }

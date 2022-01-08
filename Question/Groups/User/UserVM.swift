@@ -27,9 +27,8 @@ class UserVM: ObservableObject {
     var answersListener: ListenerRegistration?
     
     var recentUsernames: [String] {
-        let sortedAnswers = answers.sorted { $0.date > $1.date }
         var recentUsernames = [String]()
-        for answer in sortedAnswers {
+        for answer in answers {
             if let askerUsername = answer.askerUsername {
                 recentUsernames.append(askerUsername)
             }
@@ -52,7 +51,7 @@ class UserVM: ObservableObject {
         answersListener = helper.addCollectionListener(collection: "answers", field: "answerUsername", isEqualTo: username) { documents in
             self.answers = documents.map { document -> Answer in
                 Answer(id: document.documentID, data: document.data())
-            }
+            }.sorted { $0.date > $1.date }
         }
     }
     

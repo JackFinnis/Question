@@ -2,17 +2,49 @@
 //  MyRoomView.swift
 //  Question
 //
-//  Created by Jack Finnis on 05/01/2022.
+//  Created by Jack Finnis on 08/01/2022.
 //
 
 import SwiftUI
 
 struct MyRoomView: View {
+    @Environment(\.dismiss) var dismiss
     @StateObject var roomVM = RoomVM()
+    @State var redundantFinished = false
     
     let username: String
     
     var body: some View {
-        Text("My Room")
+        NavigationView {
+            Group {
+                if roomVM.user == nil {
+                    ProgressView("Loading room...")
+                } else if roomVM.user!.liveQuestionID == nil {
+                    NewQuestionView(loading: $roomVM.loading, finished: $redundantFinished, username: username)
+                } else {
+                    MyQuestionView(username: username, questionID: roomVM.user!.liveQuestionID!)
+                }
+            }
+            .navigationTitle(username)
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                roomVM.addUserListener(username: username)
+            }
+            .onDisappear {
+                roomVM.removeListeners()
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Leave Room") {
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .principal) {
+                    if roomVM.loading {
+                        ProgressView()
+                    }
+                }
+            }
+        }
     }
 }

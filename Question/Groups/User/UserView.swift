@@ -55,20 +55,21 @@ struct UserView: View {
                             RoomView(username: username, joinUsername: userVM.joinUsername)
                         }
                         
-                        NewQuestionView(loading: $userVM.loading, finished: $userVM.showMyRoomView, username: username)
+                        NewQuestionView(loading: $userVM.loading, finished: $userVM.showMyRoomView, username: username, showRecentQuestions: true)
                             .sheet(isPresented: $userVM.showMyRoomView) {
                                 MyRoomView(username: username)
                             }
                         
                         Section {
-                            //todo
-                        } header: {
-                            Text(formatting.singularPlural(singularWord: "Question", count: userVM.user!.questionIDs.count))
-                        }
-                        .headerProminence(.increased)
-                        
-                        Section {
-                            //todo
+                            List(userVM.answers) { answer in
+                                NavigationLink {
+                                    if let questionID = answer.questionID {
+                                        QuestionView(username: username, questionID: questionID)
+                                    }
+                                } label: {
+                                    AnswerRow(answer: answer)
+                                }
+                            }
                         } header: {
                             Text(formatting.singularPlural(singularWord: "Answer", count: userVM.user!.answerIDs.count))
                         }
