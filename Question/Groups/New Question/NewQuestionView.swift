@@ -53,7 +53,7 @@ struct NewQuestionView: View {
                 Section {
                     List(newQuestionVM.questions) { question in
                         NavigationLink {
-                            QuestionView(username: username, questionID: question.id)
+                            MyQuestionView(username: username, questionID: question.id)
                         } label: {
                             Text(question.question ?? "No Question")
                         }

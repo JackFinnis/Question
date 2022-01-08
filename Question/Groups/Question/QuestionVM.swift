@@ -65,25 +65,39 @@ class QuestionVM: ObservableObject {
     }
     
     // MARK: - Methods
-    func submitAnswer() async {
+    func submitAnswer(questionID: String, username: String, joinUsername: String) async {
         answerError = nil
         if answer.isEmpty {
             answerError = "Please enter an answer"
         } else {
             loading = true
-            //todo
+            
+            let newAnswerID = questionID + username
+            await helper.addDocument(collection: "answers", documentID: newAnswerID, data: [
+                "date": Date(),
+                "answer": answer,
+                "questionID": questionID,
+                "askerUsername": joinUsername,
+                "answerUsername": username
+            ])
+            await helper.addElement(collection: "questions", documentID: questionID, arrayName: "answerIDs", element: newAnswerID)
+            await helper.addElement(collection: "users", documentID: username, arrayName: "answerIDs", element: newAnswerID)
+            
             oldAnswer = answer
             loading = false
         }
     }
     
-    func resubmitQuestion() async {
+    func resubmitQuestion(questionID: String, username: String) async {
         newQuestionError = nil
         if newQuestion.isEmpty {
             newQuestionError = "Please enter a new question"
         } else {
             loading = true
-            //todo
+            let newAnswerID = questionID + username
+            await helper.updateData(collection: "answers", documentID: newAnswerID, data: [
+                "answer": newQuestion
+            ])
             loading = false
         }
     }

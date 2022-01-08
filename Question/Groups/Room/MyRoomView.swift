@@ -20,7 +20,7 @@ struct MyRoomView: View {
                 if roomVM.user == nil {
                     ProgressView("Loading room...")
                 } else if roomVM.user!.liveQuestionID == nil {
-                    NewQuestionView(loading: $roomVM.loading, finished: $redundantFinished, username: username)
+                    NewQuestionView(loading: $roomVM.loading, finished: $redundantFinished, username: username, showRecentQuestions: false)
                 } else {
                     MyQuestionView(username: username, questionID: roomVM.user!.liveQuestionID!)
                 }
