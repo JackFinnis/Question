@@ -27,21 +27,20 @@ struct RoomView: View {
             }
             .navigationTitle(joinUsername)
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
+            .task {
                 roomVM.addUserListener(username: joinUsername)
+                await roomVM.joinRoom(username: username, joinUsername: joinUsername)
             }
             .onDisappear {
                 roomVM.removeListeners()
+                Task {
+                    await roomVM.leaveRoom(username: username, joinUsername: joinUsername)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Leave") {
                         dismiss()
-                    }
-                }
-                ToolbarItem(placement: .principal) {
-                    if roomVM.loading {
-                        ProgressView()
                     }
                 }
             }

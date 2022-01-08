@@ -25,7 +25,6 @@ class RoomVM: ObservableObject {
         loading = true
         userListener?.remove()
         userListener = helper.addUserListener(userID: username) { user in
-            print(user)
             self.user = user
             self.loading = false
         }
@@ -33,5 +32,14 @@ class RoomVM: ObservableObject {
     
     func removeListeners() {
         userListener?.remove()
+    }
+    
+    // MARK: - Methods
+    func joinRoom(username: String, joinUsername: String) async {
+        await helper.addElement(collection: "users", documentID: joinUsername, arrayName: "liveUsernames", element: username)
+    }
+    
+    func leaveRoom(username: String, joinUsername: String) async {
+        await helper.removeElement(collection: "users", documentID: joinUsername, arrayName: "liveUsernames", element: username)
     }
 }

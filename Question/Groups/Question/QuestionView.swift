@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct QuestionView: View {
-    @Environment(\.dismiss) var dismiss
     @StateObject var questionVM = QuestionVM()
     
     let username: String
@@ -33,10 +32,10 @@ struct QuestionView: View {
                     
                     Form {
                         Section {
-                            if questionVM.question!.finished {
-                                Text(questionVM.answer)
-                            } else {
+                            if questionVM.isLive {
                                 TextEditor(text: $questionVM.answer)
+                            } else {
+                                Text(questionVM.answer)
                             }
                         } footer: {
                             Text(questionVM.answerError ?? "")
@@ -96,11 +95,6 @@ struct QuestionView: View {
             questionVM.removeListeners()
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Leave Room") {
-                    dismiss()
-                }
-            }
             ToolbarItem(placement: .principal) {
                 if questionVM.loading {
                     ProgressView()

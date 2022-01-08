@@ -13,6 +13,7 @@ struct MyQuestionView: View {
     @State var redundantFinished = false
     @State var showEndAlert = false
     
+    let user: User
     let username: String
     let questionID: String
     
@@ -26,39 +27,42 @@ struct MyQuestionView: View {
                 VStack {
                     Text(questionVM.question?.question ?? "No Question")
                     Form {
-                        Section {
-                            TextEditor(text: $questionVM.newQuestion)
-                            Button("Edit") {
-                                Task {
-                                    await questionVM.submitNewQuestion(username: username)
+                        if questionVM.isLive {
+                            Section {
+                                TextEditor(text: $questionVM.newQuestion)
+                                Button("Edit") {
+                                    Task {
+                                        await questionVM.submitNewQuestion(questionID: questionID)
+                                    }
                                 }
+                            } header: {
+                                Text("Edit Question")
+                            } footer: {
+                                Text(questionVM.newQuestionError ?? "")
                             }
-                        } header: {
-                            Text("Edit Question")
-                        } footer: {
-                            Text(questionVM.newQuestionError ?? "")
-                        }
-                        .headerProminence(.increased)
-                        
-                        Section {
-                            Toggle("Time Limit", isOn: $questionVM.newTimedQuestion.animation())
-                            if questionVM.newTimedQuestion {
-                                Stepper(formatting.singularPlural(singularWord: "Minute", count: questionVM.newQuestionMinutes), value: $questionVM.newQuestionMinutes, in: 1...60)
-                            }
-                            Button("Edit") {
-                                Task {
-                                    await questionVM.submitNewTimeLimit(username: username)
+                            .headerProminence(.increased)
+                            
+                            Section {
+                                Toggle("Time Limit", isOn: $questionVM.newTimedQuestion.animation())
+                                if questionVM.newTimedQuestion {
+                                    Stepper(formatting.singularPlural(singularWord: "Minute", count: questionVM.newQuestionMinutes), value: $questionVM.newQuestionMinutes, in: 1...60)
                                 }
+                                Button("Edit") {
+                                    Task {
+                                        await questionVM.submitNewTimeLimit(questionID: questionID)
+                                    }
+                                }
+                            } header: {
+                                Text("Edit Time Limit")
                             }
-                        } header: {
-                            Text("Edit Time Limit")
+                            .headerProminence(.increased)
                         }
-                        .headerProminence(.increased)
                         
                         Section {
                             List(questionVM.answers) { answer in
                                 HStack {
                                     AnswerUserRow(answer: answer)
+                                    Spacer()
                                     ToggleShareButton(questionVM: questionVM, question: questionVM.question!, answerID: answer.id)
                                 }
                                 .swipeActions {
@@ -66,7 +70,16 @@ struct MyQuestionView: View {
                                 }
                             }
                         } header: {
-                            Text(formatting.singularPlural(singularWord: "Answer", count: questionVM.question!.sharedAnswerIDs.count))
+                            HStack {
+                                Text(formatting.singularPlural(singularWord: "Answer", count: questionVM.question!.answerIDs.count))
+                                Spacer()
+                                Button("Share All") {
+                                    Task {
+                                        await questionVM.shareAllAnswers(question: questionVM.question!)
+                                    }
+                                }
+                                .font(.none)
+                            }
                         }
                         .headerProminence(.increased)
                     }
@@ -85,32 +98,29 @@ struct MyQuestionView: View {
         }
         .onDisappear {
             questionVM.removeListeners()
+            Task {
+                await questionVM.stopLiveQuestion(username: username)
+            }
         }
-        .interactiveDismissDisabled(!(questionVM.question?.finished ?? false))
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                if questionVM.question?.finished ?? false {
-                    Button("Done") {
-                        dismiss()
+                if questionVM.isLive {
+                    Button("End") {
+                        Task {
+                            await questionVM.stopQuestion(username: username, questionID: questionID)
+                        }
                     }
                 } else {
-                    Button("End") {
-                        showEndAlert = true
-                    }
-                    .tint(.red)
-                    .confirmationDialog("End Question?", isPresented: $showEndAlert) {
-                        Button("Cancel", role: .cancel) { }
-                        Button("End Question", role: .destructive) {
-                            Task {
-                                await questionVM.stopQuestion(username: username, questionID: questionID)
-                            }
-                        }
+                    Button("Leave") {
+                        dismiss()
                     }
                 }
             }
             ToolbarItem(placement: .principal) {
                 if questionVM.loading {
                     ProgressView()
+                } else {
+                    RoomStatusButton(joinUsername: username, guestUsernames: user.guestUsernames)
                 }
             }
         }

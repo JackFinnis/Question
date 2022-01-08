@@ -21,33 +21,42 @@ struct UserView: View {
                 } else {
                     Form {
                         JoinRoom(userVM: userVM, username: username)
+                        NewQuestion(userVM: userVM, username: username)
                         
-                        NewQuestion(loading: $userVM.loading, finished: $userVM.showMyRoomView, username: username, showRecentQuestions: true, questionID: nil, placeholderQuestion: "")
-                            .sheet(isPresented: $userVM.showMyRoomView) {
-                                MyRoomView(username: username)
+                        Section {
+                            NavigationLink {
+                                QuestionsView(userVM: userVM, user: userVM.user!, username: username)
+                            } label: {
+                                Row(leading: "My Questions", trailing: String(userVM.questions.count))
                             }
-                        
-                        NavigationLink {
-                            AnswersView(userVM: userVM, username: username)
-                        } label: {
-                            Row(leading: "My Answers", trailing: String(userVM.user!.answerIDs.count))
+                            NavigationLink {
+                                AnswersView(userVM: userVM, username: username)
+                            } label: {
+                                Row(leading: "My Answers", trailing: String(userVM.answers.count))
+                            }
+                        } header: {
+                            Text("History")
+                        }
+                        .headerProminence(.increased)
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            if userVM.loading {
+                                ProgressView()
+                            } else {
+                                RoomStatusButton(joinUsername: username, guestUsernames: userVM.user!.guestUsernames)
+                            }
                         }
                     }
                 }
             }
             .navigationTitle(username)
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 userVM.addListeners(username: username)
             }
             .onDisappear {
                 userVM.removeListeners()
-            }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    if userVM.loading {
-                        ProgressView()
-                    }
-                }
             }
         }
     }

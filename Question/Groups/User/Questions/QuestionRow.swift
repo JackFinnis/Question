@@ -10,6 +10,7 @@ import SwiftUI
 struct QuestionRow: View {
     @State var showQuestionView = false
     
+    let user: User
     let username: String
     let question: Question
     
@@ -22,7 +23,7 @@ struct QuestionRow: View {
         .sheet(isPresented: $showQuestionView) {
             if let joinUsername = question.askerUsername {
                 NavigationView {
-                    MyQuestionView(username: username, questionID: question.id)
+                    MyQuestionView(user: user, username: username, questionID: question.id)
                         .navigationTitle(joinUsername)
                         .navigationBarTitleDisplayMode(.inline)
                 }

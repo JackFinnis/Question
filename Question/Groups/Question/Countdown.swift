@@ -17,7 +17,7 @@ struct Countdown: View {
     var formattedTimeRemaining: String {
         if question.end == nil {
             return "Live"
-        } else if timeIntervalRemaining < 0 {
+        } else if timeIntervalRemaining <= 0 {
             return "Finished"
         } else {
             return DateComponentsFormatter().string(from: timeIntervalRemaining)!

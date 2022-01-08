@@ -10,7 +10,6 @@ import SwiftUI
 struct MyRoomView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var roomVM = RoomVM()
-    @State var redundantFinished = false
     
     let username: String
     
@@ -20,7 +19,7 @@ struct MyRoomView: View {
                 if roomVM.user == nil {
                     ProgressView("Loading room...")
                 } else if roomVM.user!.liveQuestionID != nil {
-                    MyQuestionView(username: username, questionID: roomVM.user!.liveQuestionID!)
+                    MyQuestionView(user: roomVM.user!, username: username, questionID: roomVM.user!.liveQuestionID!)
                 }
             }
             .navigationTitle(username)
@@ -30,18 +29,6 @@ struct MyRoomView: View {
             }
             .onDisappear {
                 roomVM.removeListeners()
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Leave") {
-                        dismiss()
-                    }
-                }
-                ToolbarItem(placement: .principal) {
-                    if roomVM.loading {
-                        ProgressView()
-                    }
-                }
             }
         }
     }

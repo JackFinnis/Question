@@ -25,8 +25,12 @@ class QuestionVM: ObservableObject {
     var updated = false
     @Published var newQuestion = ""
     @Published var newQuestionError: String?
-    @Published var newTimedQuestion = false
-    @Published var newQuestionMinutes: Int = 0
+    @Published var newTimedQuestion = true
+    @Published var newQuestionMinutes: Int = 2
+    
+    var isLive: Bool {
+        question?.end == nil || question!.end! > Date()
+    }
     
     let helper = FirebaseHelper()
     
@@ -109,6 +113,11 @@ class QuestionVM: ObservableObject {
         await helper.updateData(collection: "questions", documentID: questionID, data: [
             "end": Date()
         ])
+        loading = false
+    }
+    
+    func stopLiveQuestion(username: String) async {
+        loading = true
         await helper.deleteField(collection: "users", documentID: username, field: "liveQuestionID")
         loading = false
     }
@@ -143,9 +152,17 @@ class QuestionVM: ObservableObject {
             endDate = Date().addingTimeInterval(Double(newQuestionMinutes * 60))
         }
         await helper.updateData(collection: "questions", documentID: questionID, data: [
-            "end": endDate as Any
+            "end": endDate as Any,
+            "minutes": newQuestionMinutes
         ])
-        await helper.increment(collection: "questions", documentID: questionID, field: "minutes", value: newQuestionMinutes)
+        loading = false
+    }
+    
+    func shareAllAnswers(question: Question) async {
+        loading = true
+        await helper.updateData(collection: "questions", documentID: question.id, data: [
+            "sharedQuestionIDs": question.answerIDs
+        ])
         loading = false
     }
 }

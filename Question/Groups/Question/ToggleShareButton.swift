@@ -21,7 +21,8 @@ struct ToggleShareButton: View {
                 await questionVM.toggleSharedAnswer(questionID: question.id, answerID: answerID, shared: shared)
             }
         } label: {
-            Label("Share", systemImage: "square.and.arrow.up" + (shared ? ".fill" : ""))
+            Image(systemName: "square.and.arrow.up" + (shared ? ".fill" : ""))
         }
+        .tint(.accentColor)
     }
 }

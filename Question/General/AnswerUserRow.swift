@@ -11,12 +11,10 @@ struct AnswerUserRow: View {
     let answer: Answer
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            Text(answer.answerUsername ?? "Anonymous")
+                .bold()
             Text(answer.answer ?? "No Answer")
-            HStack {
-                Spacer()
-                Text(answer.answerUsername ?? "Anonymous")
-            }
         }
     }
 }

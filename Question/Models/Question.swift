@@ -17,8 +17,6 @@ struct Question: Identifiable, Hashable {
     let askerUsername: String?
     let sharedAnswerIDs: [String]
     
-    var finished: Bool { end == nil ? false : end! < Date() }
-    
     init(id: String, data: [String: Any]) {
         self.id = id
         self.minutes = data["minutes"] as? Int
