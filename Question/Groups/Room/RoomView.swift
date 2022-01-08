@@ -22,7 +22,7 @@ struct RoomView: View {
                 } else if roomVM.user!.liveQuestionID == nil {
                     ProgressView("Waiting for next question...")
                 } else {
-                    QuestionView(username: username, questionID: roomVM.user!.liveQuestionID!)
+                    QuestionView(username: username, questionID: roomVM.user!.liveQuestionID!, joinUsername: joinUsername)
                 }
             }
             .navigationTitle(joinUsername)

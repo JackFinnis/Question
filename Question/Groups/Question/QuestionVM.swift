@@ -19,11 +19,12 @@ class QuestionVM: ObservableObject {
     
     @Published var answer = ""
     @Published var answerError: String?
-    @Published var oldAnswer = ""
-    var unsavedChanges: Bool { oldAnswer != answer }
+    var oldAnswer = ""
+    var unsavedChanges: Bool { answer.isEmpty || oldAnswer != answer }
     
     @Published var newQuestion = ""
     @Published var newQuestionError: String?
+    var oldQuestion = ""
     
     let helper = FirebaseHelper()
     
@@ -38,6 +39,10 @@ class QuestionVM: ObservableObject {
             self.loading = false
             if let data = data {
                 self.question = Question(id: questionID, data: data)
+                // Update text editor
+                if self.newQuestion.isEmpty {
+                    self.newQuestion = self.question?.question ?? "No Question"
+                }
             } else {
                 self.question = nil
                 self.error = true
@@ -45,12 +50,19 @@ class QuestionVM: ObservableObject {
         }
     }
     
-    func addAnswersListener(questionID: String) {
+    func addAnswersListener(questionID: String, username: String) {
         answersListener?.remove()
         answersListener = helper.addCollectionListener(collection: "answers", field: "questionID", isEqualTo: questionID) { documents in
             self.answers = documents.map { document -> Answer in
                 Answer(id: document.documentID, data: document.data())
             }.sorted { $0.date > $1.date }
+            
+            if let previousAnswer = self.answers.first(where: { $0.answerUsername == username }) {
+                if self.answer.isEmpty {
+                    self.answer = previousAnswer.answer ?? ""
+                    self.oldAnswer = previousAnswer.answer ?? ""
+                }
+            }
         }
     }
     
@@ -59,9 +71,9 @@ class QuestionVM: ObservableObject {
         answersListener?.remove()
     }
     
-    func addListeners(questionID: String) {
+    func addListeners(questionID: String, username: String) {
         addQuestionListener(questionID: questionID)
-        addAnswersListener(questionID: questionID)
+        addAnswersListener(questionID: questionID, username: username)
     }
     
     // MARK: - Methods

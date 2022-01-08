@@ -1,5 +1,5 @@
 //
-//  NewQuestionView.swift
+//  NewQuestion.swift
 //  Question
 //
 //  Created by Jack Finnis on 06/01/2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NewQuestionView: View {
+struct NewQuestion: View {
     @StateObject var newQuestionVM = NewQuestionVM()
     
     @Binding var loading: Bool
@@ -25,16 +25,17 @@ struct NewQuestionView: View {
                     SelectQuestionView(selectedQuestion: $newQuestionVM.selectedRecentQuestion, questions: newQuestionVM.questions)
                 } label: {
                     HStack {
-                        TextField("Enter Question", text: $newQuestionVM.newQuestion)
+                        TextEditor(text: $newQuestionVM.newQuestion)
                             .submitLabel(.go)
                             .onSubmit {
                                 startQuestion()
                             }
                         Text("Recent")
+                            .foregroundColor(.secondary)
                     }
                 }
                 
-                Toggle("Timed Question", isOn: $newQuestionVM.timedQuestion.animation())
+                Toggle("Time Limit", isOn: $newQuestionVM.timedQuestion.animation())
                 if newQuestionVM.timedQuestion {
                     Stepper(formatting.singularPlural(singularWord: "Minute", count: newQuestionVM.newQuestionMinutes), value: $newQuestionVM.newQuestionMinutes, in: 1...60)
                 }
@@ -52,11 +53,7 @@ struct NewQuestionView: View {
             if showRecentQuestions {
                 Section {
                     List(newQuestionVM.questions) { question in
-                        NavigationLink {
-                            MyQuestionView(username: username, questionID: question.id)
-                        } label: {
-                            Text(question.question ?? "No Question")
-                        }
+                        QuestionRow(username: username, question: question)
                     }
                 } header: {
                     Text(formatting.singularPlural(singularWord: "Question", count: newQuestionVM.questions.count))

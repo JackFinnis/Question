@@ -8,28 +8,28 @@
 import SwiftUI
 
 struct Countdown: View {
-    @State var timeIntervalRemaining: TimeInterval?
+    @State var timeIntervalRemaining: TimeInterval? = 0
     
     let question: Question
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var formattedTimeRemaining: String {
-        if timeIntervalRemaining == nil {
-            return ""
-        } else if timeIntervalRemaining! > 0 {
+        if question.end == nil {
+            return "Live"
+        } else if timeIntervalRemaining == nil {
+            return "Loading..."
+        } else if timeIntervalRemaining! <= 0 {
             return "Finished"
         } else {
-            return timeIntervalRemaining!.formatted()
+            return DateComponentsFormatter().string(from: timeIntervalRemaining!)!
         }
     }
     
     var body: some View {
-        if question.end != nil && question.finished {
-            Text(formattedTimeRemaining)
-                .onReceive(timer) { _ in
-                    timeIntervalRemaining = question.end?.timeIntervalSinceNow
-                }
-        }
+        Text(formattedTimeRemaining)
+            .onReceive(timer) { _ in
+                timeIntervalRemaining = question.end?.timeIntervalSinceNow
+            }
     }
 }

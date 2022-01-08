@@ -12,6 +12,7 @@ struct QuestionView: View {
     
     let username: String
     let questionID: String
+    let joinUsername: String
     
     let formatting = FormattingHelper()
     
@@ -26,55 +27,57 @@ struct QuestionView: View {
                     Text("This question has been deleted")
                 }
             } else {
-                Form {
-                    Section {
-                        Text(questionVM.question!.question ?? "No Question")
-                    } header: {
-                        Text("Question")
-                    }
-                    .headerProminence(.increased)
+                VStack {
+                    Text(questionVM.question!.question ?? "No Question")
                     
-                    Section {
-                        TextEditor(text: $questionVM.answer)
-                            .disabled(questionVM.question!.finished)
-                    } header: {
-                        Text("Answer")
-                    } footer: {
-                        Text(questionVM.answerError ?? "")
-                    }
-                    .headerProminence(.increased)
-                    
-                    Section {
-                        HStack {
-                            Spacer()
-                            Button {
-                                Task {
-                                    await questionVM.submitAnswer()
-                                }
-                            } label: {
-                                if questionVM.oldAnswer.isEmpty {
-                                    Text("Submit")
-                                } else if questionVM.unsavedChanges {
-                                    Text("Submit Again")
-                                } else {
-                                    Text("Submitted")
-                                }
+                    Form {
+                        Section {
+                            if questionVM.question!.finished {
+                                Text(questionVM.answer)
+                            } else {
+                                TextEditor(text: $questionVM.answer)
                             }
-                            .disabled(!questionVM.unsavedChanges)
-                            Spacer()
+                        } footer: {
+                            Text(questionVM.answerError ?? "")
                         }
-                        .foregroundColor(.white)
-                        .listRowBackground(Color.accentColor)
-                    }
-                    
-                    Section {
-                        List(questionVM.answers.filter { questionVM.question!.sharedAnswerIDs.contains($0.id) }) { answer in
-                            AnswerRow(answer: answer)
+                        
+                        Section {
+                            if !questionVM.unsavedChanges {
+                                HStack {
+                                    Spacer()
+                                    Text("Submitted")
+                                    Spacer()
+                                }
+                            } else {
+                                HStack {
+                                    Spacer()
+                                    Button {
+                                        Task {
+                                            await questionVM.submitAnswer(questionID: questionID, username: username, joinUsername: joinUsername)
+                                        }
+                                    } label: {
+                                        if questionVM.oldAnswer.isEmpty {
+                                            Text("Submit")
+                                        } else {
+                                            Text("Resubmit")
+                                        }
+                                    }
+                                    Spacer()
+                                }
+                                .foregroundColor(.white)
+                                .listRowBackground(Color.accentColor)
+                            }
                         }
-                    } header: {
-                        Text(formatting.singularPlural(singularWord: "Answer", count: questionVM.question!.sharedAnswerIDs.count))
+                        
+                        Section {
+                            List(questionVM.answers.filter { questionVM.question!.sharedAnswerIDs.contains($0.id) }) { answer in
+                                AnswerUserRow(answer: answer)
+                            }
+                        } header: {
+                            Text(formatting.singularPlural(singularWord: "Shared Answer", count: questionVM.question!.sharedAnswerIDs.count))
+                        }
+                        .headerProminence(.increased)
                     }
-                    .headerProminence(.increased)
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -84,7 +87,7 @@ struct QuestionView: View {
             }
         }
         .onAppear {
-            questionVM.addListeners(questionID: questionID)
+            questionVM.addListeners(questionID: questionID, username: username)
         }
         .onDisappear {
             questionVM.removeListeners()

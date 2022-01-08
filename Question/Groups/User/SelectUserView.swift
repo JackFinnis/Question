@@ -1,5 +1,5 @@
 //
-//  SelectQuestionView.swift
+//  SelectUserView.swift
 //  Question
 //
 //  Created by Jack Finnis on 08/01/2022.
@@ -7,29 +7,29 @@
 
 import SwiftUI
 
-struct SelectQuestionView: View {
+struct SelectUserView: View {
     @Environment(\.dismiss) var dismiss
-    @Binding var selectedQuestion: Question?
+    @Binding var selectedUsername: String
     
-    let questions: [Question]
+    let usernames: [String]
     
     let formatter = FormattingHelper()
     
     var body: some View {
         Form {
             Section {
-                List(questions) { question in
+                List(usernames, id: \.self) { username in
                     Button {
                         withAnimation {
-                            selectedQuestion = question
+                            selectedUsername = username
                             dismiss()
                         }
                     } label: {
-                        Text(question.question ?? "No Question")
+                        Text(username)
                     }
                 }
             } header: {
-                Text(formatter.singularPlural(singularWord: "Recent Question", count: questions.count))
+                Text(formatter.singularPlural(singularWord: "Recent Room", count: usernames.count))
             }
             .headerProminence(.increased)
         }

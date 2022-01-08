@@ -20,55 +20,16 @@ struct UserView: View {
                     ProgressView("Loading profile...")
                 } else {
                     Form {
-                        Section {
-                            HStack {
-                                TextField("Enter Username", text: $userVM.joinUsername)
-                                    .disableAutocorrection(true)
-                                    .textContentType(.username)
-                                    .submitLabel(.join)
-                                if !userVM.recentUsernames.isEmpty {
-                                    Picker("", selection: $userVM.joinUsername) {
-                                        ForEach(userVM.recentUsernames, id: \.self) { username in
-                                            Text(username)
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            Button("Join") {
-                                Task {
-                                    await userVM.submitJoinUser()
-                                }
-                            }
-                        } header: {
-                            Text("Join a Room")
-                        } footer: {
-                            Text(userVM.joinUsernameError ?? "")
-                        }
-                        .headerProminence(.increased)
-                        .onSubmit {
-                            Task {
-                                await userVM.submitJoinUser()
-                            }
-                        }
-                        .sheet(isPresented: $userVM.showRoomView) {
-                            RoomView(username: username, joinUsername: userVM.joinUsername)
-                        }
+                        JoinRoom(userVM: userVM, username: username)
                         
-                        NewQuestionView(loading: $userVM.loading, finished: $userVM.showMyRoomView, username: username, showRecentQuestions: true)
+                        NewQuestion(loading: $userVM.loading, finished: $userVM.showMyRoomView, username: username, showRecentQuestions: true)
                             .sheet(isPresented: $userVM.showMyRoomView) {
                                 MyRoomView(username: username)
                             }
                         
                         Section {
                             List(userVM.answers) { answer in
-                                NavigationLink {
-                                    if let questionID = answer.questionID {
-                                        QuestionView(username: username, questionID: questionID)
-                                    }
-                                } label: {
-                                    AnswerRow(answer: answer)
-                                }
+                                AnswerRow(username: username, answer: answer)
                             }
                         } header: {
                             Text(formatting.singularPlural(singularWord: "Answer", count: userVM.user!.answerIDs.count))

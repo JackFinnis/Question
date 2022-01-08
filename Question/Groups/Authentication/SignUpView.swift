@@ -18,6 +18,11 @@ struct SignUpView: View {
                         .disableAutocorrection(true)
                         .textContentType(.name)
                         .submitLabel(.join)
+                        .onSubmit {
+                            Task {
+                                await authVM.createAccount()
+                            }
+                        }
                 } footer: {
                     Text("This username cannot be changed and is public")
                 }
@@ -41,11 +46,6 @@ struct SignUpView: View {
                 }
             }
             .navigationTitle("Sign Up")
-            .onSubmit {
-                Task {
-                    await authVM.createAccount()
-                }
-            }
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     if authVM.loading {
