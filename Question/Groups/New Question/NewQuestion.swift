@@ -16,6 +16,9 @@ struct NewQuestion: View {
     let username: String
     let showRecentQuestions: Bool
     
+    let questionID: String?
+    let placeholderQuestion: String
+    
     let formatting = FormattingHelper()
     
     var body: some View {
@@ -26,10 +29,6 @@ struct NewQuestion: View {
                 } label: {
                     HStack {
                         TextEditor(text: $newQuestionVM.newQuestion)
-                            .submitLabel(.go)
-                            .onSubmit {
-                                startQuestion()
-                            }
                         Text("Recent")
                             .foregroundColor(.secondary)
                     }
@@ -40,11 +39,15 @@ struct NewQuestion: View {
                     Stepper(formatting.singularPlural(singularWord: "Minute", count: newQuestionVM.newQuestionMinutes), value: $newQuestionVM.newQuestionMinutes, in: 1...60)
                 }
                 
-                Button("Start") {
-                    startQuestion()
+                Button(questionID == nil ? "Start" : "Edit") {
+                    Task {
+                        loading = true
+                        finished = await newQuestionVM.startQuestion(username: username, questionID: questionID)
+                        loading = false
+                    }
                 }
             } header: {
-                Text("Start a Question")
+                Text(questionID == nil ? "Start a Question" : "Edit Question")
             } footer: {
                 Text(newQuestionVM.newQuestionError ?? "")
             }
@@ -52,28 +55,23 @@ struct NewQuestion: View {
             
             if showRecentQuestions {
                 Section {
-                    List(newQuestionVM.questions) { question in
-                        QuestionRow(username: username, question: question)
+                    NavigationLink {
+                        QuestionsView(newQuestionVM: newQuestionVM, username: username)
+                    } label: {
+                        Row(leading: "My Questions", trailing: String(newQuestionVM.questions.count))
                     }
                 } header: {
-                    Text(formatting.singularPlural(singularWord: "Question", count: newQuestionVM.questions.count))
+                    Text("History")
                 }
                 .headerProminence(.increased)
             }
         }
         .onAppear {
             newQuestionVM.addQuestionsListener(username: username)
+            newQuestionVM.newQuestion = placeholderQuestion
         }
         .onDisappear {
             newQuestionVM.removeListeners()
-        }
-    }
-    
-    func startQuestion() {
-        Task {
-            loading = true
-            finished = await newQuestionVM.startQuestion(username: username)
-            loading = false
         }
     }
 }

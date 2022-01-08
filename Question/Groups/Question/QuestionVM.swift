@@ -100,30 +100,25 @@ class QuestionVM: ObservableObject {
         }
     }
     
-    func resubmitQuestion(questionID: String, username: String) async {
+    func resubmitQuestion(questionID: String) async {
         newQuestionError = nil
         if newQuestion.isEmpty {
             newQuestionError = "Please enter a new question"
         } else {
             loading = true
-            let newAnswerID = questionID + username
-            await helper.updateData(collection: "answers", documentID: newAnswerID, data: [
-                "answer": newQuestion
+            await helper.updateData(collection: "questions", documentID: questionID, data: [
+                "question": newQuestion
             ])
             loading = false
         }
     }
     
     // MARK: - Methods
-    func stopQuestion(username: String) async {
+    func stopQuestion(username: String, questionID: String) async {
         loading = true
-        if let question = question {
-            if question.end == nil {
-                await helper.updateData(collection: "questions", documentID: question.id, data: [
-                    "end": Date()
-                ])
-            }
-        }
+        await helper.updateData(collection: "questions", documentID: questionID, data: [
+            "end": Date()
+        ])
         await helper.deleteField(collection: "users", documentID: username, field: "liveQuestionID")
         loading = false
     }

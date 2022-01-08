@@ -13,25 +13,17 @@ struct SelectUserView: View {
     
     let usernames: [String]
     
-    let formatter = FormattingHelper()
-    
     var body: some View {
-        Form {
-            Section {
-                List(usernames, id: \.self) { username in
-                    Button {
-                        withAnimation {
-                            selectedUsername = username
-                            dismiss()
-                        }
-                    } label: {
-                        Text(username)
-                    }
+        List(usernames, id: \.self) { username in
+            Button {
+                withAnimation {
+                    selectedUsername = username
+                    dismiss()
                 }
-            } header: {
-                Text(formatter.singularPlural(singularWord: "Recent Room", count: usernames.count))
+            } label: {
+                Text(username)
             }
-            .headerProminence(.increased)
         }
+        .navigationTitle("Recent Rooms")
     }
 }

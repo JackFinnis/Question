@@ -21,6 +21,11 @@ class UserVM: ObservableObject {
     @Published var joinUsername = ""
     @Published var joinUsernameError: String?
     
+    @Published var filteredAnswers = [Answer]()
+    @Published var searchText = "" { didSet {
+        filterAnswers()
+    }}
+    
     let helper = FirebaseHelper()
     
     var userListener: ListenerRegistration?
@@ -52,6 +57,7 @@ class UserVM: ObservableObject {
             self.answers = documents.map { document -> Answer in
                 Answer(id: document.documentID, data: document.data())
             }.sorted { $0.date > $1.date }
+            self.filterAnswers()
         }
     }
     
@@ -66,6 +72,16 @@ class UserVM: ObservableObject {
     }
     
     // MARK: - Methods
+    func filterAnswers() {
+        if searchText.isEmpty {
+            filteredAnswers = answers
+        } else {
+            filteredAnswers = answers.filter {
+                $0.answer?.localizedCaseInsensitiveContains(searchText) ?? false
+            }
+        }
+    }
+    
     func submitJoinUser() async {
         loading = true
         joinUsernameError = nil

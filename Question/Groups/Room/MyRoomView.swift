@@ -21,7 +21,7 @@ struct MyRoomView: View {
                     ProgressView("Loading room...")
                 } else if roomVM.user!.liveQuestionID == nil {
                     Form {
-                        NewQuestion(loading: $roomVM.loading, finished: $redundantFinished, username: username, showRecentQuestions: false)
+                        NewQuestion(loading: $roomVM.loading, finished: $redundantFinished, username: username, showRecentQuestions: false, questionID: nil, placeholderQuestion: "")
                     }
                 } else {
                     MyQuestionView(username: username, questionID: roomVM.user!.liveQuestionID!)

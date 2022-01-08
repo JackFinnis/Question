@@ -22,8 +22,7 @@ struct AnswerRow: View {
         .sheet(isPresented: $showQuestionView) {
             if let questionID = answer.questionID, let joinUsername = answer.askerUsername {
                 NavigationView {
-                    MyQuestionView(username: username, questionID: questionID)
-                        .navigationTitle(joinUsername)
+                    QuestionView(username: username, questionID: questionID, joinUsername: joinUsername)
                 }
             }
         }

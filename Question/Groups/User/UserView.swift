@@ -22,24 +22,20 @@ struct UserView: View {
                     Form {
                         JoinRoom(userVM: userVM, username: username)
                         
-                        NewQuestion(loading: $userVM.loading, finished: $userVM.showMyRoomView, username: username, showRecentQuestions: true)
+                        NewQuestion(loading: $userVM.loading, finished: $userVM.showMyRoomView, username: username, showRecentQuestions: true, questionID: nil, placeholderQuestion: "")
                             .sheet(isPresented: $userVM.showMyRoomView) {
                                 MyRoomView(username: username)
                             }
                         
-                        Section {
-                            List(userVM.answers) { answer in
-                                AnswerRow(username: username, answer: answer)
-                            }
-                        } header: {
-                            Text(formatting.singularPlural(singularWord: "Answer", count: userVM.user!.answerIDs.count))
+                        NavigationLink {
+                            AnswersView(userVM: userVM, username: username)
+                        } label: {
+                            Row(leading: "My Answers", trailing: String(userVM.user!.answerIDs.count))
                         }
-                        .headerProminence(.increased)
                     }
                 }
             }
             .navigationTitle(username)
-            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 userVM.addListeners(username: username)
             }

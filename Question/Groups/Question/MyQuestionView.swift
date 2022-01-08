@@ -10,6 +10,8 @@ import SwiftUI
 struct MyQuestionView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var questionVM = QuestionVM()
+    @State var redundantFinished = false
+    @State var showEndAlert = false
     
     let username: String
     let questionID: String
@@ -24,23 +26,7 @@ struct MyQuestionView: View {
                 VStack {
                     Text(questionVM.question?.question ?? "No Question")
                     Form {
-                        Section {
-                            TextEditor(text: $questionVM.newQuestion)
-                                .submitLabel(.go)
-                                .onSubmit {
-                                    Task {
-                                        await questionVM.resubmitQuestion(questionID: questionID, username: username)
-                                    }
-                                }
-                            Button("Resubmit") {
-                                Task {
-                                    await questionVM.resubmitQuestion(questionID: questionID, username: username)
-                                }
-                            }
-                        } footer: {
-                            Text(questionVM.newQuestionError ?? "")
-                        }
-                        .headerProminence(.increased)
+                        NewQuestion(loading: $questionVM.loading, finished: $redundantFinished, username: username, showRecentQuestions: false, questionID: questionID, placeholderQuestion: questionVM.question?.question ?? "No Question")
                         
                         Section {
                             List(questionVM.answers) { answer in
@@ -60,24 +46,38 @@ struct MyQuestionView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Countdown(question: questionVM.question!)
+                        Countdown(timeIntervalRemaining: questionVM.question?.end?.timeIntervalSinceNow ?? 0, question: questionVM.question!)
                     }
                 }
             }
         }
+        .navigationTitle(username)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             questionVM.addListeners(questionID: questionID, username: username)
         }
         .onDisappear {
             questionVM.removeListeners()
         }
-        .interactiveDismissDisabled()
+        .interactiveDismissDisabled(!(questionVM.question?.finished ?? false))
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button("Stop Question") {
-                    Task {
-                        await questionVM.stopQuestion(username: username)
+                if questionVM.question?.finished ?? false {
+                    Button("Done") {
                         dismiss()
+                    }
+                } else {
+                    Button("End") {
+                        showEndAlert = true
+                    }
+                    .tint(.red)
+                    .confirmationDialog("End Question?", isPresented: $showEndAlert) {
+                        Button("Cancel", role: .cancel) { }
+                        Button("End Question", role: .destructive) {
+                            Task {
+                                await questionVM.stopQuestion(username: username, questionID: questionID)
+                            }
+                        }
                     }
                 }
             }

@@ -31,6 +31,11 @@ class NewQuestionVM: ObservableObject {
     @Published var timedQuestion = false
     @Published var newQuestionMinutes: Int = 2
     
+    @Published var filteredQuestions = [Question]()
+    @Published var searchText = "" { didSet {
+        filterQuestions()
+    }}
+    
     let helper = FirebaseHelper()
     
     var questionsListener: ListenerRegistration?
@@ -42,6 +47,7 @@ class NewQuestionVM: ObservableObject {
             self.questions = documents.map { document -> Question in
                 Question(id: document.documentID, data: document.data())
             }.sorted { $0.end ?? Date() > $1.end ?? Date() }
+            self.filterQuestions()
         }
     }
     
@@ -50,7 +56,17 @@ class NewQuestionVM: ObservableObject {
     }
     
     // MARK: - Methods
-    func startQuestion(username: String) async -> Bool {
+    func filterQuestions() {
+        if searchText.isEmpty {
+            filteredQuestions = questions
+        } else {
+            filteredQuestions = questions.filter {
+                $0.question?.localizedCaseInsensitiveContains(searchText) ?? false
+            }
+        }
+    }
+    
+    func startQuestion(username: String, questionID: String?) async -> Bool {
         newQuestionError = nil
         if newQuestion.isEmpty {
             newQuestionError = "Please enter a question"
@@ -63,16 +79,24 @@ class NewQuestionVM: ObservableObject {
                 endDate = Date().addingTimeInterval(Double(newQuestionMinutes * 60))
             }
             
-            await helper.addDocument(collection: "questions", documentID: newQuestionID, data: [
-                "end": endDate as Any,
-                "askerUsername": username,
-                "question": newQuestion,
-                "minutes": timedQuestion ? newQuestionMinutes : helper.nothing as Any
-            ])
-            await helper.updateData(collection: "users", documentID: username, data: [
-                "liveQuestion": newQuestionID
-            ])
-            await helper.addElement(collection: "users", documentID: username, arrayName: "questionIDs", element: newQuestionID)
+            if let questionID = questionID {
+                await helper.updateData(collection: "questions", documentID: questionID, data: [
+                    "end": endDate as Any,
+                    "question": newQuestion,
+                    "minutes": timedQuestion ? newQuestionMinutes : helper.nothing as Any
+                ])
+            } else {
+                await helper.addDocument(collection: "questions", documentID: newQuestionID, data: [
+                    "end": endDate as Any,
+                    "askerUsername": username,
+                    "question": newQuestion,
+                    "minutes": timedQuestion ? newQuestionMinutes : helper.nothing as Any
+                ])
+                await helper.updateData(collection: "users", documentID: username, data: [
+                    "liveQuestionID": newQuestionID
+                ])
+                await helper.addElement(collection: "users", documentID: username, arrayName: "questionIDs", element: newQuestionID)
+            }
             
             loading = false
             return true

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Countdown: View {
-    @State var timeIntervalRemaining: TimeInterval? = 0
+    @State var timeIntervalRemaining: TimeInterval
     
     let question: Question
     
@@ -17,19 +17,17 @@ struct Countdown: View {
     var formattedTimeRemaining: String {
         if question.end == nil {
             return "Live"
-        } else if timeIntervalRemaining == nil {
-            return "Loading..."
-        } else if timeIntervalRemaining! <= 0 {
+        } else if timeIntervalRemaining < 0 {
             return "Finished"
         } else {
-            return DateComponentsFormatter().string(from: timeIntervalRemaining!)!
+            return DateComponentsFormatter().string(from: timeIntervalRemaining)!
         }
     }
     
     var body: some View {
         Text(formattedTimeRemaining)
             .onReceive(timer) { _ in
-                timeIntervalRemaining = question.end?.timeIntervalSinceNow
+                timeIntervalRemaining = question.end?.timeIntervalSinceNow ?? 0
             }
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct QuestionView: View {
+    @Environment(\.dismiss) var dismiss
     @StateObject var questionVM = QuestionVM()
     
     let username: String
@@ -81,11 +82,13 @@ struct QuestionView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Countdown(question: questionVM.question!)
+                        Countdown(timeIntervalRemaining: questionVM.question?.end?.timeIntervalSinceNow ?? 0, question: questionVM.question!)
                     }
                 }
             }
         }
+        .navigationTitle(joinUsername)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             questionVM.addListeners(questionID: questionID, username: username)
         }
@@ -93,6 +96,11 @@ struct QuestionView: View {
             questionVM.removeListeners()
         }
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Leave Room") {
+                    dismiss()
+                }
+            }
             ToolbarItem(placement: .principal) {
                 if questionVM.loading {
                     ProgressView()

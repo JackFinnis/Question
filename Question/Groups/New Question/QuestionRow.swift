@@ -24,6 +24,7 @@ struct QuestionRow: View {
                 NavigationView {
                     MyQuestionView(username: username, questionID: question.id)
                         .navigationTitle(joinUsername)
+                        .navigationBarTitleDisplayMode(.inline)
                 }
             }
         }

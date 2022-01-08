@@ -25,6 +25,7 @@ class RoomVM: ObservableObject {
         loading = true
         userListener?.remove()
         userListener = helper.addUserListener(userID: username) { user in
+            print(user)
             self.user = user
             self.loading = false
         }
