@@ -22,9 +22,11 @@ class QuestionVM: ObservableObject {
     var oldAnswer = ""
     var unsavedChanges: Bool { answer.isEmpty || oldAnswer != answer }
     
+    var updated = false
     @Published var newQuestion = ""
     @Published var newQuestionError: String?
-    var oldQuestion = ""
+    @Published var newTimedQuestion = false
+    @Published var newQuestionMinutes: Int = 0
     
     let helper = FirebaseHelper()
     
@@ -40,8 +42,9 @@ class QuestionVM: ObservableObject {
             if let data = data {
                 self.question = Question(id: questionID, data: data)
                 // Update text editor
-                if self.newQuestion.isEmpty {
+                if !self.updated {
                     self.newQuestion = self.question?.question ?? "No Question"
+                    self.updated = true
                 }
             } else {
                 self.question = nil
@@ -100,19 +103,6 @@ class QuestionVM: ObservableObject {
         }
     }
     
-    func resubmitQuestion(questionID: String) async {
-        newQuestionError = nil
-        if newQuestion.isEmpty {
-            newQuestionError = "Please enter a new question"
-        } else {
-            loading = true
-            await helper.updateData(collection: "questions", documentID: questionID, data: [
-                "question": newQuestion
-            ])
-            loading = false
-        }
-    }
-    
     // MARK: - Methods
     func stopQuestion(username: String, questionID: String) async {
         loading = true
@@ -130,6 +120,32 @@ class QuestionVM: ObservableObject {
         } else {
             await helper.addElement(collection: "questions", documentID: questionID, arrayName: "sharedAnswerIDs", element: answerID)
         }
+        loading = false
+    }
+    
+    func submitNewQuestion(questionID: String) async {
+        newQuestionError = nil
+        if newQuestion.isEmpty {
+            newQuestionError = "Please enter a new question"
+        } else {
+            loading = true
+            await helper.updateData(collection: "questions", documentID: questionID, data: [
+                "question": newQuestion
+            ])
+            loading = false
+        }
+    }
+    
+    func submitNewTimeLimit(questionID: String) async {
+        loading = true
+        var endDate: Date?
+        if newTimedQuestion {
+            endDate = Date().addingTimeInterval(Double(newQuestionMinutes * 60))
+        }
+        await helper.updateData(collection: "questions", documentID: questionID, data: [
+            "end": endDate as Any
+        ])
+        await helper.increment(collection: "questions", documentID: questionID, field: "minutes", value: newQuestionMinutes)
         loading = false
     }
 }

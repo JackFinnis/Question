@@ -24,7 +24,7 @@ struct SignUpView: View {
                             }
                         }
                 } footer: {
-                    Text("This username cannot be changed and is public")
+                    Text("Enter a unique username. This username cannot be changed and is public")
                 }
                 
                 Section {

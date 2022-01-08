@@ -16,9 +16,6 @@ struct NewQuestion: View {
     let username: String
     let showRecentQuestions: Bool
     
-    let questionID: String?
-    let placeholderQuestion: String
-    
     let formatting = FormattingHelper()
     
     var body: some View {
@@ -39,15 +36,15 @@ struct NewQuestion: View {
                     Stepper(formatting.singularPlural(singularWord: "Minute", count: newQuestionVM.newQuestionMinutes), value: $newQuestionVM.newQuestionMinutes, in: 1...60)
                 }
                 
-                Button(questionID == nil ? "Start" : "Edit") {
+                Button("Start") {
                     Task {
                         loading = true
-                        finished = await newQuestionVM.startQuestion(username: username, questionID: questionID)
+                        finished = await newQuestionVM.startQuestion(username: username)
                         loading = false
                     }
                 }
             } header: {
-                Text(questionID == nil ? "Start a Question" : "Edit Question")
+                Text("Start a Question")
             } footer: {
                 Text(newQuestionVM.newQuestionError ?? "")
             }
@@ -68,7 +65,6 @@ struct NewQuestion: View {
         }
         .onAppear {
             newQuestionVM.addQuestionsListener(username: username)
-            newQuestionVM.newQuestion = placeholderQuestion
         }
         .onDisappear {
             newQuestionVM.removeListeners()

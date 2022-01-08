@@ -26,7 +26,34 @@ struct MyQuestionView: View {
                 VStack {
                     Text(questionVM.question?.question ?? "No Question")
                     Form {
-                        NewQuestion(loading: $questionVM.loading, finished: $redundantFinished, username: username, showRecentQuestions: false, questionID: questionID, placeholderQuestion: questionVM.question?.question ?? "No Question")
+                        Section {
+                            TextEditor(text: $questionVM.newQuestion)
+                            Button("Edit") {
+                                Task {
+                                    await questionVM.submitNewQuestion(username: username)
+                                }
+                            }
+                        } header: {
+                            Text("Edit Question")
+                        } footer: {
+                            Text(questionVM.newQuestionError ?? "")
+                        }
+                        .headerProminence(.increased)
+                        
+                        Section {
+                            Toggle("Time Limit", isOn: $questionVM.newTimedQuestion.animation())
+                            if questionVM.newTimedQuestion {
+                                Stepper(formatting.singularPlural(singularWord: "Minute", count: questionVM.newQuestionMinutes), value: $questionVM.newQuestionMinutes, in: 1...60)
+                            }
+                            Button("Edit") {
+                                Task {
+                                    await questionVM.submitNewTimeLimit(username: username)
+                                }
+                            }
+                        } header: {
+                            Text("Edit Time Limit")
+                        }
+                        .headerProminence(.increased)
                         
                         Section {
                             List(questionVM.answers) { answer in

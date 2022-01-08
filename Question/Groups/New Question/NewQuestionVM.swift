@@ -66,7 +66,7 @@ class NewQuestionVM: ObservableObject {
         }
     }
     
-    func startQuestion(username: String, questionID: String?) async -> Bool {
+    func startQuestion(username: String) async -> Bool {
         newQuestionError = nil
         if newQuestion.isEmpty {
             newQuestionError = "Please enter a question"
@@ -79,24 +79,16 @@ class NewQuestionVM: ObservableObject {
                 endDate = Date().addingTimeInterval(Double(newQuestionMinutes * 60))
             }
             
-            if let questionID = questionID {
-                await helper.updateData(collection: "questions", documentID: questionID, data: [
-                    "end": endDate as Any,
-                    "question": newQuestion,
-                    "minutes": timedQuestion ? newQuestionMinutes : helper.nothing as Any
-                ])
-            } else {
-                await helper.addDocument(collection: "questions", documentID: newQuestionID, data: [
-                    "end": endDate as Any,
-                    "askerUsername": username,
-                    "question": newQuestion,
-                    "minutes": timedQuestion ? newQuestionMinutes : helper.nothing as Any
-                ])
-                await helper.updateData(collection: "users", documentID: username, data: [
-                    "liveQuestionID": newQuestionID
-                ])
-                await helper.addElement(collection: "users", documentID: username, arrayName: "questionIDs", element: newQuestionID)
-            }
+            await helper.addDocument(collection: "questions", documentID: newQuestionID, data: [
+                "end": endDate as Any,
+                "askerUsername": username,
+                "question": newQuestion,
+                "minutes": timedQuestion ? newQuestionMinutes : helper.nothing as Any
+            ])
+            await helper.updateData(collection: "users", documentID: username, data: [
+                "liveQuestionID": newQuestionID
+            ])
+            await helper.addElement(collection: "users", documentID: username, arrayName: "questionIDs", element: newQuestionID)
             
             loading = false
             return true

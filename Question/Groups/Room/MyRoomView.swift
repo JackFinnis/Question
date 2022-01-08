@@ -19,11 +19,7 @@ struct MyRoomView: View {
             Group {
                 if roomVM.user == nil {
                     ProgressView("Loading room...")
-                } else if roomVM.user!.liveQuestionID == nil {
-                    Form {
-                        NewQuestion(loading: $roomVM.loading, finished: $redundantFinished, username: username, showRecentQuestions: false, questionID: nil, placeholderQuestion: "")
-                    }
-                } else {
+                } else if roomVM.user!.liveQuestionID != nil {
                     MyQuestionView(username: username, questionID: roomVM.user!.liveQuestionID!)
                 }
             }
@@ -37,7 +33,7 @@ struct MyRoomView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Leave Room") {
+                    Button("Leave") {
                         dismiss()
                     }
                 }
