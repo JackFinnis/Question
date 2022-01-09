@@ -18,6 +18,7 @@ struct MyQuestionView: View {
     let questionID: String
     
     let formatting = FormattingHelper()
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         Group {
@@ -86,7 +87,10 @@ struct MyQuestionView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Countdown(timeIntervalRemaining: questionVM.question?.end?.timeIntervalSinceNow ?? 0, question: questionVM.question!)
+                        Text(questionVM.formattedTimeRemaining)
+                            .onReceive(timer) { _ in
+                                questionVM.timeIntervalRemaining = questionVM.question?.end?.timeIntervalSinceNow ?? 0
+                            }
                     }
                 }
             }

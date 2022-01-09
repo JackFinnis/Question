@@ -28,8 +28,18 @@ class QuestionVM: ObservableObject {
     @Published var newTimedQuestion = true
     @Published var newQuestionMinutes: Int = 2
     
+    @Published var timeIntervalRemaining: TimeInterval = 0
     var isLive: Bool {
         question?.end == nil || question!.end! > Date()
+    }
+    var formattedTimeRemaining: String {
+        if question?.end == nil {
+            return "Live"
+        } else if timeIntervalRemaining <= 0 {
+            return "Finished"
+        } else {
+            return DateComponentsFormatter().string(from: timeIntervalRemaining)!
+        }
     }
     
     let helper = FirebaseHelper()
@@ -50,6 +60,8 @@ class QuestionVM: ObservableObject {
                     self.newQuestion = self.question?.question ?? "No Question"
                     self.updated = true
                 }
+                // Update countdown
+                self.timeIntervalRemaining = self.question?.end?.timeIntervalSinceNow ?? 0
             } else {
                 self.question = nil
                 self.error = true
@@ -161,7 +173,7 @@ class QuestionVM: ObservableObject {
     func shareAllAnswers(question: Question) async {
         loading = true
         await helper.updateData(collection: "questions", documentID: question.id, data: [
-            "sharedQuestionIDs": question.answerIDs
+            "sharedAnswerIDs": question.answerIDs
         ])
         loading = false
     }

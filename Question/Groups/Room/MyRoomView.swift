@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MyRoomView: View {
-    @Environment(\.dismiss) var dismiss
     @StateObject var roomVM = RoomVM()
     
     let username: String

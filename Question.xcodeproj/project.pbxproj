@@ -29,7 +29,6 @@
 		04F5FF9A278655B500E0EF9D /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF99278655B500E0EF9D /* Row.swift */; };
 		04F5FFA2278716A800E0EF9D /* NewQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFA1278716A800E0EF9D /* NewQuestion.swift */; };
 		04F5FFA5278903E700E0EF9D /* AnswerUserRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFA4278903E700E0EF9D /* AnswerUserRow.swift */; };
-		04F5FFA927890C2000E0EF9D /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFA827890C2000E0EF9D /* Countdown.swift */; };
 		04F5FFAC27898A1600E0EF9D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 04F5FFAB27898A1600E0EF9D /* FirebaseAuth */; };
 		04F5FFB12789A19100E0EF9D /* FormattingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFB02789A19100E0EF9D /* FormattingHelper.swift */; };
 		04F5FFB32789AA7500E0EF9D /* SelectQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFB22789AA7500E0EF9D /* SelectQuestionView.swift */; };
@@ -67,7 +66,6 @@
 		04F5FF99278655B500E0EF9D /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
 		04F5FFA1278716A800E0EF9D /* NewQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewQuestion.swift; sourceTree = "<group>"; };
 		04F5FFA4278903E700E0EF9D /* AnswerUserRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerUserRow.swift; sourceTree = "<group>"; };
-		04F5FFA827890C2000E0EF9D /* Countdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countdown.swift; sourceTree = "<group>"; };
 		04F5FFB02789A19100E0EF9D /* FormattingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormattingHelper.swift; sourceTree = "<group>"; };
 		04F5FFB22789AA7500E0EF9D /* SelectQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectQuestionView.swift; sourceTree = "<group>"; };
 		04F5FFB42789AE9C00E0EF9D /* MyRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRoomView.swift; sourceTree = "<group>"; };
@@ -196,7 +194,6 @@
 				0495E3192724933000F53132 /* QuestionView.swift */,
 				0495E31F27254D7B00F53132 /* MyQuestionView.swift */,
 				04F5FFB62789BB0400E0EF9D /* ToggleShareButton.swift */,
-				04F5FFA827890C2000E0EF9D /* Countdown.swift */,
 				04F5FF9627864E2200E0EF9D /* QuestionVM.swift */,
 			);
 			path = Question;
@@ -344,7 +341,6 @@
 				0495E2D72722F75800F53132 /* QuestionApp.swift in Sources */,
 				0495E2F62722FB9300F53132 /* Answer.swift in Sources */,
 				0495E32027254D7B00F53132 /* MyQuestionView.swift in Sources */,
-				04F5FFA927890C2000E0EF9D /* Countdown.swift in Sources */,
 				0495E31627234E0500F53132 /* User.swift in Sources */,
 				04F5FFB52789AE9C00E0EF9D /* MyRoomView.swift in Sources */,
 				0495E3182724928100F53132 /* UserView.swift in Sources */,

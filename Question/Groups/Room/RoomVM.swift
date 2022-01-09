@@ -36,10 +36,10 @@ class RoomVM: ObservableObject {
     
     // MARK: - Methods
     func joinRoom(username: String, joinUsername: String) async {
-        await helper.addElement(collection: "users", documentID: joinUsername, arrayName: "liveUsernames", element: username)
+        await helper.addElement(collection: "users", documentID: joinUsername, arrayName: "guestUsernames", element: username)
     }
     
     func leaveRoom(username: String, joinUsername: String) async {
-        await helper.removeElement(collection: "users", documentID: joinUsername, arrayName: "liveUsernames", element: username)
+        await helper.removeElement(collection: "users", documentID: joinUsername, arrayName: "guestUsernames", element: username)
     }
 }

@@ -24,7 +24,7 @@ struct JoinRoom: View {
                         .submitLabel(.join)
                         .onSubmit {
                             Task {
-                                await userVM.submitJoinUser()
+                                await userVM.submitJoinUser(username: username)
                             }
                         }
                     Text("Recent")
@@ -34,7 +34,7 @@ struct JoinRoom: View {
             
             Button("Join") {
                 Task {
-                    await userVM.submitJoinUser()
+                    await userVM.submitJoinUser(username: username)
                 }
             }
         } header: {

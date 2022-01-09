@@ -95,7 +95,6 @@ class UserVM: ObservableObject {
     }
     
     func removeListeners() {
-        userListener?.remove()
         answersListener?.remove()
         questionsListener?.remove()
     }
@@ -117,11 +116,13 @@ class UserVM: ObservableObject {
         }
     }
     
-    func submitJoinUser() async {
+    func submitJoinUser(username: String) async {
         loading = true
         joinUsernameError = nil
         if joinUsername.isEmpty {
             joinUsernameError = "Please enter a username"
+        } else if joinUsername == username {
+            joinUsernameError = "Please enter a different username"
         } else if await helper.isInUse(username: joinUsername) {
             showRoomView = true
         } else {
