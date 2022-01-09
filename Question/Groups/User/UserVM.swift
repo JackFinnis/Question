@@ -17,12 +17,15 @@ class UserVM: ObservableObject {
     }}
     @Published var questions = [Question]()
     @Published var loading = false
+    @Published var reset = true
 
     @Published var showRoomView = false
     @Published var showMyRoomView = false
     
     @Published var joinUsername = ""
     @Published var joinUsernameError: String?
+    
+    @Published var recentUsernames = [String]()
     
     @Published var filteredAnswers = [Answer]()
     @Published var answersSearchText = "" { didSet {
@@ -39,6 +42,7 @@ class UserVM: ObservableObject {
         }
     }}
     
+    @Published var newQuestionID: String?
     @Published var newQuestion = ""
     @Published var newQuestionError: String?
     
@@ -58,8 +62,6 @@ class UserVM: ObservableObject {
     var answersListener: ListenerRegistration?
     var questionsListener: ListenerRegistration?
     
-    @Published var recentUsernames = [String]()
-    
     // MARK: - Listeners
     func addUserListener(username: String) {
         loading = true
@@ -67,6 +69,15 @@ class UserVM: ObservableObject {
         userListener = helper.addUserListener(userID: username) { user in
             self.loading = false
             self.user = user
+            // Make sure user isn't in any rooms
+            if self.reset, let user = user, !user.liveRoomUsernames.isEmpty {
+                self.reset = false
+                for joinUsername in user.liveRoomUsernames {
+                    Task {
+                        await self.helper.leaveRoom(username: username, joinUsername: joinUsername)
+                    }
+                }
+            }
         }
     }
     
@@ -89,11 +100,6 @@ class UserVM: ObservableObject {
             self.filterQuestions()
         }
     }
-
-    func removeListeners() {
-        answersListener?.remove()
-        questionsListener?.remove()
-    }
     
     func addListeners(username: String) {
         addUserListener(username: username)
@@ -103,12 +109,16 @@ class UserVM: ObservableObject {
     
     // MARK: - Methods
     func filterAnswers() {
-        if answersSearchText.isEmpty {
-            filteredAnswers = answers
-        } else {
-            filteredAnswers = answers.filter {
-                $0.answer?.localizedCaseInsensitiveContains(answersSearchText) ?? false
-            }
+        filteredAnswers = answers.filter {
+            answersSearchText.isEmpty ||
+            $0.answer?.localizedCaseInsensitiveContains(answersSearchText) ?? false
+        }
+    }
+    
+    func filterQuestions() {
+        filteredQuestions = questions.filter {
+            questionsSearchText.isEmpty ||
+            $0.question?.localizedCaseInsensitiveContains(questionsSearchText) ?? false
         }
     }
     
@@ -117,28 +127,18 @@ class UserVM: ObservableObject {
         joinUsernameError = nil
         if joinUsername.isEmpty {
             joinUsernameError = "Please enter a username"
-            haptics.error()
         } else if joinUsername == username {
             joinUsernameError = "Please enter a different username"
-            haptics.error()
         } else if await helper.isInUse(username: joinUsername) {
             showRoomView = true
             haptics.success()
+            loading = false
+            return
         } else {
             joinUsernameError = "User does not exist"
-            haptics.error()
         }
+        haptics.error()
         loading = false
-    }
-    
-    func filterQuestions() {
-        if questionsSearchText.isEmpty {
-            filteredQuestions = questions
-        } else {
-            filteredQuestions = questions.filter {
-                $0.question?.localizedCaseInsensitiveContains(questionsSearchText) ?? false
-            }
-        }
     }
     
     func filterRecentUsernames() {
@@ -177,6 +177,7 @@ class UserVM: ObservableObject {
             
             haptics.success()
             loading = false
+            self.newQuestionID = newQuestionID
             showMyRoomView = true
         }
     }

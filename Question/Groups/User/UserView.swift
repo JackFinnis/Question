@@ -22,8 +22,70 @@ struct UserView: View {
                     ZStack {
                         Form { }
                         Form {
-                            JoinRoom(userVM: userVM, username: username)
-                            NewQuestion(userVM: userVM, username: username)
+                            Section {
+                                TextField("Enter Username", text: $userVM.joinUsername)
+                                    .disableAutocorrection(true)
+                                    .submitLabel(.join)
+                                    .onSubmit {
+                                        Task {
+                                            await userVM.submitJoinUser(username: username)
+                                        }
+                                    }
+                                Button("Join") {
+                                    Task {
+                                        await userVM.submitJoinUser(username: username)
+                                    }
+                                }
+                            } header: {
+                                HStack {
+                                    Text("Join a Room")
+                                    Spacer()
+                                    if !userVM.recentUsernames.isEmpty {
+                                        Menu {
+                                            List(userVM.recentUsernames, id: \.self) { username in
+                                                Button {
+                                                    userVM.joinUsername = username
+                                                } label: {
+                                                    Text(username)
+                                                }
+                                            }
+                                        } label: {
+                                            Text("Recent")
+                                        }
+                                        .font(.none)
+                                    }
+                                }
+                            } footer: {
+                                Text(userVM.joinUsernameError ?? "")
+                            }
+                            .headerProminence(.increased)
+                            .fullScreenCover(isPresented: $userVM.showRoomView) {
+                                RoomView(username: username, joinUsername: userVM.joinUsername)
+                            }
+                            
+                            Section {
+                                TextEditor(text: $userVM.newQuestion)
+                                Toggle("Time Limit", isOn: $userVM.timedQuestion.animation())
+                                if userVM.timedQuestion {
+                                    Stepper(formatting.singularPlural(singularWord: "Minute", count: userVM.newQuestionMinutes), value: $userVM.newQuestionMinutes, in: 1...60)
+                                }
+                                
+                                Button("Start") {
+                                    Task {
+                                        await userVM.startQuestion(username: username)
+                                    }
+                                }
+                            } header: {
+                                Text("Start a Question")
+                            } footer: {
+                                Text(userVM.newQuestionError ?? "")
+                            }
+                            .headerProminence(.increased)
+                            .fullScreenCover(isPresented: $userVM.showMyRoomView) {
+                                if let questionID = userVM.newQuestionID {
+                                    MyQuestionView(user: userVM.user!, username: username, questionID: questionID)
+                                }
+                            }
                         }
                         .frame(maxWidth: 700)
                     }
@@ -43,9 +105,6 @@ struct UserView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 userVM.addListeners(username: username)
-            }
-            .onDisappear {
-                userVM.removeListeners()
             }
         }
         .navigationViewStyle(.stack)

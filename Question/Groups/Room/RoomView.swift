@@ -29,12 +29,12 @@ struct RoomView: View {
             .navigationBarTitleDisplayMode(.inline)
             .task {
                 roomVM.addUserListener(username: joinUsername)
-                await roomVM.joinRoom(username: username, joinUsername: joinUsername)
+                await roomVM.helper.joinRoom(username: username, joinUsername: joinUsername)
             }
             .onDisappear {
                 roomVM.removeListeners()
                 Task {
-                    await roomVM.leaveRoom(username: username, joinUsername: joinUsername)
+                    await roomVM.helper.leaveRoom(username: username, joinUsername: joinUsername)
                 }
             }
             .toolbar {

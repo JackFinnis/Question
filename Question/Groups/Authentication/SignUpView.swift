@@ -12,47 +12,53 @@ struct SignUpView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Section {
-                    TextField("Username", text: $authVM.createUsername)
-                        .disableAutocorrection(true)
-                        .textContentType(.name)
-                        .submitLabel(.join)
-                        .onSubmit {
-                            Task {
-                                await authVM.createAccount()
+            ZStack {
+                Form { }
+                Form {
+                    Section {
+                        TextField("Username", text: $authVM.createUsername)
+                            .textInputAutocapitalization(.never)
+                            .disableAutocorrection(true)
+                            .textContentType(.name)
+                            .submitLabel(.join)
+                            .onSubmit {
+                                Task {
+                                    await authVM.createAccount()
+                                }
                             }
-                        }
-                } footer: {
-                    Text("Enter a unique username. This username cannot be changed and is public")
-                }
-                
-                Section {
-                    Button {
-                        Task {
-                            await authVM.createAccount()
-                        }
-                    } label: {
-                        HStack {
-                            Spacer()
-                            Text("Sign Up")
-                            Spacer()
-                        }
+                    } footer: {
+                        Text("Create a unique username. This username cannot be changed and is public")
                     }
-                    .foregroundColor(.white)
-                    .listRowBackground(Color.accentColor)
-                } footer: {
-                    Text(authVM.createUsernameError ?? "")
+                    
+                    Section {
+                        if authVM.loading {
+                            HStack {
+                                Spacer()
+                                ProgressView()
+                                Spacer()
+                            }
+                        } else {
+                            Button {
+                                Task {
+                                    await authVM.createAccount()
+                                }
+                            } label: {
+                                HStack {
+                                    Spacer()
+                                    Text("Sign Up")
+                                    Spacer()
+                                }
+                            }
+                            .foregroundColor(.white)
+                            .listRowBackground(Color.accentColor)
+                        }
+                    } footer: {
+                        Text(authVM.createUsernameError ?? "")
+                    }
                 }
+                .frame(maxWidth: 700)
             }
             .navigationTitle("Sign Up")
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    if authVM.loading {
-                        ProgressView()
-                    }
-                }
-            }
         }
         .navigationViewStyle(.stack)
     }

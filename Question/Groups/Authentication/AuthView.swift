@@ -14,10 +14,10 @@ struct AuthView: View {
         Group {
             if authVM.username == nil {
                 SignUpView(authVM: authVM)
-            } else if authVM.signedIn {
-                UserView(username: authVM.username!)
-            } else {
+            } else if !authVM.signedIn {
                 ProgressView("Signing in...")
+            } else {
+                UserView(username: authVM.username!)
             }
         }
     }

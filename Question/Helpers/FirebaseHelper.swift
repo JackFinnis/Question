@@ -208,4 +208,14 @@ struct FirebaseHelper {
         let data = await getDocumentData(collection: "users", documentID: username)
         return data != nil
     }
+    
+    func joinRoom(username: String, joinUsername: String) async {
+        await addElement(collection: "users", documentID: joinUsername, arrayName: "guestUsernames", element: username)
+        await addElement(collection: "users", documentID: username, arrayName: "liveRoomUsernames", element: joinUsername)
+    }
+    
+    func leaveRoom(username: String, joinUsername: String) async {
+        await removeElement(collection: "users", documentID: joinUsername, arrayName: "guestUsernames", element: username)
+        await removeElement(collection: "users", documentID: username, arrayName: "liveRoomUsernames", element: joinUsername)
+    }
 }
