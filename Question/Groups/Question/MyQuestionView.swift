@@ -25,63 +25,67 @@ struct MyQuestionView: View {
             if questionVM.question == nil {
                 ProgressView("Loading question...")
             } else {
-                VStack {
-                    Text(questionVM.question?.question ?? "No Question")
-                    Form {
-                        Section {
-                            TextEditor(text: $questionVM.newQuestion)
-                            Button("Edit") {
-                                Task {
-                                    await questionVM.submitNewQuestion(questionID: questionID)
-                                }
-                            }
-                        } header: {
-                            Text("Edit Question")
-                        } footer: {
-                            Text(questionVM.newQuestionError ?? "")
-                        }
-                        .headerProminence(.increased)
-                        
-                        Section {
-                            Toggle("Time Limit", isOn: $questionVM.newTimedQuestion.animation())
-                            if questionVM.newTimedQuestion {
-                                Stepper(formatting.singularPlural(singularWord: "Minute", count: questionVM.newQuestionMinutes), value: $questionVM.newQuestionMinutes, in: 1...60)
-                            }
-                            Button("Submit") {
-                                Task {
-                                    await questionVM.submitNewTimeLimit(questionID: questionID)
-                                }
-                            }
-                        } header: {
-                            Text("New Time Limit")
-                        }
-                        .headerProminence(.increased)
-                        
-                        Section {
-                            List(questionVM.answers) { answer in
-                                HStack {
-                                    AnswerUserRow(answer: answer)
-                                    Spacer()
-                                    ToggleShareButton(questionVM: questionVM, question: questionVM.question!, answerID: answer.id)
-                                }
-                                .swipeActions {
-                                    ToggleShareButton(questionVM: questionVM, question: questionVM.question!, answerID: answer.id)
-                                }
-                            }
-                        } header: {
-                            HStack {
-                                Text(formatting.singularPlural(singularWord: "Answer", count: questionVM.question!.answerIDs.count))
-                                Spacer()
-                                Button("Share All") {
+                ZStack {
+                    Form {}
+                    VStack {
+                        Text(questionVM.question?.question ?? "No Question")
+                        Form {
+                            Section {
+                                TextEditor(text: $questionVM.newQuestion)
+                                Button("Edit") {
                                     Task {
-                                        await questionVM.shareAllAnswers(question: questionVM.question!)
+                                        await questionVM.submitNewQuestion(questionID: questionID)
                                     }
                                 }
-                                .font(.none)
+                            } header: {
+                                Text("Edit Question")
+                            } footer: {
+                                Text(questionVM.newQuestionError ?? "")
                             }
+                            .headerProminence(.increased)
+                            
+                            Section {
+                                Toggle("Time Limit", isOn: $questionVM.newTimedQuestion.animation())
+                                if questionVM.newTimedQuestion {
+                                    Stepper(formatting.singularPlural(singularWord: "Minute", count: questionVM.newQuestionMinutes), value: $questionVM.newQuestionMinutes, in: 1...60)
+                                }
+                                Button("Submit") {
+                                    Task {
+                                        await questionVM.submitNewTimeLimit(questionID: questionID)
+                                    }
+                                }
+                            } header: {
+                                Text("New Time Limit")
+                            }
+                            .headerProminence(.increased)
+                            
+                            Section {
+                                List(questionVM.answers) { answer in
+                                    HStack {
+                                        AnswerUserRow(answer: answer)
+                                        Spacer()
+                                        ToggleShareButton(questionVM: questionVM, question: questionVM.question!, answerID: answer.id)
+                                    }
+                                    .swipeActions {
+                                        ToggleShareButton(questionVM: questionVM, question: questionVM.question!, answerID: answer.id)
+                                    }
+                                }
+                            } header: {
+                                HStack {
+                                    Text(formatting.singularPlural(singularWord: "Answer", count: questionVM.question!.answerIDs.count))
+                                    Spacer()
+                                    Button("Share All") {
+                                        Task {
+                                            await questionVM.shareAllAnswers(question: questionVM.question!)
+                                        }
+                                    }
+                                    .font(.none)
+                                }
+                            }
+                            .headerProminence(.increased)
                         }
-                        .headerProminence(.increased)
                     }
+                    .frame(maxWidth: 700)
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {

@@ -16,7 +16,6 @@ struct JoinRoom: View {
         Section {
             TextField("Enter Username", text: $userVM.joinUsername)
                 .disableAutocorrection(true)
-                .textContentType(.username)
                 .submitLabel(.join)
                 .onSubmit {
                     Task {
@@ -51,7 +50,7 @@ struct JoinRoom: View {
             Text(userVM.joinUsernameError ?? "")
         }
         .headerProminence(.increased)
-        .sheet(isPresented: $userVM.showRoomView) {
+        .fullScreenCover(isPresented: $userVM.showRoomView) {
             RoomView(username: username, joinUsername: userVM.joinUsername)
         }
     }

@@ -23,73 +23,77 @@ struct QuestionView: View {
             if questionVM.question == nil {
                 ProgressView("Loading question...")
             } else {
-                VStack {
-                    Text(questionVM.question!.question ?? "No Question")
-                    Form {
-                        Section {
-                            if questionVM.isLive {
-                                TextEditor(text: $questionVM.answer)
-                            } else if questionVM.answer.isEmpty {
-                                Text("No Answer")
-                            } else {
-                                Text(questionVM.answer)
-                                    .contextMenu {
-                                        CopyButton(string: questionVM.answer)
-                                    }
-                            }
-                        } footer: {
-                            Text(questionVM.answerError ?? "")
-                        }
-                        
-                        Section {
-                            if questionVM.answer.isEmpty {
-                                HStack {
-                                    Spacer()
+                ZStack {
+                    Form {}
+                    VStack {
+                        Text(questionVM.question!.question ?? "No Question")
+                        Form {
+                            Section {
+                                if questionVM.isLive {
+                                    TextEditor(text: $questionVM.answer)
+                                } else if questionVM.answer.isEmpty {
                                     Text("No Answer")
-                                    Spacer()
-                                }
-                            } else if questionVM.loading {
-                                HStack {
-                                    Spacer()
-                                    ProgressView()
-                                    Spacer()
-                                }
-                            } else if !questionVM.unsavedChanges {
-                                HStack {
-                                    Spacer()
-                                    Text("Submitted")
-                                    Spacer()
-                                }
-                            } else {
-                                HStack {
-                                    Spacer()
-                                    Button {
-                                        Task {
-                                            await questionVM.submitAnswer(questionID: questionID, username: username, joinUsername: joinUsername)
+                                } else {
+                                    Text(questionVM.answer)
+                                        .contextMenu {
+                                            CopyButton(string: questionVM.answer)
                                         }
-                                    } label: {
-                                        if questionVM.oldAnswer.isEmpty {
-                                            Text("Submit")
-                                        } else {
-                                            Text("Resubmit")
-                                        }
+                                }
+                            } footer: {
+                                Text(questionVM.answerError ?? "")
+                            }
+                            
+                            Section {
+                                if questionVM.answer.isEmpty {
+                                    HStack {
+                                        Spacer()
+                                        Text("No Answer")
+                                        Spacer()
                                     }
-                                    Spacer()
+                                } else if questionVM.loading {
+                                    HStack {
+                                        Spacer()
+                                        ProgressView()
+                                        Spacer()
+                                    }
+                                } else if !questionVM.unsavedChanges {
+                                    HStack {
+                                        Spacer()
+                                        Text("Submitted")
+                                        Spacer()
+                                    }
+                                } else {
+                                    HStack {
+                                        Spacer()
+                                        Button {
+                                            Task {
+                                                await questionVM.submitAnswer(questionID: questionID, username: username, joinUsername: joinUsername)
+                                            }
+                                        } label: {
+                                            if questionVM.oldAnswer.isEmpty {
+                                                Text("Submit")
+                                            } else {
+                                                Text("Resubmit")
+                                            }
+                                        }
+                                        Spacer()
+                                    }
+                                    .foregroundColor(.white)
+                                    .listRowBackground(Color.accentColor)
                                 }
-                                .foregroundColor(.white)
-                                .listRowBackground(Color.accentColor)
                             }
-                        }
-                        
-                        Section {
-                            List(questionVM.answers.filter { questionVM.question!.sharedAnswerIDs.contains($0.id) }) { answer in
-                                AnswerUserRow(answer: answer)
+                            
+                            Section {
+                                List(questionVM.answers.filter { questionVM.question!.sharedAnswerIDs.contains($0.id) }) { answer in
+                                    AnswerUserRow(answer: answer)
+                                }
+                            } header: {
+                                Text(formatting.singularPlural(singularWord: "Shared Answer", count: questionVM.question!.sharedAnswerIDs.count))
                             }
-                        } header: {
-                            Text(formatting.singularPlural(singularWord: "Shared Answer", count: questionVM.question!.sharedAnswerIDs.count))
+                            .headerProminence(.increased)
                         }
-                        .headerProminence(.increased)
                     }
+                    .frame(maxWidth: 700)
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {

@@ -33,7 +33,7 @@ struct NewQuestion: View {
             Text(userVM.newQuestionError ?? "")
         }
         .headerProminence(.increased)
-        .sheet(isPresented: $userVM.showMyRoomView) {
+        .fullScreenCover(isPresented: $userVM.showMyRoomView) {
             MyRoomView(username: username)
         }
     }

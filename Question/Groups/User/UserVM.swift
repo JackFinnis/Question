@@ -81,24 +81,24 @@ class UserVM: ObservableObject {
     }
 
     func addQuestionsListener(username: String) {
-//        questionsListener?.remove()
-//        questionsListener = helper.addCollectionListener(collection: "questions", field: "askerUsername", isEqualTo: username) { documents in
-//            self.questions = documents.map { document -> Question in
-//                Question(id: document.documentID, data: document.data())
-//            }.sorted { $0.end ?? Date() > $1.end ?? Date() }
-//            self.filterQuestions()
-//        }
+        questionsListener?.remove()
+        questionsListener = helper.addCollectionListener(collection: "questions", field: "askerUsername", isEqualTo: username) { documents in
+            self.questions = documents.map { document -> Question in
+                Question(id: document.documentID, data: document.data())
+            }.sorted { $0.end ?? Date() > $1.end ?? Date() }
+            self.filterQuestions()
+        }
     }
 
     func removeListeners() {
         answersListener?.remove()
-//        questionsListener?.remove()
+        questionsListener?.remove()
     }
     
     func addListeners(username: String) {
         addUserListener(username: username)
         addAnswersListener(username: username)
-//        addQuestionsListener(username: username)
+        addQuestionsListener(username: username)
     }
     
     // MARK: - Methods

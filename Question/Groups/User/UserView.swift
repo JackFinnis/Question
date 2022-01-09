@@ -19,25 +19,13 @@ struct UserView: View {
                 if userVM.user == nil {
                     ProgressView("Loading profile...")
                 } else {
-                    Form {
-                        JoinRoom(userVM: userVM, username: username)
-                        NewQuestion(userVM: userVM, username: username)
-                        
-//                        Section {
-//                            NavigationLink {
-//                                QuestionsView(userVM: userVM, user: userVM.user!, username: username)
-//                            } label: {
-//                                Row(leading: "My Questions", trailing: String(userVM.questions.count))
-//                            }
-//                            NavigationLink {
-//                                AnswersView(userVM: userVM, username: username)
-//                            } label: {
-//                                Row(leading: "My Answers", trailing: String(userVM.answers.count))
-//                            }
-//                        } header: {
-//                            Text("History")
-//                        }
-//                        .headerProminence(.increased)
+                    ZStack {
+                        Form { }
+                        Form {
+                            JoinRoom(userVM: userVM, username: username)
+                            NewQuestion(userVM: userVM, username: username)
+                        }
+                        .frame(maxWidth: 700)
                     }
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
