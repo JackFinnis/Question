@@ -12,7 +12,9 @@ import FirebaseFirestore
 class UserVM: ObservableObject {
     // MARK: - Properties
     @Published var user: User?
-    @Published var answers = [Answer]()
+    @Published var answers = [Answer]() { didSet {
+        filterRecentUsernames()
+    }}
     @Published var questions = [Question]()
     @Published var loading = false
 
@@ -43,26 +45,20 @@ class UserVM: ObservableObject {
     @Published var timedQuestion = false
     @Published var newQuestionMinutes: Int = 2
     
+    @Published var filteredRecentQuestions = [Question]()
     @Published var filteredQuestions = [Question]()
     @Published var questionsSearchText = "" { didSet {
         filterQuestions()
     }}
     
     let helper = FirebaseHelper()
+    let haptics = HapticsHelper()
     
     var userListener: ListenerRegistration?
     var answersListener: ListenerRegistration?
     var questionsListener: ListenerRegistration?
     
-    var recentUsernames: [String] {
-        var recentUsernames = [String]()
-        for answer in answers {
-            if let askerUsername = answer.askerUsername {
-                recentUsernames.append(askerUsername)
-            }
-        }
-        return recentUsernames
-    }
+    @Published var recentUsernames = [String]()
     
     // MARK: - Listeners
     func addUserListener(username: String) {
@@ -83,26 +79,26 @@ class UserVM: ObservableObject {
             self.filterAnswers()
         }
     }
-    
+
     func addQuestionsListener(username: String) {
-        questionsListener?.remove()
-        questionsListener = helper.addCollectionListener(collection: "questions", field: "askerUsername", isEqualTo: username) { documents in
-            self.questions = documents.map { document -> Question in
-                Question(id: document.documentID, data: document.data())
-            }.sorted { $0.end ?? Date() > $1.end ?? Date() }
-            self.filterQuestions()
-        }
+//        questionsListener?.remove()
+//        questionsListener = helper.addCollectionListener(collection: "questions", field: "askerUsername", isEqualTo: username) { documents in
+//            self.questions = documents.map { document -> Question in
+//                Question(id: document.documentID, data: document.data())
+//            }.sorted { $0.end ?? Date() > $1.end ?? Date() }
+//            self.filterQuestions()
+//        }
     }
-    
+
     func removeListeners() {
         answersListener?.remove()
-        questionsListener?.remove()
+//        questionsListener?.remove()
     }
     
     func addListeners(username: String) {
         addUserListener(username: username)
         addAnswersListener(username: username)
-        addQuestionsListener(username: username)
+//        addQuestionsListener(username: username)
     }
     
     // MARK: - Methods
@@ -121,12 +117,16 @@ class UserVM: ObservableObject {
         joinUsernameError = nil
         if joinUsername.isEmpty {
             joinUsernameError = "Please enter a username"
+            haptics.error()
         } else if joinUsername == username {
             joinUsernameError = "Please enter a different username"
+            haptics.error()
         } else if await helper.isInUse(username: joinUsername) {
             showRoomView = true
+            haptics.success()
         } else {
             joinUsernameError = "User does not exist"
+            haptics.error()
         }
         loading = false
     }
@@ -141,10 +141,21 @@ class UserVM: ObservableObject {
         }
     }
     
+    func filterRecentUsernames() {
+        var recentUsernames = [String]()
+        for answer in answers {
+            if let askerUsername = answer.askerUsername, !recentUsernames.contains(askerUsername) {
+                recentUsernames.append(askerUsername)
+            }
+        }
+        self.recentUsernames = recentUsernames
+    }
+    
     func startQuestion(username: String) async {
         newQuestionError = nil
         if newQuestion.isEmpty {
             newQuestionError = "Please enter a question"
+            haptics.error()
         } else {
             loading = true
             let newQuestionID = helper.getUniqueID()
@@ -164,6 +175,7 @@ class UserVM: ObservableObject {
             ])
             await helper.addElement(collection: "users", documentID: username, arrayName: "questionIDs", element: newQuestionID)
             
+            haptics.success()
             loading = false
             showMyRoomView = true
         }

@@ -44,7 +44,13 @@ struct QuestionView: View {
                         }
                         
                         Section {
-                            if !questionVM.unsavedChanges {
+                            if questionVM.loading {
+                                HStack {
+                                    Spacer()
+                                    ProgressView()
+                                    Spacer()
+                                }
+                            } else if !questionVM.unsavedChanges {
                                 HStack {
                                     Spacer()
                                     Text("Submitted")
@@ -101,13 +107,8 @@ struct QuestionView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button("Leave") {
+                Button("Leave Room") {
                     dismiss()
-                }
-            }
-            ToolbarItem(placement: .principal) {
-                if questionVM.loading {
-                    ProgressView()
                 }
             }
         }

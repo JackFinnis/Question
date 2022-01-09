@@ -39,7 +39,7 @@ struct RoomView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Leave") {
+                    Button("Leave Room") {
                         dismiss()
                     }
                 }

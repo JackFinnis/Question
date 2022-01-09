@@ -42,10 +42,12 @@
 		04F5FFC32789EF4F00E0EF9D /* AnswersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFC22789EF4F00E0EF9D /* AnswersView.swift */; };
 		04F5FFC5278A4B4700E0EF9D /* RoomStatusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFC4278A4B4700E0EF9D /* RoomStatusButton.swift */; };
 		04F5FFC7278A4BDD00E0EF9D /* GuestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFC6278A4BDD00E0EF9D /* GuestsView.swift */; };
+		04F5FFCD278AFD1000E0EF9D /* HapticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFCC278AFD1000E0EF9D /* HapticsHelper.swift */; };
+		04F5FFCF278AFFEF00E0EF9D /* CopyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFCE278AFFEF00E0EF9D /* CopyButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0495E2D32722F75800F53132 /* Question.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Question.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0495E2D32722F75800F53132 /* QuickFire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickFire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0495E2D62722F75800F53132 /* QuestionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionApp.swift; sourceTree = "<group>"; };
 		0495E2DA2722F75A00F53132 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0495E2F32722F9C700F53132 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
@@ -78,6 +80,8 @@
 		04F5FFC22789EF4F00E0EF9D /* AnswersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersView.swift; sourceTree = "<group>"; };
 		04F5FFC4278A4B4700E0EF9D /* RoomStatusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStatusButton.swift; sourceTree = "<group>"; };
 		04F5FFC6278A4BDD00E0EF9D /* GuestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestsView.swift; sourceTree = "<group>"; };
+		04F5FFCC278AFD1000E0EF9D /* HapticsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticsHelper.swift; sourceTree = "<group>"; };
+		04F5FFCE278AFFEF00E0EF9D /* CopyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +110,7 @@
 		0495E2D42722F75800F53132 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0495E2D32722F75800F53132 /* Question.app */,
+				0495E2D32722F75800F53132 /* QuickFire.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -150,6 +154,8 @@
 			children = (
 				0495E3172724928100F53132 /* UserView.swift */,
 				04F5FF8927861D2900E0EF9D /* UserVM.swift */,
+				04F5FFBC2789CD6200E0EF9D /* JoinRoom.swift */,
+				04F5FFA1278716A800E0EF9D /* NewQuestion.swift */,
 				04F5FFC8278A4FB200E0EF9D /* Join Room */,
 				04F5FFCB278A523D00E0EF9D /* New Question */,
 				04F5FFC9278A50A700E0EF9D /* Answers */,
@@ -171,6 +177,7 @@
 		04F5FF8827861CDD00E0EF9D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				04F5FFCC278AFD1000E0EF9D /* HapticsHelper.swift */,
 				04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */,
 				04F5FFB02789A19100E0EF9D /* FormattingHelper.swift */,
 			);
@@ -194,6 +201,7 @@
 				0495E3192724933000F53132 /* QuestionView.swift */,
 				0495E31F27254D7B00F53132 /* MyQuestionView.swift */,
 				04F5FFB62789BB0400E0EF9D /* ToggleShareButton.swift */,
+				04F5FFCE278AFFEF00E0EF9D /* CopyButton.swift */,
 				04F5FF9627864E2200E0EF9D /* QuestionVM.swift */,
 			);
 			path = Question;
@@ -220,7 +228,6 @@
 		04F5FFC8278A4FB200E0EF9D /* Join Room */ = {
 			isa = PBXGroup;
 			children = (
-				04F5FFBC2789CD6200E0EF9D /* JoinRoom.swift */,
 				04F5FFBE2789D85B00E0EF9D /* SelectUserView.swift */,
 			);
 			path = "Join Room";
@@ -247,7 +254,6 @@
 		04F5FFCB278A523D00E0EF9D /* New Question */ = {
 			isa = PBXGroup;
 			children = (
-				04F5FFA1278716A800E0EF9D /* NewQuestion.swift */,
 				04F5FFB22789AA7500E0EF9D /* SelectQuestionView.swift */,
 			);
 			name = "New Question";
@@ -276,7 +282,7 @@
 				04F5FFAB27898A1600E0EF9D /* FirebaseAuth */,
 			);
 			productName = Question;
-			productReference = 0495E2D32722F75800F53132 /* Question.app */;
+			productReference = 0495E2D32722F75800F53132 /* QuickFire.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -333,6 +339,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				04F5FF83278618D600E0EF9D /* AuthVM.swift in Sources */,
+				04F5FFCD278AFD1000E0EF9D /* HapticsHelper.swift in Sources */,
+				04F5FFCF278AFFEF00E0EF9D /* CopyButton.swift in Sources */,
 				04F5FFC7278A4BDD00E0EF9D /* GuestsView.swift in Sources */,
 				04F5FFBF2789D85B00E0EF9D /* SelectUserView.swift in Sources */,
 				04F5FFA5278903E700E0EF9D /* AnswerUserRow.swift in Sources */,
@@ -507,7 +515,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = JackFinnis.Question;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = QuickFire;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -537,7 +545,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = JackFinnis.Question;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = QuickFire;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

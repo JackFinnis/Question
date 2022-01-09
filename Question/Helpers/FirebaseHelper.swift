@@ -10,16 +10,17 @@ import FirebaseFirestore
 
 struct FirebaseHelper {
     // MARK: - Properties
-    // Firebase database helper
     let database = Firestore.firestore()
     var nothing: String?
     
     // MARK: - Document Listeners
-    // Setup a listener for the given document in a collection
     func addDocumentListener(collection: String, documentID: String, completion: @escaping ([String : Any]?) -> Void) -> ListenerRegistration {
         database.collection(collection).document(documentID).addSnapshotListener { (document, error) in
-            // Return document
-            completion(document?.data())
+            if document?.metadata.hasPendingWrites ?? true {
+                completion(nil)
+            } else {
+                completion(document?.data())
+            }
         }
     }
     
@@ -27,7 +28,11 @@ struct FirebaseHelper {
     func addCollectionListener(collection: String, field: String, arrayContains: Any, completion: @escaping ([QueryDocumentSnapshot]) -> Void) -> ListenerRegistration? {
         // Fetch documents where the given field array contains given element
         return database.collection(collection).whereField(field, arrayContains: arrayContains).addSnapshotListener { (queryDocuments, error) in
-            completion(queryDocuments?.documents ?? [])
+            if queryDocuments?.metadata.hasPendingWrites ?? true {
+                completion([])
+            } else {
+                completion(queryDocuments?.documents ?? [])
+            }
         }
     }
     
@@ -35,14 +40,22 @@ struct FirebaseHelper {
     func addCollectionListener(collection: String, field: String, isEqualTo: Any, completion: @escaping ([QueryDocumentSnapshot]) -> Void) -> ListenerRegistration? {
         // Fetch documents where the given field array contains given element
         return database.collection(collection).whereField(field, isEqualTo: isEqualTo).addSnapshotListener { (queryDocuments, error) in
-            completion(queryDocuments?.documents ?? [])
+            if queryDocuments?.metadata.hasPendingWrites ?? true {
+                completion([])
+            } else {
+                completion(queryDocuments?.documents ?? [])
+            }
         }
     }
     
     // Setup a listener for all the documents in the given collection
     func addCollectionListener(collection: String, completion: @escaping ([QueryDocumentSnapshot]) -> Void) -> ListenerRegistration? {
         return database.collection(collection).addSnapshotListener { queryDocuments, error in
-            completion(queryDocuments?.documents ?? [])
+            if queryDocuments?.metadata.hasPendingWrites ?? true {
+                completion([])
+            } else {
+                completion(queryDocuments?.documents ?? [])
+            }
         }
     }
     
@@ -50,18 +63,27 @@ struct FirebaseHelper {
     // Fetch static version of document from collection
     func getDocumentData(collection: String, documentID: String) async -> [String : Any]? {
         // Ensure data is found
-        guard let data = try? await database.collection(collection).document(documentID).getDocument().data() else {
+        if let document = try? await database.collection(collection).document(documentID).getDocument() {
+            if document.metadata.hasPendingWrites {
+                return nil
+            } else {
+                return document.data()
+            }
+        } else {
             print("Document not found")
             return nil
         }
-        return data
     }
     
     // Fetch documents with given IDs
     func fetchDocuments(collection: String, documentIDs: [String]? = nil) async -> [QueryDocumentSnapshot] {
         if let snapshot = try? await database.collection(collection).getDocuments() {
-            return snapshot.documents.filter { document in
-                documentIDs == nil || documentIDs!.contains(document.documentID)
+            if snapshot.metadata.hasPendingWrites {
+                return []
+            } else {
+                return snapshot.documents.filter { document in
+                    documentIDs == nil || documentIDs!.contains(document.documentID)
+                }
             }
         } else {
             return []
@@ -71,7 +93,11 @@ struct FirebaseHelper {
     // Fetch documents with given IDs
     func fetchDocuments(collection: String, field: String, equalTo: Any) async -> [QueryDocumentSnapshot] {
         if let snapshot = try? await database.collection(collection).whereField(field, isEqualTo: equalTo).getDocuments() {
-            return snapshot.documents
+            if snapshot.metadata.hasPendingWrites {
+                return []
+            } else {
+                return snapshot.documents
+            }
         } else {
             return []
         }
@@ -80,7 +106,11 @@ struct FirebaseHelper {
     // Fetch documents with given IDs
     func fetchDocuments(collection: String, field: String, arrayContains element: Any) async -> [QueryDocumentSnapshot] {
         if let snapshot = try? await database.collection(collection).whereField(field, arrayContains: element).getDocuments() {
-            return snapshot.documents
+            if snapshot.metadata.hasPendingWrites {
+                return []
+            } else {
+                return snapshot.documents
+            }
         } else {
             return []
         }

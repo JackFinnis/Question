@@ -43,6 +43,7 @@ class QuestionVM: ObservableObject {
     }
     
     let helper = FirebaseHelper()
+    let haptics = HapticsHelper()
     
     var questionListener: ListenerRegistration?
     var answersListener: ListenerRegistration?
@@ -100,6 +101,7 @@ class QuestionVM: ObservableObject {
         answerError = nil
         if answer.isEmpty {
             answerError = "Please enter an answer"
+            haptics.error()
         } else {
             loading = true
             
@@ -114,17 +116,18 @@ class QuestionVM: ObservableObject {
             await helper.addElement(collection: "questions", documentID: questionID, arrayName: "answerIDs", element: newAnswerID)
             await helper.addElement(collection: "users", documentID: username, arrayName: "answerIDs", element: newAnswerID)
             
+            haptics.success()
             oldAnswer = answer
             loading = false
         }
     }
     
-    // MARK: - Methods
     func stopQuestion(username: String, questionID: String) async {
         loading = true
         await helper.updateData(collection: "questions", documentID: questionID, data: [
             "end": Date()
         ])
+        haptics.success()
         loading = false
     }
     
@@ -141,6 +144,7 @@ class QuestionVM: ObservableObject {
         } else {
             await helper.addElement(collection: "questions", documentID: questionID, arrayName: "sharedAnswerIDs", element: answerID)
         }
+        haptics.success()
         loading = false
     }
     
@@ -148,11 +152,13 @@ class QuestionVM: ObservableObject {
         newQuestionError = nil
         if newQuestion.isEmpty {
             newQuestionError = "Please enter a new question"
+            haptics.error()
         } else {
             loading = true
             await helper.updateData(collection: "questions", documentID: questionID, data: [
                 "question": newQuestion
             ])
+            haptics.success()
             loading = false
         }
     }
@@ -167,6 +173,7 @@ class QuestionVM: ObservableObject {
             "end": endDate as Any,
             "minutes": newQuestionMinutes
         ])
+        haptics.success()
         loading = false
     }
     
@@ -175,6 +182,7 @@ class QuestionVM: ObservableObject {
         await helper.updateData(collection: "questions", documentID: question.id, data: [
             "sharedAnswerIDs": question.answerIDs
         ])
+        haptics.success()
         loading = false
     }
 }

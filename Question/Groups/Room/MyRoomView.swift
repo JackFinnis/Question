@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyRoomView: View {
+    @Environment(\.dismiss) var dismiss
     @StateObject var roomVM = RoomVM()
     
     let username: String
@@ -17,7 +18,11 @@ struct MyRoomView: View {
             Group {
                 if roomVM.user == nil {
                     ProgressView("Loading room...")
-                } else if roomVM.user!.liveQuestionID != nil {
+                } else if roomVM.user!.liveQuestionID == nil {
+                    Button("Start a Question") {
+                        dismiss()
+                    }
+                } else {
                     MyQuestionView(user: roomVM.user!, username: username, questionID: roomVM.user!.liveQuestionID!)
                 }
             }

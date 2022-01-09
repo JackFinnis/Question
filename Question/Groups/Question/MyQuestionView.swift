@@ -48,13 +48,13 @@ struct MyQuestionView: View {
                                 if questionVM.newTimedQuestion {
                                     Stepper(formatting.singularPlural(singularWord: "Minute", count: questionVM.newQuestionMinutes), value: $questionVM.newQuestionMinutes, in: 1...60)
                                 }
-                                Button("Edit") {
+                                Button("Submit") {
                                     Task {
                                         await questionVM.submitNewTimeLimit(questionID: questionID)
                                     }
                                 }
                             } header: {
-                                Text("Edit Time Limit")
+                                Text("New Time Limit")
                             }
                             .headerProminence(.increased)
                         }
@@ -108,24 +108,23 @@ struct MyQuestionView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                if questionVM.isLive {
-                    Button("End") {
+                if questionVM.loading {
+                    ProgressView()
+                } else if questionVM.isLive {
+                    Button("End Now") {
                         Task {
                             await questionVM.stopQuestion(username: username, questionID: questionID)
                         }
                     }
+                    .tint(.red)
                 } else {
-                    Button("Leave") {
+                    Button("Leave Room") {
                         dismiss()
                     }
                 }
             }
             ToolbarItem(placement: .principal) {
-                if questionVM.loading {
-                    ProgressView()
-                } else {
-                    RoomStatusButton(joinUsername: username, guestUsernames: user.guestUsernames)
-                }
+                RoomStatusButton(joinUsername: username, guestUsernames: user.guestUsernames)
             }
         }
     }

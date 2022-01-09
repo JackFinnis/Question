@@ -23,29 +23,30 @@ struct UserView: View {
                         JoinRoom(userVM: userVM, username: username)
                         NewQuestion(userVM: userVM, username: username)
                         
-                        Section {
-                            NavigationLink {
-                                QuestionsView(userVM: userVM, user: userVM.user!, username: username)
-                            } label: {
-                                Row(leading: "My Questions", trailing: String(userVM.questions.count))
-                            }
-                            NavigationLink {
-                                AnswersView(userVM: userVM, username: username)
-                            } label: {
-                                Row(leading: "My Answers", trailing: String(userVM.answers.count))
-                            }
-                        } header: {
-                            Text("History")
-                        }
-                        .headerProminence(.increased)
+//                        Section {
+//                            NavigationLink {
+//                                QuestionsView(userVM: userVM, user: userVM.user!, username: username)
+//                            } label: {
+//                                Row(leading: "My Questions", trailing: String(userVM.questions.count))
+//                            }
+//                            NavigationLink {
+//                                AnswersView(userVM: userVM, username: username)
+//                            } label: {
+//                                Row(leading: "My Answers", trailing: String(userVM.answers.count))
+//                            }
+//                        } header: {
+//                            Text("History")
+//                        }
+//                        .headerProminence(.increased)
                     }
                     .toolbar {
-                        ToolbarItem(placement: .principal) {
+                        ToolbarItem(placement: .navigationBarLeading) {
                             if userVM.loading {
                                 ProgressView()
-                            } else {
-                                RoomStatusButton(joinUsername: username, guestUsernames: userVM.user!.guestUsernames)
                             }
+                        }
+                        ToolbarItem(placement: .principal) {
+                            RoomStatusButton(joinUsername: username, guestUsernames: userVM.user!.guestUsernames)
                         }
                     }
                 }

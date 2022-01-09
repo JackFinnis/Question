@@ -16,16 +16,7 @@ struct NewQuestion: View {
     
     var body: some View {
         Section {
-            NavigationLink {
-                SelectQuestionView(selectedQuestion: $userVM.selectedRecentQuestion, questions: userVM.questions)
-            } label: {
-                HStack {
-                    TextEditor(text: $userVM.newQuestion)
-                    Text("Recent")
-                        .foregroundColor(.secondary)
-                }
-            }
-            
+            TextEditor(text: $userVM.newQuestion)
             Toggle("Time Limit", isOn: $userVM.timedQuestion.animation())
             if userVM.timedQuestion {
                 Stepper(formatting.singularPlural(singularWord: "Minute", count: userVM.newQuestionMinutes), value: $userVM.newQuestionMinutes, in: 1...60)

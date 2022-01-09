@@ -38,6 +38,7 @@ struct GuestsView: View {
                 }
             }
             .navigationTitle(joinUsername + "'s Guests")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Done") {
