@@ -54,5 +54,6 @@ struct SignUpView: View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
     }
 }

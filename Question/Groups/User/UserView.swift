@@ -60,5 +60,6 @@ struct UserView: View {
                 userVM.removeListeners()
             }
         }
+        .navigationViewStyle(.stack)
     }
 }

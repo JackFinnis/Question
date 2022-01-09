@@ -35,5 +35,6 @@ struct MyRoomView: View {
                 roomVM.removeListeners()
             }
         }
+        .navigationViewStyle(.stack)
     }
 }

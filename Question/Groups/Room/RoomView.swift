@@ -45,5 +45,6 @@ struct RoomView: View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
     }
 }
