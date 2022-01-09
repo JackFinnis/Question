@@ -22,29 +22,33 @@ struct QuestionView: View {
         Group {
             if questionVM.question == nil {
                 ProgressView("Loading question...")
-            } else if questionVM.error {
-                HStack {
-                    Image(systemName: "questionmark")
-                        .font(.title)
-                    Text("This question has been deleted")
-                }
             } else {
                 VStack {
                     Text(questionVM.question!.question ?? "No Question")
-                    
                     Form {
                         Section {
                             if questionVM.isLive {
                                 TextEditor(text: $questionVM.answer)
+                            } else if questionVM.answer.isEmpty {
+                                Text("No Answer")
                             } else {
                                 Text(questionVM.answer)
+                                    .contextMenu {
+                                        CopyButton(string: questionVM.answer)
+                                    }
                             }
                         } footer: {
                             Text(questionVM.answerError ?? "")
                         }
                         
                         Section {
-                            if questionVM.loading {
+                            if questionVM.answer.isEmpty {
+                                HStack {
+                                    Spacer()
+                                    Text("No Answer")
+                                    Spacer()
+                                }
+                            } else if questionVM.loading {
                                 HStack {
                                     Spacer()
                                     ProgressView()

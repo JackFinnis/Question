@@ -11,20 +11,13 @@ struct AnswerUserRow: View {
     let answer: Answer
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(answer.answerUsername ?? "Anonymous")
-                    .bold()
-                Text(answer.answer ?? "No Answer")
-            }
-            Spacer()
-            CopyButton(answer: answer)
+        VStack(alignment: .leading) {
+            Text(answer.answerUsername ?? "Anonymous")
+                .bold()
+            Text(answer.answer ?? "No Answer")
         }
         .contextMenu {
-            CopyButton(answer: answer)
-        }
-        .swipeActions {
-            CopyButton(answer: answer)
+            CopyButton(string: answer.answer)
         }
     }
 }

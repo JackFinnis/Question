@@ -12,9 +12,6 @@ import FirebaseFirestore
 class RoomVM: ObservableObject {
     // MARK: - Properties
     @Published var user: User?
-    @Published var question: Question?
-    
-    @Published var loading = false
     
     let helper = FirebaseHelper()
     
@@ -22,11 +19,9 @@ class RoomVM: ObservableObject {
     
     // MARK: - Listeners
     func addUserListener(username: String) {
-        loading = true
         userListener?.remove()
         userListener = helper.addUserListener(userID: username) { user in
             self.user = user
-            self.loading = false
         }
     }
     

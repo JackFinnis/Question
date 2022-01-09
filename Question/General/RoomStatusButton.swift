@@ -20,6 +20,7 @@ struct RoomStatusButton: View {
             showGuestsView = true
         } label: {
             Text(joinUsername + " - " + formatter.singularPlural(singularWord: "Guest", count: guestUsernames.count))
+                .bold()
         }
         .sheet(isPresented: $showGuestsView) {
             GuestsView(joinUsername: joinUsername, guestUsernames: guestUsernames)

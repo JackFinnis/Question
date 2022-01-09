@@ -28,36 +28,34 @@ struct MyQuestionView: View {
                 VStack {
                     Text(questionVM.question?.question ?? "No Question")
                     Form {
-                        if questionVM.isLive {
-                            Section {
-                                TextEditor(text: $questionVM.newQuestion)
-                                Button("Edit") {
-                                    Task {
-                                        await questionVM.submitNewQuestion(questionID: questionID)
-                                    }
+                        Section {
+                            TextEditor(text: $questionVM.newQuestion)
+                            Button("Edit") {
+                                Task {
+                                    await questionVM.submitNewQuestion(questionID: questionID)
                                 }
-                            } header: {
-                                Text("Edit Question")
-                            } footer: {
-                                Text(questionVM.newQuestionError ?? "")
                             }
-                            .headerProminence(.increased)
-                            
-                            Section {
-                                Toggle("Time Limit", isOn: $questionVM.newTimedQuestion.animation())
-                                if questionVM.newTimedQuestion {
-                                    Stepper(formatting.singularPlural(singularWord: "Minute", count: questionVM.newQuestionMinutes), value: $questionVM.newQuestionMinutes, in: 1...60)
-                                }
-                                Button("Submit") {
-                                    Task {
-                                        await questionVM.submitNewTimeLimit(questionID: questionID)
-                                    }
-                                }
-                            } header: {
-                                Text("New Time Limit")
-                            }
-                            .headerProminence(.increased)
+                        } header: {
+                            Text("Edit Question")
+                        } footer: {
+                            Text(questionVM.newQuestionError ?? "")
                         }
+                        .headerProminence(.increased)
+                        
+                        Section {
+                            Toggle("Time Limit", isOn: $questionVM.newTimedQuestion.animation())
+                            if questionVM.newTimedQuestion {
+                                Stepper(formatting.singularPlural(singularWord: "Minute", count: questionVM.newQuestionMinutes), value: $questionVM.newQuestionMinutes, in: 1...60)
+                            }
+                            Button("Submit") {
+                                Task {
+                                    await questionVM.submitNewTimeLimit(questionID: questionID)
+                                }
+                            }
+                        } header: {
+                            Text("New Time Limit")
+                        }
+                        .headerProminence(.increased)
                         
                         Section {
                             List(questionVM.answers) { answer in
@@ -118,7 +116,7 @@ struct MyQuestionView: View {
                     }
                     .tint(.red)
                 } else {
-                    Button("Leave Room") {
+                    Button("New Question") {
                         dismiss()
                     }
                 }

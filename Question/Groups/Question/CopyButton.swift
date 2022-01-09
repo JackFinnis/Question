@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct CopyButton: View {
-    let answer: Answer
+    let string: String?
     
     let haptics = HapticsHelper()
     
     var body: some View {
-        if answer.answer != nil && !answer.answer!.isEmpty {
+        if string != nil && !string!.isEmpty {
             Button {
                 let pasteboard = UIPasteboard.general
-                pasteboard.string = answer.answer!
+                pasteboard.string = string!
                 haptics.success()
             } label: {
                 Label("Copy Answer", systemImage: "doc.on.doc")

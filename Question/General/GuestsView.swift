@@ -21,6 +21,8 @@ struct GuestsView: View {
         }
     }
     
+    let formatter = FormattingHelper()
+    
     var body: some View {
         NavigationView {
             Group {
@@ -31,8 +33,14 @@ struct GuestsView: View {
                         Text("No guests yet")
                     }
                 } else {
-                    List(filteredGuestUsernames, id: \.self) { guestUsername in
-                        Text(guestUsername)
+                    Form {
+                        Section {
+                            List(filteredGuestUsernames, id: \.self) { guestUsername in
+                                Text(guestUsername)
+                            }
+                        } footer: {
+                            Text(formatter.singularPlural(singularWord: "Guest", count: guestUsernames.count))
+                        }
                     }
                     .searchable(text: $searchText.animation())
                 }
