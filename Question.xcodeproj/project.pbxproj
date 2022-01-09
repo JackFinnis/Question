@@ -125,6 +125,7 @@
 				04F5FF9127861DC400E0EF9D /* Groups */,
 				04F5FF8827861CDD00E0EF9D /* Helpers */,
 				0495E2ED2722F80D00F53132 /* Models */,
+				04F5FFD0278B2CF900E0EF9D /* Old */,
 			);
 			path = Question;
 			sourceTree = "<group>";
@@ -156,10 +157,6 @@
 				04F5FF8927861D2900E0EF9D /* UserVM.swift */,
 				04F5FFBC2789CD6200E0EF9D /* JoinRoom.swift */,
 				04F5FFA1278716A800E0EF9D /* NewQuestion.swift */,
-				04F5FFC8278A4FB200E0EF9D /* Join Room */,
-				04F5FFCB278A523D00E0EF9D /* New Question */,
-				04F5FFC9278A50A700E0EF9D /* Answers */,
-				04F5FFCA278A50B400E0EF9D /* Questions */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -256,8 +253,18 @@
 			children = (
 				04F5FFB22789AA7500E0EF9D /* SelectQuestionView.swift */,
 			);
-			name = "New Question";
-			path = "Join Room/New Question";
+			path = "New Question";
+			sourceTree = "<group>";
+		};
+		04F5FFD0278B2CF900E0EF9D /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				04F5FFC8278A4FB200E0EF9D /* Join Room */,
+				04F5FFCB278A523D00E0EF9D /* New Question */,
+				04F5FFC9278A50A700E0EF9D /* Answers */,
+				04F5FFCA278A50B400E0EF9D /* Questions */,
+			);
+			path = Old;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
