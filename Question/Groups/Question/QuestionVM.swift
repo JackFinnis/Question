@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 import FirebaseFirestore
 
 @MainActor
@@ -13,6 +14,7 @@ class QuestionVM: ObservableObject {
     // MARK: - Properties
     @Published var question: Question?
     @Published var answers = [Answer]()
+    @Published var filteredSharedAnswers = [Answer]()
     
     @Published var loading = false
     @Published var error = false
@@ -44,18 +46,20 @@ class QuestionVM: ObservableObject {
     
     let helper = FirebaseHelper()
     let haptics = HapticsHelper()
+    var timer: Cancellable?
     
     var questionListener: ListenerRegistration?
     var answersListener: ListenerRegistration?
     
     // MARK: - Listeners
-    func addQuestionListener(questionID: String) {
+    func addQuestionListener(username: String, questionID: String) {
         loading = true
         questionListener?.remove()
         questionListener = helper.addDocumentListener(collection: "questions", documentID: questionID) { data in
             self.loading = false
             if let data = data {
                 self.question = Question(id: questionID, data: data)
+                self.filterSharedAnswers(username: username)
                 // Update text editor
                 if !self.updated {
                     self.updated = true
@@ -76,6 +80,7 @@ class QuestionVM: ObservableObject {
             self.answers = documents.map { document -> Answer in
                 Answer(id: document.documentID, data: document.data())
             }.sorted { $0.date < $1.date }
+            self.filterSharedAnswers(username: username)
             
             if let previousAnswer = self.answers.first(where: { $0.answerUsername == username }) {
                 if self.answer.isEmpty {
@@ -92,7 +97,7 @@ class QuestionVM: ObservableObject {
     }
     
     func addListeners(questionID: String, username: String) {
-        addQuestionListener(questionID: questionID)
+        addQuestionListener(username: username, questionID: questionID)
         addAnswersListener(questionID: questionID, username: username)
     }
     
@@ -185,5 +190,28 @@ class QuestionVM: ObservableObject {
         ])
         haptics.success()
         loading = false
+    }
+    
+    func filterSharedAnswers(username: String) {
+        filteredSharedAnswers = answers.filter {
+            question?.sharedAnswerIDs.contains($0.id) ?? false &&
+            $0.answerUsername != username
+        }
+    }
+    
+    func startTimer() {
+        timer = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
+            .sink { [weak self] _ in
+                if let self = self {
+                    self.updateCountdown()
+                }
+            }
+    }
+    
+    func updateCountdown() {
+        timeIntervalRemaining = question?.end?.timeIntervalSinceNow ?? 0
+        if formattedTimeRemaining == "0" {
+            haptics.error()
+        }
     }
 }

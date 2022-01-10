@@ -71,14 +71,14 @@ struct QuestionView: View {
                                 }
                             }
                             
-                            if !questionVM.question!.sharedAnswerIDs.isEmpty {
+                            if !questionVM.filteredSharedAnswers.isEmpty {
                                 Section {
-                                    List(questionVM.answers.filter { questionVM.question!.sharedAnswerIDs.contains($0.id) }) { answer in
+                                    List(questionVM.filteredSharedAnswers) { answer in
                                         AnswerUserRow(answer: answer)
                                     }
                                     .animation(.default, value: questionVM.answers)
                                 } header: {
-                                    Text(formatting.singularPlural(singularWord: "Shared Answer", count: questionVM.question!.sharedAnswerIDs.count))
+                                    Text(formatting.singularPlural(singularWord: "Shared Answer", count: questionVM.filteredSharedAnswers.count))
                                 }
                                 .headerProminence(.increased)
                             }
@@ -93,6 +93,7 @@ struct QuestionView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             questionVM.addListeners(questionID: questionID, username: username)
+            questionVM.startTimer()
         }
         .onDisappear {
             questionVM.removeListeners()

@@ -34,14 +34,6 @@ struct MyQuestionView: View {
                                 Section {
                                     TextEditor(text: $questionVM.newQuestion)
                                         .focused($focused)
-                                        .toolbar {
-                                            ToolbarItemGroup(placement: .keyboard) {
-                                                Spacer()
-                                                Button("Done") {
-                                                    focused = false
-                                                }
-                                            }
-                                        }
                                     Button("Edit") {
                                         Task {
                                             await questionVM.submitNewQuestion(questionID: questionID)
@@ -107,6 +99,7 @@ struct MyQuestionView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 questionVM.addListeners(questionID: questionID, username: username)
+                questionVM.startTimer()
             }
             .onDisappear {
                 questionVM.removeListeners()
