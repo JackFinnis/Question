@@ -18,7 +18,7 @@ struct SignUpView: View {
                 Form {
                     Section {
                         TextField("Username", text: $authVM.createUsername)
-                            .textInputAutocapitalization(.never)
+                            .textInputAutocapitalization(.words)
                             .disableAutocorrection(true)
                             .textContentType(.name)
                             .submitLabel(.join)
@@ -29,7 +29,7 @@ struct SignUpView: View {
                                 }
                             }
                     } footer: {
-                        Text("Create a unique username. This username cannot be changed and is public")
+                        Text("Create a unique username. This username cannot be changed and is public.")
                     }
                     
                     Section {

@@ -223,4 +223,26 @@ struct FirebaseHelper {
         await deleteField(collection: "users", documentID: username, field: "liveJoinUsername")
         haptics.success()
     }
+    
+    func joinRoom(username: String, joinUsername: String? = nil) async {
+        if let joinUsername = joinUsername {
+            UserDefaults.standard.set(joinUsername, forKey: "joinUsername")
+        }
+        if let joinUsername = UserDefaults.standard.string(forKey: "joinUsername") {
+            await addElement(collection: "users", documentID: joinUsername, arrayName: "guestUsernames", element: username)
+        }
+    }
+    
+    func leaveRoom(username: String) async {
+        if let joinUsername = UserDefaults.standard.string(forKey: "joinUsername") {
+            await removeElement(collection: "users", documentID: joinUsername, arrayName: "guestUsernames", element: username)
+        }
+    }
+    
+    func leaveRoomFully(username: String) async {
+        if let joinUsername = UserDefaults.standard.string(forKey: "joinUsername") {
+            await removeElement(collection: "users", documentID: joinUsername, arrayName: "guestUsernames", element: username)
+        }
+        UserDefaults.standard.set(nil, forKey: "joinUsername")
+    }
 }

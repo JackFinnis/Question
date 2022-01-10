@@ -35,17 +35,17 @@ class AuthVM: ObservableObject {
         loading = true
         // Validate username
         if createUsername.isEmpty {
-            createUsernameError = "Please enter a username"
+            createUsernameError = "Please enter a username."
         } else if createUsername.contains("/") {
-            createUsernameError = "Username connot contain a forward slash"
+            createUsernameError = "Username connot contain a forward slash."
         } else if createUsername.contains(".") {
-            createUsernameError = "Username connot contain a full stop"
+            createUsernameError = "Username connot contain a full stop."
         } else if createUsername.contains("__.*__") {
             createUsernameError = "Username connot contain the phrase __.*__"
         } else if createUsername.count > 20 {
-            createUsernameError = "Username must be shorter that 20 characters"
+            createUsernameError = "Username must be shorter that 20 characters."
         } else if await helper.isInUse(username: createUsername) {
-            createUsernameError = "Username is already taken"
+            createUsernameError = "Username is already taken."
         } else {
             await helper.addDocument(collection: "users", documentID: createUsername)
             username = createUsername

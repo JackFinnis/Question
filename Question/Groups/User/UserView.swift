@@ -26,6 +26,7 @@ struct UserView: View {
                         Form {
                             Section {
                                 TextField("Enter Username", text: $userVM.joinUsername)
+                                    .textInputAutocapitalization(.words)
                                     .disableAutocorrection(true)
                                     .focused($joinRoomFocused)
                                     .submitLabel(.join)

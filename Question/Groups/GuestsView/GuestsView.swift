@@ -33,38 +33,28 @@ struct GuestsView: View {
     
     var body: some View {
         NavigationView {
-            Group {
-                if user.guestUsernames.isEmpty {
-                    VStack {
-                        Image(systemName: "person")
-                            .font(.title)
-                        Text("No guests yet")
+            Form {
+                Section {
+                    List(filteredGuestUsernames, id: \.self) { guestUsername in
+                        GuestRow(loading: $loading, username: username, guestUsername: guestUsername)
                     }
-                } else {
-                    Form {
-                        Section {
-                            List(filteredGuestUsernames, id: \.self) { guestUsername in
-                                GuestRow(loading: $loading, username: username, guestUsername: guestUsername)
-                            }
-                        } header: {
-                            Text(formatter.singularPlural(singularWord: "Guest", count: user.guestUsernames.count))
+                } header: {
+                    Text(formatter.singularPlural(singularWord: "Guest", count: user.guestUsernames.count))
+                }
+                .headerProminence(.increased)
+                
+                if !user.usernamesYouBlocked.isEmpty {
+                    Section {
+                        List(filteredGuestUsernames, id: \.self) { guestUsername in
+                            BlockedGuestRow(loading: $loading, username: username, guestUsername: guestUsername)
                         }
-                        .headerProminence(.increased)
-                        
-                        if !user.usernamesYouBlocked.isEmpty {
-                            Section {
-                                List(filteredGuestUsernames, id: \.self) { guestUsername in
-                                    BlockedGuestRow(loading: $loading, username: username, guestUsername: guestUsername)
-                                }
-                            } header: {
-                                Text(formatter.singularPlural(singularWord: "Blocked Guest", count: user.usernamesYouBlocked.count))
-                            }
-                            .headerProminence(.increased)
-                        }
+                    } header: {
+                        Text(formatter.singularPlural(singularWord: "Blocked Guest", count: user.usernamesYouBlocked.count))
                     }
-                    .searchable(text: $searchText.animation())
+                    .headerProminence(.increased)
                 }
             }
+            .searchable(text: $searchText.animation())
             .navigationTitle(username + "'s Room")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

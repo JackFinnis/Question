@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct RoomView: View {
-    @Environment(\.scenePhase) var scenePhase
     @StateObject var roomVM = RoomVM()
     
     let username: String
@@ -30,13 +29,13 @@ struct RoomView: View {
             .onAppear {
                 roomVM.addUserListener(username: joinUsername)
                 Task {
-                    await roomVM.joinRoom(username: username, joinUsername: joinUsername)
+                    await roomVM.helper.joinRoom(username: username, joinUsername: joinUsername)
                 }
             }
             .onDisappear {
                 roomVM.removeListeners()
                 Task {
-                    await roomVM.leaveRoom(username: username, joinUsername: joinUsername)
+                    await roomVM.helper.leaveRoomFully(username: username)
                 }
             }
             .toolbar {
@@ -45,15 +44,6 @@ struct RoomView: View {
                         Task {
                             await roomVM.helper.leaveLiveRoom(username: username)
                         }
-                    }
-                }
-            }
-            .onChange(of: scenePhase) { newPhase in
-                Task {
-                    if newPhase == .active {
-                        await roomVM.joinRoom(username: username, joinUsername: joinUsername)
-                    } else {
-                        await roomVM.leaveRoom(username: username, joinUsername: joinUsername)
                     }
                 }
             }

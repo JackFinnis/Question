@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct AuthView: View {
+    @Environment(\.scenePhase) var scenePhase
     @StateObject var authVM = AuthVM()
+    
+    let helper = FirebaseHelper()
     
     var body: some View {
         Group {
@@ -18,7 +21,16 @@ struct AuthView: View {
                 ProgressView("Signing in...")
             } else {
                 UserView(username: authVM.username!)
-                    .navigationBarTitleDisplayMode(.inline)
+                    .onChange(of: scenePhase) { newPhase in
+                        print(newPhase)
+                        Task {
+                            if newPhase == .active {
+                                await helper.joinRoom(username: authVM.username!)
+                            } else {
+                                await helper.leaveRoom(username: authVM.username!)
+                            }
+                        }
+                    }
             }
         }
         .navigationViewStyle(.stack)
