@@ -21,6 +21,10 @@
 		0495E31A2724933000F53132 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E3192724933000F53132 /* QuestionView.swift */; };
 		0495E31E2724A95D00F53132 /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31D2724A95D00F53132 /* RoomView.swift */; };
 		0495E32027254D7B00F53132 /* MyQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31F27254D7B00F53132 /* MyQuestionView.swift */; };
+		04B3C3B4278C3B0E000027B9 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3B3278C3B0E000027B9 /* View.swift */; };
+		04B3C3B7278C3D0F000027B9 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3B6278C3D0F000027B9 /* Countdown.swift */; };
+		04B3C3BB278C5364000027B9 /* GuestRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3BA278C5364000027B9 /* GuestRow.swift */; };
+		04B3C3BD278C555C000027B9 /* BlockedGuestRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3BC278C555C000027B9 /* BlockedGuestRow.swift */; };
 		04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */; };
 		04F5FF83278618D600E0EF9D /* AuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF82278618D600E0EF9D /* AuthVM.swift */; };
 		04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8927861D2900E0EF9D /* UserVM.swift */; };
@@ -57,6 +61,10 @@
 		0495E3192724933000F53132 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 		0495E31D2724A95D00F53132 /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
 		0495E31F27254D7B00F53132 /* MyQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyQuestionView.swift; sourceTree = "<group>"; };
+		04B3C3B3278C3B0E000027B9 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		04B3C3B6278C3D0F000027B9 /* Countdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countdown.swift; sourceTree = "<group>"; };
+		04B3C3BA278C5364000027B9 /* GuestRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestRow.swift; sourceTree = "<group>"; };
+		04B3C3BC278C555C000027B9 /* BlockedGuestRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedGuestRow.swift; sourceTree = "<group>"; };
 		04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		04F5FF82278618D600E0EF9D /* AuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVM.swift; sourceTree = "<group>"; };
 		04F5FF8927861D2900E0EF9D /* UserVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVM.swift; sourceTree = "<group>"; };
@@ -119,6 +127,7 @@
 				04F5FF9127861DC400E0EF9D /* Groups */,
 				04F5FF8827861CDD00E0EF9D /* Helpers */,
 				0495E2ED2722F80D00F53132 /* Models */,
+				04B3C3B5278C3B12000027B9 /* Extensions */,
 				04F5FFD0278B2CF900E0EF9D /* Old */,
 			);
 			path = Question;
@@ -132,6 +141,25 @@
 				0495E2F52722FB9300F53132 /* Answer.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		04B3C3B5278C3B12000027B9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				04B3C3B3278C3B0E000027B9 /* View.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		04B3C3BE278C5563000027B9 /* GuestsView */ = {
+			isa = PBXGroup;
+			children = (
+				04F5FFC4278A4B4700E0EF9D /* RoomStatusButton.swift */,
+				04F5FFC6278A4BDD00E0EF9D /* GuestsView.swift */,
+				04B3C3BA278C5364000027B9 /* GuestRow.swift */,
+				04B3C3BC278C555C000027B9 /* BlockedGuestRow.swift */,
+			);
+			path = GuestsView;
 			sourceTree = "<group>";
 		};
 		04F5FF8427861C2900E0EF9D /* Authentication */ = {
@@ -176,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				04F5FF8427861C2900E0EF9D /* Authentication */,
+				04B3C3BE278C5563000027B9 /* GuestsView */,
 				04F5FF8527861C5F00E0EF9D /* User */,
 				04F5FF8727861CAF00E0EF9D /* Room */,
 				04F5FF9527864E0600E0EF9D /* Question */,
@@ -198,10 +227,9 @@
 			children = (
 				04F5FF99278655B500E0EF9D /* Row.swift */,
 				04F5FFA4278903E700E0EF9D /* AnswerUserRow.swift */,
-				04F5FFC4278A4B4700E0EF9D /* RoomStatusButton.swift */,
-				04F5FFC6278A4BDD00E0EF9D /* GuestsView.swift */,
 				04F5FFB62789BB0400E0EF9D /* ToggleShareButton.swift */,
 				04F5FFCE278AFFEF00E0EF9D /* CopyButton.swift */,
+				04B3C3B6278C3D0F000027B9 /* Countdown.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -338,15 +366,18 @@
 			files = (
 				04F5FF83278618D600E0EF9D /* AuthVM.swift in Sources */,
 				04F5FFCD278AFD1000E0EF9D /* HapticsHelper.swift in Sources */,
+				04B3C3B4278C3B0E000027B9 /* View.swift in Sources */,
 				04F5FFCF278AFFEF00E0EF9D /* CopyButton.swift in Sources */,
 				04F5FFC7278A4BDD00E0EF9D /* GuestsView.swift in Sources */,
 				04F5FFBF2789D85B00E0EF9D /* SelectUserView.swift in Sources */,
 				04F5FFA5278903E700E0EF9D /* AnswerUserRow.swift in Sources */,
 				0495E31A2724933000F53132 /* QuestionView.swift in Sources */,
 				04F5FFC32789EF4F00E0EF9D /* AnswersView.swift in Sources */,
+				04B3C3BB278C5364000027B9 /* GuestRow.swift in Sources */,
 				0495E2D72722F75800F53132 /* QuestionApp.swift in Sources */,
 				0495E2F62722FB9300F53132 /* Answer.swift in Sources */,
 				0495E32027254D7B00F53132 /* MyQuestionView.swift in Sources */,
+				04B3C3BD278C555C000027B9 /* BlockedGuestRow.swift in Sources */,
 				0495E31627234E0500F53132 /* User.swift in Sources */,
 				0495E3182724928100F53132 /* UserView.swift in Sources */,
 				04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */,
@@ -355,6 +386,7 @@
 				04F5FFBB2789CCA300E0EF9D /* AnswerRow.swift in Sources */,
 				04F5FFC12789EE0700E0EF9D /* QuestionsView.swift in Sources */,
 				04F5FFB32789AA7500E0EF9D /* SelectQuestionView.swift in Sources */,
+				04B3C3B7278C3D0F000027B9 /* Countdown.swift in Sources */,
 				04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */,
 				04F5FFB92789C27A00E0EF9D /* QuestionRow.swift in Sources */,
 				04F5FFC5278A4B4700E0EF9D /* RoomStatusButton.swift in Sources */,

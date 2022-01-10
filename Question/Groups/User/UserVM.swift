@@ -12,26 +12,23 @@ import FirebaseFirestore
 class UserVM: ObservableObject {
     // MARK: - Properties
     @Published var user: User?
+    @Published var loading = false
+    @Published var questions = [Question]()
     @Published var answers = [Answer]() { didSet {
         filterRecentUsernames()
     }}
-    @Published var questions = [Question]()
-    @Published var loading = false
-    @Published var reset = true
 
     @Published var showRoomView = false
-    @Published var showMyRoomView = false
+    @Published var showMyQuestionView = false
     
     @Published var joinUsername = ""
     @Published var joinUsernameError: String?
-    
     @Published var recentUsernames = [String]()
     
-    @Published var filteredAnswers = [Answer]()
-    @Published var answersSearchText = "" { didSet {
-        filterAnswers()
-    }}
-    
+    @Published var newQuestion = ""
+    @Published var newQuestionError: String?
+    @Published var timedQuestion = false
+    @Published var newQuestionMinutes: Int = 2
     @Published var selectedRecentQuestion: Question? { didSet {
         newQuestion = selectedRecentQuestion?.question ?? newQuestion
         if let minutes = selectedRecentQuestion?.minutes {
@@ -42,17 +39,14 @@ class UserVM: ObservableObject {
         }
     }}
     
-    @Published var newQuestionID: String?
-    @Published var newQuestion = ""
-    @Published var newQuestionError: String?
-    
-    @Published var timedQuestion = false
-    @Published var newQuestionMinutes: Int = 2
-    
-    @Published var filteredRecentQuestions = [Question]()
     @Published var filteredQuestions = [Question]()
     @Published var questionsSearchText = "" { didSet {
         filterQuestions()
+    }}
+    
+    @Published var filteredAnswers = [Answer]()
+    @Published var answersSearchText = "" { didSet {
+        filterAnswers()
     }}
     
     let helper = FirebaseHelper()
@@ -69,15 +63,8 @@ class UserVM: ObservableObject {
         userListener = helper.addUserListener(userID: username) { user in
             self.loading = false
             self.user = user
-            // Make sure user isn't in any rooms
-            if self.reset, let user = user, !user.liveRoomUsernames.isEmpty {
-                self.reset = false
-                for joinUsername in user.liveRoomUsernames {
-                    Task {
-                        await self.helper.leaveRoom(username: username, joinUsername: joinUsername)
-                    }
-                }
-            }
+            self.showRoomView = user?.liveJoinUsername != nil
+            self.showMyQuestionView = user?.liveQuestionID != nil
         }
     }
     
@@ -122,25 +109,6 @@ class UserVM: ObservableObject {
         }
     }
     
-    func submitJoinUser(username: String) async {
-        loading = true
-        joinUsernameError = nil
-        if joinUsername.isEmpty {
-            joinUsernameError = "Please enter a username"
-        } else if joinUsername == username {
-            joinUsernameError = "Please enter a different username"
-        } else if await helper.isInUse(username: joinUsername) {
-            showRoomView = true
-            haptics.success()
-            loading = false
-            return
-        } else {
-            joinUsernameError = "User does not exist"
-        }
-        haptics.error()
-        loading = false
-    }
-    
     func filterRecentUsernames() {
         var recentUsernames = [String]()
         for answer in answers {
@@ -149,6 +117,29 @@ class UserVM: ObservableObject {
             }
         }
         self.recentUsernames = recentUsernames
+    }
+    
+    func submitJoinUser(username: String, usernamesBlockedYou: [String]) async {
+        loading = true
+        joinUsernameError = nil
+        if joinUsername.isEmpty {
+            joinUsernameError = "Please enter a username"
+        } else if joinUsername == username {
+            joinUsernameError = "Please enter a different username"
+        } else if usernamesBlockedYou.contains(username) {
+            joinUsernameError = username + " has blocked you from joining their room"
+        } else if await !helper.isInUse(username: joinUsername) {
+            joinUsernameError = "User does not exist"
+        } else {
+            await helper.updateData(collection: "users", documentID: username, data: [
+                "liveJoinUsername": joinUsername
+            ])
+            haptics.success()
+            loading = false
+            return
+        }
+        haptics.error()
+        loading = false
     }
     
     func startQuestion(username: String) async {
@@ -173,12 +164,9 @@ class UserVM: ObservableObject {
             await helper.updateData(collection: "users", documentID: username, data: [
                 "liveQuestionID": newQuestionID
             ])
-            await helper.addElement(collection: "users", documentID: username, arrayName: "questionIDs", element: newQuestionID)
             
             haptics.success()
             loading = false
-            self.newQuestionID = newQuestionID
-            showMyRoomView = true
         }
     }
 }

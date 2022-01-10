@@ -10,8 +10,8 @@ import SwiftUI
 struct RoomStatusButton: View {
     @State var showGuestsView = false
     
-    let joinUsername: String
-    let guestUsernames: [String]
+    let user: User
+    let username: String
     
     let formatter = FormattingHelper()
     
@@ -19,11 +19,11 @@ struct RoomStatusButton: View {
         Button {
             showGuestsView = true
         } label: {
-            Text(joinUsername + " - " + formatter.singularPlural(singularWord: "Guest", count: guestUsernames.count))
+            Text(username + " - " + formatter.singularPlural(singularWord: "Guest", count: user.guestUsernames.count))
                 .bold()
         }
         .sheet(isPresented: $showGuestsView) {
-            GuestsView(joinUsername: joinUsername, guestUsernames: guestUsernames)
+            GuestsView(user: user, username: username)
         }
     }
 }

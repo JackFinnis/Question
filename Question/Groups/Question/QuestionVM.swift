@@ -58,8 +58,8 @@ class QuestionVM: ObservableObject {
                 self.question = Question(id: questionID, data: data)
                 // Update text editor
                 if !self.updated {
-                    self.newQuestion = self.question?.question ?? "No Question"
                     self.updated = true
+                    self.newQuestion = self.question?.question ?? "No Question"
                 }
                 // Update countdown
                 self.timeIntervalRemaining = self.question?.end?.timeIntervalSinceNow ?? 0
@@ -75,7 +75,7 @@ class QuestionVM: ObservableObject {
         answersListener = helper.addCollectionListener(collection: "answers", field: "questionID", isEqualTo: questionID) { documents in
             self.answers = documents.map { document -> Answer in
                 Answer(id: document.documentID, data: document.data())
-            }.sorted { $0.date > $1.date }
+            }.sorted { $0.date < $1.date }
             
             if let previousAnswer = self.answers.first(where: { $0.answerUsername == username }) {
                 if self.answer.isEmpty {
@@ -134,6 +134,7 @@ class QuestionVM: ObservableObject {
     func stopLiveQuestion(username: String) async {
         loading = true
         await helper.deleteField(collection: "users", documentID: username, field: "liveQuestionID")
+        haptics.success()
         loading = false
     }
     

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct UserView: View {
     @StateObject var userVM = UserVM()
+    @FocusState var joinRoomFocused: Bool
+    @FocusState var newQuestionFocused: Bool
     
     let username: String
     let formatting = FormattingHelper()
@@ -25,6 +27,7 @@ struct UserView: View {
                             Section {
                                 TextField("Enter Username", text: $userVM.joinUsername)
                                     .disableAutocorrection(true)
+                                    .focused($joinRoomFocused)
                                     .submitLabel(.join)
                                     .onSubmit {
                                         Task {
@@ -44,7 +47,9 @@ struct UserView: View {
                                         Menu {
                                             List(userVM.recentUsernames, id: \.self) { username in
                                                 Button {
-                                                    userVM.joinUsername = username
+                                                    withAnimation {
+                                                        userVM.joinUsername = username
+                                                    }
                                                 } label: {
                                                     Text(username)
                                                 }
@@ -60,11 +65,14 @@ struct UserView: View {
                             }
                             .headerProminence(.increased)
                             .fullScreenCover(isPresented: $userVM.showRoomView) {
-                                RoomView(username: username, joinUsername: userVM.joinUsername)
+                                if let joinUsername = userVM.user?.liveJoinUsername {
+                                    RoomView(username: username, joinUsername: joinUsername)
+                                }
                             }
                             
                             Section {
                                 TextEditor(text: $userVM.newQuestion)
+                                    .focused($newQuestionFocused)
                                 Toggle("Time Limit", isOn: $userVM.timedQuestion.animation())
                                 if userVM.timedQuestion {
                                     Stepper(formatting.singularPlural(singularWord: "Minute", count: userVM.newQuestionMinutes), value: $userVM.newQuestionMinutes, in: 1...60)
@@ -81,23 +89,13 @@ struct UserView: View {
                                 Text(userVM.newQuestionError ?? "")
                             }
                             .headerProminence(.increased)
-                            .fullScreenCover(isPresented: $userVM.showMyRoomView) {
-                                if let questionID = userVM.newQuestionID {
+                            .fullScreenCover(isPresented: $userVM.showMyQuestionView) {
+                                if let questionID = userVM.user?.liveQuestionID {
                                     MyQuestionView(user: userVM.user!, username: username, questionID: questionID)
                                 }
                             }
                         }
                         .frame(maxWidth: 700)
-                    }
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            if userVM.loading {
-                                ProgressView()
-                            }
-                        }
-                        ToolbarItem(placement: .principal) {
-                            RoomStatusButton(joinUsername: username, guestUsernames: userVM.user!.guestUsernames)
-                        }
                     }
                 }
             }
@@ -105,6 +103,25 @@ struct UserView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 userVM.addListeners(username: username)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if userVM.loading {
+                        ProgressView()
+                    }
+                }
+                ToolbarItem(placement: .principal) {
+                    if let user = userVM.user {
+                        RoomStatusButton(user: user, username: username)
+                    }
+                }
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        joinRoomFocused = false
+                        newQuestionFocused = false
+                    }
+                }
             }
         }
         .navigationViewStyle(.stack)

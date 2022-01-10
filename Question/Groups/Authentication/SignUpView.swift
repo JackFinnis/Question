@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     @ObservedObject var authVM: AuthVM
+    @FocusState var focused: Bool
     
     var body: some View {
         NavigationView {
@@ -21,6 +22,7 @@ struct SignUpView: View {
                             .disableAutocorrection(true)
                             .textContentType(.name)
                             .submitLabel(.join)
+                            .focused($focused)
                             .onSubmit {
                                 Task {
                                     await authVM.createAccount()
@@ -32,23 +34,15 @@ struct SignUpView: View {
                     
                     Section {
                         if authVM.loading {
-                            HStack {
-                                Spacer()
-                                ProgressView()
-                                Spacer()
-                            }
+                            ProgressView()
+                                .centred()
                         } else {
-                            Button {
+                            Button("Sign Up") {
                                 Task {
                                     await authVM.createAccount()
                                 }
-                            } label: {
-                                HStack {
-                                    Spacer()
-                                    Text("Sign Up")
-                                    Spacer()
-                                }
                             }
+                            .centred()
                             .foregroundColor(.white)
                             .listRowBackground(Color.accentColor)
                         }
@@ -59,6 +53,14 @@ struct SignUpView: View {
                 .frame(maxWidth: 700)
             }
             .navigationTitle("Sign Up")
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        focused = false
+                    }
+                }
+            }
         }
         .navigationViewStyle(.stack)
     }

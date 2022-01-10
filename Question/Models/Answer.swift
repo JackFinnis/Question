@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-struct Answer: Identifiable {
+struct Answer: Identifiable, Equatable {
     let id: String
     let date: Date
     let answer: String?

@@ -8,126 +8,135 @@
 import SwiftUI
 
 struct MyQuestionView: View {
-    @Environment(\.dismiss) var dismiss
     @StateObject var questionVM = QuestionVM()
-    @State var redundantFinished = false
+    @FocusState var focused: Bool
     @State var showEndAlert = false
+    
+    @State var redundantFinished = false
     
     let user: User
     let username: String
     let questionID: String
     
     let formatting = FormattingHelper()
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
-        Group {
-            if questionVM.question == nil {
-                ProgressView("Loading question...")
-            } else {
-                ZStack {
-                    Form {}
-                    VStack {
-                        Text(questionVM.question?.question ?? "No Question")
-                        Form {
-                            Section {
-                                TextEditor(text: $questionVM.newQuestion)
-                                Button("Edit") {
-                                    Task {
-                                        await questionVM.submitNewQuestion(questionID: questionID)
-                                    }
-                                }
-                            } header: {
-                                Text("Edit Question")
-                            } footer: {
-                                Text(questionVM.newQuestionError ?? "")
-                            }
-                            .headerProminence(.increased)
-                            
-                            Section {
-                                Toggle("Time Limit", isOn: $questionVM.newTimedQuestion.animation())
-                                if questionVM.newTimedQuestion {
-                                    Stepper(formatting.singularPlural(singularWord: "Minute", count: questionVM.newQuestionMinutes), value: $questionVM.newQuestionMinutes, in: 1...60)
-                                }
-                                Button("Submit") {
-                                    Task {
-                                        await questionVM.submitNewTimeLimit(questionID: questionID)
-                                    }
-                                }
-                            } header: {
-                                Text("New Time Limit")
-                            }
-                            .headerProminence(.increased)
-                            
-                            Section {
-                                List(questionVM.answers) { answer in
-                                    HStack {
-                                        AnswerUserRow(answer: answer)
-                                        Spacer()
-                                        ToggleShareButton(questionVM: questionVM, question: questionVM.question!, answerID: answer.id)
-                                    }
-                                    .swipeActions {
-                                        ToggleShareButton(questionVM: questionVM, question: questionVM.question!, answerID: answer.id)
-                                    }
-                                }
-                            } header: {
-                                HStack {
-                                    Text(formatting.singularPlural(singularWord: "Answer", count: questionVM.question!.answerIDs.count))
-                                    Spacer()
-                                    Button("Share All") {
+        NavigationView {
+            Group {
+                if questionVM.question == nil {
+                    ProgressView("Loading question...")
+                } else {
+                    ZStack {
+                        Form {}
+                        VStack {
+                            Text(questionVM.question?.question ?? "No Question")
+                            Form {
+                                Section {
+                                    TextEditor(text: $questionVM.newQuestion)
+                                        .focused($focused)
+                                        .toolbar {
+                                            ToolbarItemGroup(placement: .keyboard) {
+                                                Spacer()
+                                                Button("Done") {
+                                                    focused = false
+                                                }
+                                            }
+                                        }
+                                    Button("Edit") {
                                         Task {
-                                            await questionVM.shareAllAnswers(question: questionVM.question!)
+                                            await questionVM.submitNewQuestion(questionID: questionID)
                                         }
                                     }
-                                    .font(.none)
+                                } header: {
+                                    Text("Edit Question")
+                                } footer: {
+                                    Text(questionVM.newQuestionError ?? "")
                                 }
+                                .headerProminence(.increased)
+                                
+                                Section {
+                                    Toggle("Time Limit", isOn: $questionVM.newTimedQuestion.animation())
+                                    if questionVM.newTimedQuestion {
+                                        Stepper(formatting.singularPlural(singularWord: "Minute", count: questionVM.newQuestionMinutes), value: $questionVM.newQuestionMinutes, in: 1...60)
+                                    }
+                                    Button("Submit") {
+                                        Task {
+                                            await questionVM.submitNewTimeLimit(questionID: questionID)
+                                        }
+                                    }
+                                } header: {
+                                    Text("New Time Limit")
+                                }
+                                .headerProminence(.increased)
+                                
+                                Section {
+                                    List(questionVM.answers) { answer in
+                                        HStack {
+                                            AnswerUserRow(answer: answer)
+                                            Spacer()
+                                            ToggleShareButton(questionVM: questionVM, question: questionVM.question!, answerID: answer.id)
+                                        }
+                                        .swipeActions {
+                                            ToggleShareButton(questionVM: questionVM, question: questionVM.question!, answerID: answer.id)
+                                        }
+                                    }
+                                    .animation(.default, value: questionVM.answers)
+                                } header: {
+                                    HStack {
+                                        Text(formatting.singularPlural(singularWord: "Answer", count: questionVM.question!.answerIDs.count))
+                                        Spacer()
+                                        if !questionVM.question!.answerIDs.isEmpty {
+                                            Button("Share All") {
+                                                Task {
+                                                    await questionVM.shareAllAnswers(question: questionVM.question!)
+                                                }
+                                            }
+                                            .font(.none)
+                                        }
+                                    }
+                                }
+                                .headerProminence(.increased)
                             }
-                            .headerProminence(.increased)
+                            .frame(maxWidth: 700)
                         }
                     }
-                    .frame(maxWidth: 700)
                 }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Text(questionVM.formattedTimeRemaining)
-                            .onReceive(timer) { _ in
-                                questionVM.timeIntervalRemaining = questionVM.question?.end?.timeIntervalSinceNow ?? 0
+            }
+            .navigationTitle(username)
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                questionVM.addListeners(questionID: questionID, username: username)
+            }
+            .onDisappear {
+                questionVM.removeListeners()
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if questionVM.loading {
+                        ProgressView()
+                    } else if questionVM.isLive {
+                        Button("End Now") {
+                            Task {
+                                await questionVM.stopQuestion(username: username, questionID: questionID)
                             }
-                    }
-                }
-            }
-        }
-        .navigationTitle(username)
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            questionVM.addListeners(questionID: questionID, username: username)
-        }
-        .onDisappear {
-            questionVM.removeListeners()
-            Task {
-                await questionVM.stopLiveQuestion(username: username)
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                if questionVM.loading {
-                    ProgressView()
-                } else if questionVM.isLive {
-                    Button("End Now") {
-                        Task {
-                            await questionVM.stopQuestion(username: username, questionID: questionID)
+                        }
+                        .tint(.red)
+                    } else {
+                        Button("New Question") {
+                            Task {
+                                await questionVM.stopLiveQuestion(username: username)
+                            }
                         }
                     }
-                    .tint(.red)
-                } else {
-                    Button("New Question") {
-                        dismiss()
-                    }
+                }
+                ToolbarItem(placement: .principal) {
+                    RoomStatusButton(user: user, username: username)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Countdown(questionVM: questionVM)
                 }
             }
-            ToolbarItem(placement: .principal) {
-                RoomStatusButton(joinUsername: username, guestUsernames: user.guestUsernames)
-            }
         }
+        .navigationViewStyle(.stack)
     }
 }

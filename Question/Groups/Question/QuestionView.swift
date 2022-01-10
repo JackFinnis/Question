@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct QuestionView: View {
-    @Environment(\.dismiss) var dismiss
     @StateObject var questionVM = QuestionVM()
+    @FocusState var focused: Bool
     
     let username: String
     let questionID: String
     let joinUsername: String
     
     let formatting = FormattingHelper()
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         Group {
@@ -31,6 +30,7 @@ struct QuestionView: View {
                             Section {
                                 if questionVM.isLive {
                                     TextEditor(text: $questionVM.answer)
+                                        .focused($focused)
                                 } else if questionVM.answer.isEmpty {
                                     Text("No Answer")
                                 } else {
@@ -45,63 +45,46 @@ struct QuestionView: View {
                             
                             Section {
                                 if questionVM.answer.isEmpty {
-                                    HStack {
-                                        Spacer()
-                                        Text("No Answer")
-                                        Spacer()
-                                    }
+                                    Text("No Answer")
+                                        .centred()
                                 } else if questionVM.loading {
-                                    HStack {
-                                        Spacer()
-                                        ProgressView()
-                                        Spacer()
-                                    }
+                                    ProgressView()
+                                        .centred()
                                 } else if !questionVM.unsavedChanges {
-                                    HStack {
-                                        Spacer()
-                                        Text("Submitted")
-                                        Spacer()
-                                    }
+                                    Text("Submitted")
+                                        .centred()
                                 } else {
-                                    HStack {
-                                        Spacer()
-                                        Button {
-                                            Task {
-                                                await questionVM.submitAnswer(questionID: questionID, username: username, joinUsername: joinUsername)
-                                            }
-                                        } label: {
-                                            if questionVM.oldAnswer.isEmpty {
-                                                Text("Submit")
-                                            } else {
-                                                Text("Resubmit")
-                                            }
+                                    Button {
+                                        Task {
+                                            await questionVM.submitAnswer(questionID: questionID, username: username, joinUsername: joinUsername)
                                         }
-                                        Spacer()
+                                    } label: {
+                                        if questionVM.oldAnswer.isEmpty {
+                                            Text("Submit")
+                                        } else {
+                                            Text("Resubmit")
+                                        }
                                     }
+                                    .centred()
                                     .foregroundColor(.white)
                                     .listRowBackground(Color.accentColor)
                                 }
                             }
                             
-                            Section {
-                                List(questionVM.answers.filter { questionVM.question!.sharedAnswerIDs.contains($0.id) }) { answer in
-                                    AnswerUserRow(answer: answer)
+                            if !questionVM.question!.sharedAnswerIDs.isEmpty {
+                                Section {
+                                    List(questionVM.answers.filter { questionVM.question!.sharedAnswerIDs.contains($0.id) }) { answer in
+                                        AnswerUserRow(answer: answer)
+                                    }
+                                    .animation(.default, value: questionVM.answers)
+                                } header: {
+                                    Text(formatting.singularPlural(singularWord: "Shared Answer", count: questionVM.question!.sharedAnswerIDs.count))
                                 }
-                            } header: {
-                                Text(formatting.singularPlural(singularWord: "Shared Answer", count: questionVM.question!.sharedAnswerIDs.count))
+                                .headerProminence(.increased)
                             }
-                            .headerProminence(.increased)
                         }
                     }
                     .frame(maxWidth: 700)
-                }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Text(questionVM.formattedTimeRemaining)
-                            .onReceive(timer) { _ in
-                                questionVM.timeIntervalRemaining = questionVM.question?.end?.timeIntervalSinceNow ?? 0
-                            }
-                    }
                 }
             }
         }
@@ -116,7 +99,18 @@ struct QuestionView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("Leave Room") {
-                    dismiss()
+                    Task {
+                        await questionVM.helper.leaveLiveRoom(username: username)
+                    }
+                }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Countdown(questionVM: questionVM)
+            }
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    focused = false
                 }
             }
         }

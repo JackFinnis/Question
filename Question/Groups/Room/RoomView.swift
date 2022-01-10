@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RoomView: View {
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.scenePhase) var scenePhase
     @StateObject var roomVM = RoomVM()
     
     let username: String
@@ -27,20 +27,33 @@ struct RoomView: View {
             }
             .navigationTitle(joinUsername)
             .navigationBarTitleDisplayMode(.inline)
-            .task {
+            .onAppear {
                 roomVM.addUserListener(username: joinUsername)
-                await roomVM.helper.joinRoom(username: username, joinUsername: joinUsername)
+                Task {
+                    await roomVM.joinRoom(username: username, joinUsername: joinUsername)
+                }
             }
             .onDisappear {
                 roomVM.removeListeners()
                 Task {
-                    await roomVM.helper.leaveRoom(username: username, joinUsername: joinUsername)
+                    await roomVM.leaveRoom(username: username, joinUsername: joinUsername)
                 }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Leave Room") {
-                        dismiss()
+                        Task {
+                            await roomVM.helper.leaveLiveRoom(username: username)
+                        }
+                    }
+                }
+            }
+            .onChange(of: scenePhase) { newPhase in
+                Task {
+                    if newPhase == .active {
+                        await roomVM.joinRoom(username: username, joinUsername: joinUsername)
+                    } else {
+                        await roomVM.leaveRoom(username: username, joinUsername: joinUsername)
                     }
                 }
             }

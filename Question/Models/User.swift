@@ -10,17 +10,17 @@ import Foundation
 struct User {
     let username: String?
     let liveQuestionID: String?
-    let answerIDs: [String]
-    let questionIDs: [String]
+    let liveJoinUsername: String?
     let guestUsernames: [String]
-    let liveRoomUsernames: [String]
+    let usernamesBlockedYou: [String]
+    let usernamesYouBlocked: [String]
     
     init(id: String, data: [String: Any]) {
         self.username = id
         self.liveQuestionID = data["liveQuestionID"] as? String
-        self.answerIDs = data["answerIDs"] as? [String] ?? []
-        self.questionIDs = data["questionIDs"] as? [String] ?? []
+        self.liveJoinUsername = data["liveJoinUsername"] as? String
         self.guestUsernames = data["guestUsernames"] as? [String] ?? []
-        self.liveRoomUsernames = data["liveRoomUsernames"] as? [String] ?? []
+        self.usernamesBlockedYou = data["usernamesBlockedYou"] as? [String] ?? []
+        self.usernamesYouBlocked = data["usernamesYouBlocked"] as? [String] ?? []
     }
 }

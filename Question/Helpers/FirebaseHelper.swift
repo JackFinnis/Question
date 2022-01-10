@@ -10,8 +10,18 @@ import FirebaseFirestore
 
 struct FirebaseHelper {
     // MARK: - Properties
-    let database = Firestore.firestore()
+    let database: Firestore
     var nothing: String?
+    let haptics = HapticsHelper()
+    
+    // MARK: - Initialiser
+    init() {
+        let settings = FirestoreSettings()
+        let database = Firestore.firestore()
+        settings.isPersistenceEnabled = false
+        database.settings = settings
+        self.database = database
+    }
     
     // MARK: - Document Listeners
     func addDocumentListener(collection: String, documentID: String, completion: @escaping ([String : Any]?) -> Void) -> ListenerRegistration {
@@ -209,13 +219,8 @@ struct FirebaseHelper {
         return data != nil
     }
     
-    func joinRoom(username: String, joinUsername: String) async {
-        await addElement(collection: "users", documentID: joinUsername, arrayName: "guestUsernames", element: username)
-        await addElement(collection: "users", documentID: username, arrayName: "liveRoomUsernames", element: joinUsername)
-    }
-    
-    func leaveRoom(username: String, joinUsername: String) async {
-        await removeElement(collection: "users", documentID: joinUsername, arrayName: "guestUsernames", element: username)
-        await removeElement(collection: "users", documentID: username, arrayName: "liveRoomUsernames", element: joinUsername)
+    func leaveLiveRoom(username: String) async {
+        await deleteField(collection: "users", documentID: username, field: "liveJoinUsername")
+        haptics.success()
     }
 }

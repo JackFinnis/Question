@@ -44,15 +44,15 @@ class AuthVM: ObservableObject {
             createUsernameError = "Username connot contain the phrase __.*__"
         } else if createUsername.count > 20 {
             createUsernameError = "Username must be shorter that 20 characters"
-        } else if await !helper.isInUse(username: createUsername) {
+        } else if await helper.isInUse(username: createUsername) {
+            createUsernameError = "Username is already taken"
+        } else {
             await helper.addDocument(collection: "users", documentID: createUsername)
             username = createUsername
             UserDefaults.standard.set(username, forKey: "username")
             haptics.success()
             loading = false
             return
-        } else {
-            createUsernameError = "Username is already taken"
         }
         haptics.error()
         loading = false
