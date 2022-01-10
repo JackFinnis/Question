@@ -94,6 +94,11 @@ class UserVM: ObservableObject {
         addQuestionsListener(username: username)
     }
     
+    func removeListeners() {
+        answersListener?.remove()
+        questionsListener?.remove()
+    }
+    
     // MARK: - Methods
     func filterAnswers() {
         filteredAnswers = answers.filter {
@@ -119,15 +124,13 @@ class UserVM: ObservableObject {
         self.recentUsernames = recentUsernames
     }
     
-    func submitJoinUser(username: String, usernamesBlockedYou: [String]) async {
+    func submitJoinUser(username: String) async {
         loading = true
         joinUsernameError = nil
         if joinUsername.isEmpty {
             joinUsernameError = "Please enter a username"
         } else if joinUsername == username {
             joinUsernameError = "Please enter a different username"
-        } else if usernamesBlockedYou.contains(username) {
-            joinUsernameError = username + " has blocked you from joining their room"
         } else if await !helper.isInUse(username: joinUsername) {
             joinUsernameError = "User does not exist"
         } else {

@@ -12,15 +12,13 @@ struct User {
     let liveQuestionID: String?
     let liveJoinUsername: String?
     let guestUsernames: [String]
-    let usernamesBlockedYou: [String]
-    let usernamesYouBlocked: [String]
+    let blockedUsernames: [String]
     
     init(id: String, data: [String: Any]) {
         self.username = id
         self.liveQuestionID = data["liveQuestionID"] as? String
         self.liveJoinUsername = data["liveJoinUsername"] as? String
         self.guestUsernames = data["guestUsernames"] as? [String] ?? []
-        self.usernamesBlockedYou = data["usernamesBlockedYou"] as? [String] ?? []
-        self.usernamesYouBlocked = data["usernamesYouBlocked"] as? [String] ?? []
+        self.blockedUsernames = data["blockedUsernames"] as? [String] ?? []
     }
 }

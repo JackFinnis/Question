@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct GuestRow: View {
+    @ObservedObject var guestsVM: GuestsVM
     @State var showConfirmationDialog = false
-    @Binding var loading: Bool
     
     let username: String
     let guestUsername: String
@@ -30,30 +30,14 @@ struct GuestRow: View {
                 Button("Cancel", role: .cancel) {}
                 Button("Remove User") {
                     Task {
-                        await removeUser()
+                        await guestsVM.removeUser(guestUsername: guestUsername)
                     }
                 }
                 Button("Block User", role: .destructive) {
                     Task {
-                        await blockUser()
+                        await guestsVM.blockUser(username: username, guestUsername: guestUsername)
                     }
                 }
             }
-    }
-    
-    @MainActor
-    func removeUser() async {
-        loading = true
-        await helper.deleteField(collection: "users", documentID: guestUsername, field: "liveJoinUsername")
-        loading = false
-    }
-    
-    @MainActor
-    func blockUser() async {
-        await removeUser()
-        loading = true
-        await helper.addElement(collection: "users", documentID: username, arrayName: "usernamesYouBlocked", element: guestUsername)
-        await helper.addElement(collection: "users", documentID: guestUsername, arrayName: "usernamesBlockedYou", element: username)
-        loading = false
     }
 }

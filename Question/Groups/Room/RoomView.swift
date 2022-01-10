@@ -20,6 +20,21 @@ struct RoomView: View {
                     ProgressView("Loading room...")
                 } else if roomVM.user!.liveQuestionID == nil {
                     ProgressView("Waiting for the next question...")
+                } else if roomVM.user!.blockedUsernames.contains(username) {
+                    VStack {
+                        Image(systemName: "xmark")
+                        Text(joinUsername + " has blocked you")
+                        Button("Leave Room") {
+                            Task {
+                                await roomVM.helper.leaveLiveRoom(username: username)
+                            }
+                        }
+                    }
+                    .onAppear {
+                        Task {
+                            await roomVM.helper.leaveLiveRoom(username: username)
+                        }
+                    }
                 } else {
                     QuestionView(username: username, questionID: roomVM.user!.liveQuestionID!, joinUsername: joinUsername)
                 }

@@ -24,7 +24,8 @@
 		04B3C3B4278C3B0E000027B9 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3B3278C3B0E000027B9 /* View.swift */; };
 		04B3C3B7278C3D0F000027B9 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3B6278C3D0F000027B9 /* Countdown.swift */; };
 		04B3C3BB278C5364000027B9 /* GuestRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3BA278C5364000027B9 /* GuestRow.swift */; };
-		04B3C3BD278C555C000027B9 /* BlockedGuestRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3BC278C555C000027B9 /* BlockedGuestRow.swift */; };
+		04B3C3C0278C6DD7000027B9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 04B3C3BF278C6DD7000027B9 /* FirebaseCrashlytics */; };
+		04B3C3C2278C7FA4000027B9 /* GuestsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3C1278C7FA4000027B9 /* GuestsVM.swift */; };
 		04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */; };
 		04F5FF83278618D600E0EF9D /* AuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF82278618D600E0EF9D /* AuthVM.swift */; };
 		04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8927861D2900E0EF9D /* UserVM.swift */; };
@@ -64,7 +65,7 @@
 		04B3C3B3278C3B0E000027B9 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		04B3C3B6278C3D0F000027B9 /* Countdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countdown.swift; sourceTree = "<group>"; };
 		04B3C3BA278C5364000027B9 /* GuestRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestRow.swift; sourceTree = "<group>"; };
-		04B3C3BC278C555C000027B9 /* BlockedGuestRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedGuestRow.swift; sourceTree = "<group>"; };
+		04B3C3C1278C7FA4000027B9 /* GuestsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestsVM.swift; sourceTree = "<group>"; };
 		04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		04F5FF82278618D600E0EF9D /* AuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVM.swift; sourceTree = "<group>"; };
 		04F5FF8927861D2900E0EF9D /* UserVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVM.swift; sourceTree = "<group>"; };
@@ -92,6 +93,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0495E3032723415800F53132 /* FirebaseAnalytics in Frameworks */,
+				04B3C3C0278C6DD7000027B9 /* FirebaseCrashlytics in Frameworks */,
 				04F5FFAC27898A1600E0EF9D /* FirebaseAuth in Frameworks */,
 				0495E3072723415800F53132 /* FirebaseFirestore in Frameworks */,
 			);
@@ -157,7 +159,7 @@
 				04F5FFC4278A4B4700E0EF9D /* RoomStatusButton.swift */,
 				04F5FFC6278A4BDD00E0EF9D /* GuestsView.swift */,
 				04B3C3BA278C5364000027B9 /* GuestRow.swift */,
-				04B3C3BC278C555C000027B9 /* BlockedGuestRow.swift */,
+				04B3C3C1278C7FA4000027B9 /* GuestsVM.swift */,
 			);
 			path = GuestsView;
 			sourceTree = "<group>";
@@ -204,8 +206,8 @@
 			isa = PBXGroup;
 			children = (
 				04F5FF8427861C2900E0EF9D /* Authentication */,
-				04B3C3BE278C5563000027B9 /* GuestsView */,
 				04F5FF8527861C5F00E0EF9D /* User */,
+				04B3C3BE278C5563000027B9 /* GuestsView */,
 				04F5FF8727861CAF00E0EF9D /* Room */,
 				04F5FF9527864E0600E0EF9D /* Question */,
 			);
@@ -306,6 +308,7 @@
 				0495E3022723415800F53132 /* FirebaseAnalytics */,
 				0495E3062723415800F53132 /* FirebaseFirestore */,
 				04F5FFAB27898A1600E0EF9D /* FirebaseAuth */,
+				04B3C3BF278C6DD7000027B9 /* FirebaseCrashlytics */,
 			);
 			productName = Question;
 			productReference = 0495E2D32722F75800F53132 /* Question.app */;
@@ -377,7 +380,6 @@
 				0495E2D72722F75800F53132 /* QuestionApp.swift in Sources */,
 				0495E2F62722FB9300F53132 /* Answer.swift in Sources */,
 				0495E32027254D7B00F53132 /* MyQuestionView.swift in Sources */,
-				04B3C3BD278C555C000027B9 /* BlockedGuestRow.swift in Sources */,
 				0495E31627234E0500F53132 /* User.swift in Sources */,
 				0495E3182724928100F53132 /* UserView.swift in Sources */,
 				04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */,
@@ -389,6 +391,7 @@
 				04B3C3B7278C3D0F000027B9 /* Countdown.swift in Sources */,
 				04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */,
 				04F5FFB92789C27A00E0EF9D /* QuestionRow.swift in Sources */,
+				04B3C3C2278C7FA4000027B9 /* GuestsVM.swift in Sources */,
 				04F5FFC5278A4B4700E0EF9D /* RoomStatusButton.swift in Sources */,
 				0495E31E2724A95D00F53132 /* RoomView.swift in Sources */,
 				04F5FF9027861DB100E0EF9D /* RoomVM.swift in Sources */,
@@ -625,6 +628,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0495E3012723415800F53132 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		04B3C3BF278C6DD7000027B9 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0495E3012723415800F53132 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		04F5FFAB27898A1600E0EF9D /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

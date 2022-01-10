@@ -9,23 +9,22 @@ import SwiftUI
 
 struct GuestsView: View {
     @Environment(\.dismiss) var dismiss
-    @State var loading = false
-    @State var searchText = ""
+    @ObservedObject var guestsVM: GuestsVM
     
     let user: User
     let username: String
     
     var filteredGuestUsernames: [String] {
         user.guestUsernames.filter {
-            searchText.isEmpty ||
-            $0.localizedCaseInsensitiveContains(searchText)
+            guestsVM.searchText.isEmpty ||
+            $0.localizedCaseInsensitiveContains(guestsVM.searchText)
         }
     }
     
     var filteredBlockedGuestUsernames: [String] {
-        user.usernamesYouBlocked.filter {
-            searchText.isEmpty ||
-            $0.localizedCaseInsensitiveContains(searchText)
+        user.blockedUsernames.filter {
+            guestsVM.searchText.isEmpty ||
+            $0.localizedCaseInsensitiveContains(guestsVM.searchText)
         }
     }
     
@@ -36,25 +35,35 @@ struct GuestsView: View {
             Form {
                 Section {
                     List(filteredGuestUsernames, id: \.self) { guestUsername in
-                        GuestRow(loading: $loading, username: username, guestUsername: guestUsername)
+                        GuestRow(guestsVM: guestsVM, username: username, guestUsername: guestUsername)
                     }
                 } header: {
                     Text(formatter.singularPlural(singularWord: "Guest", count: user.guestUsernames.count))
                 }
                 .headerProminence(.increased)
                 
-                if !user.usernamesYouBlocked.isEmpty {
+                if !user.blockedUsernames.isEmpty {
                     Section {
-                        List(filteredGuestUsernames, id: \.self) { guestUsername in
-                            BlockedGuestRow(loading: $loading, username: username, guestUsername: guestUsername)
+                        List(filteredBlockedGuestUsernames, id: \.self) { guestUsername in
+                            Text(guestUsername)
+                                .swipeActions {
+                                    Button {
+                                        Task {
+                                            await guestsVM.unblockUser(username: username, guestUsername: guestUsername)
+                                        }
+                                    } label: {
+                                        Image(systemName: "checkmark")
+                                    }
+                                    .tint(.green)
+                                }
                         }
                     } header: {
-                        Text(formatter.singularPlural(singularWord: "Blocked Guest", count: user.usernamesYouBlocked.count))
+                        Text(formatter.singularPlural(singularWord: "Blocked Guest", count: user.blockedUsernames.count))
                     }
                     .headerProminence(.increased)
                 }
             }
-            .searchable(text: $searchText.animation())
+            .searchable(text: $guestsVM.searchText.animation())
             .navigationTitle(username + "'s Room")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -67,7 +76,7 @@ struct GuestsView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
-                    if loading {
+                    if guestsVM.loading {
                         ProgressView()
                     }
                 }

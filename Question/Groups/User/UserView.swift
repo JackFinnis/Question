@@ -32,12 +32,12 @@ struct UserView: View {
                                     .submitLabel(.join)
                                     .onSubmit {
                                         Task {
-                                            await userVM.submitJoinUser(username: username, usernamesBlockedYou: userVM.user!.usernamesBlockedYou)
+                                            await userVM.submitJoinUser(username: username)
                                         }
                                     }
                                 Button("Join") {
                                     Task {
-                                        await userVM.submitJoinUser(username: username, usernamesBlockedYou: userVM.user!.usernamesBlockedYou)
+                                        await userVM.submitJoinUser(username: username)
                                     }
                                 }
                             } header: {
@@ -95,9 +95,12 @@ struct UserView: View {
             .onAppear {
                 userVM.addListeners(username: username)
             }
+            .onDisappear {
+                userVM.removeListeners()
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    if userVM.loading {
+                    if userVM.loading && userVM.user != nil {
                         ProgressView()
                     }
                 }

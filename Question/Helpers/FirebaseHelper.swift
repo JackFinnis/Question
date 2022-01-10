@@ -56,12 +56,7 @@ struct FirebaseHelper {
     // MARK: - General Static Fetching
     // Fetch static version of document from collection
     func getDocumentData(collection: String, documentID: String) async -> [String : Any]? {
-        // Ensure data is found
-        if let data = try? await database.collection(collection).document(documentID).getDocument().data() {
-            return data
-        } else {
-            return nil
-        }
+        try? await database.collection(collection).document(documentID).getDocument().data()
     }
     
     // Fetch documents with given IDs

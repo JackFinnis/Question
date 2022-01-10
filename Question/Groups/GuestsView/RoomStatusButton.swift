@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RoomStatusButton: View {
+    @StateObject var guestsVM = GuestsVM()
     @State var showGuestsView = false
     
     let user: User
@@ -23,7 +24,7 @@ struct RoomStatusButton: View {
                 .bold()
         }
         .sheet(isPresented: $showGuestsView) {
-            GuestsView(user: user, username: username)
+            GuestsView(guestsVM: guestsVM, user: user, username: username)
         }
     }
 }
