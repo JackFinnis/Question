@@ -26,6 +26,47 @@
 		04B3C3C2278C7FA4000027B9 /* GuestsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3C1278C7FA4000027B9 /* GuestsVM.swift */; };
 		04B3C3C4278C8201000027B9 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3C3278C8201000027B9 /* RootView.swift */; };
 		04B3C3C6278C9840000027B9 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3C5278C9840000027B9 /* DismissButton.swift */; };
+		04B3C3CE278CB8CE000027B9 /* QuestionMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3CD278CB8CE000027B9 /* QuestionMacApp.swift */; };
+		04B3C3D2278CB8CF000027B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04B3C3D1278CB8CF000027B9 /* Assets.xcassets */; };
+		04B3C3DB278CB946000027B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3DA278CB946000027B9 /* AppDelegate.swift */; };
+		04B3C3DC278CBA3E000027B9 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF99278655B500E0EF9D /* Row.swift */; };
+		04B3C3DD278CBA3E000027B9 /* AnswerUserRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFA4278903E700E0EF9D /* AnswerUserRow.swift */; };
+		04B3C3DE278CBA3E000027B9 /* ToggleShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFB62789BB0400E0EF9D /* ToggleShareButton.swift */; };
+		04B3C3DF278CBA3E000027B9 /* CopyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFCE278AFFEF00E0EF9D /* CopyButton.swift */; };
+		04B3C3E0278CBA3E000027B9 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3B6278C3D0F000027B9 /* Countdown.swift */; };
+		04B3C3E1278CBA3E000027B9 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3C5278C9840000027B9 /* DismissButton.swift */; };
+		04B3C3E2278CBA3E000027B9 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3C3278C8201000027B9 /* RootView.swift */; };
+		04B3C3E3278CBA3E000027B9 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E3112723462000F53132 /* SignUpView.swift */; };
+		04B3C3E4278CBA3E000027B9 /* AuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF82278618D600E0EF9D /* AuthVM.swift */; };
+		04B3C3E5278CBA3E000027B9 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E3172724928100F53132 /* UserView.swift */; };
+		04B3C3E6278CBA3E000027B9 /* UserVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8927861D2900E0EF9D /* UserVM.swift */; };
+		04B3C3E7278CBA3E000027B9 /* RoomStatusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFC4278A4B4700E0EF9D /* RoomStatusButton.swift */; };
+		04B3C3E8278CBA3E000027B9 /* GuestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFC6278A4BDD00E0EF9D /* GuestsView.swift */; };
+		04B3C3E9278CBA3E000027B9 /* GuestRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3BA278C5364000027B9 /* GuestRow.swift */; };
+		04B3C3EA278CBA3E000027B9 /* GuestsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3C1278C7FA4000027B9 /* GuestsVM.swift */; };
+		04B3C3EB278CBA3E000027B9 /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31D2724A95D00F53132 /* RoomView.swift */; };
+		04B3C3EC278CBA3E000027B9 /* RoomVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8F27861DB100E0EF9D /* RoomVM.swift */; };
+		04B3C3ED278CBA3E000027B9 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E3192724933000F53132 /* QuestionView.swift */; };
+		04B3C3EE278CBA3E000027B9 /* MyQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31F27254D7B00F53132 /* MyQuestionView.swift */; };
+		04B3C3EF278CBA3E000027B9 /* QuestionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF9627864E2200E0EF9D /* QuestionVM.swift */; };
+		04B3C3F0278CBA3E000027B9 /* HapticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFCC278AFD1000E0EF9D /* HapticsHelper.swift */; };
+		04B3C3F1278CBA3E000027B9 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */; };
+		04B3C3F2278CBA3E000027B9 /* FormattingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFB02789A19100E0EF9D /* FormattingHelper.swift */; };
+		04B3C3F3278CBA3E000027B9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31527234E0500F53132 /* User.swift */; };
+		04B3C3F4278CBA3E000027B9 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E2F32722F9C700F53132 /* Question.swift */; };
+		04B3C3F5278CBA3E000027B9 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E2F52722FB9300F53132 /* Answer.swift */; };
+		04B3C3F6278CBA3E000027B9 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3B3278C3B0E000027B9 /* View.swift */; };
+		04B3C3F7278CBA3E000027B9 /* SelectUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFBE2789D85B00E0EF9D /* SelectUserView.swift */; };
+		04B3C3F8278CBA3E000027B9 /* SelectQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFB22789AA7500E0EF9D /* SelectQuestionView.swift */; };
+		04B3C3F9278CBA3E000027B9 /* AnswersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFC22789EF4F00E0EF9D /* AnswersView.swift */; };
+		04B3C3FA278CBA3E000027B9 /* AnswerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFBA2789CCA300E0EF9D /* AnswerRow.swift */; };
+		04B3C3FB278CBA3E000027B9 /* QuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFC02789EE0700E0EF9D /* QuestionsView.swift */; };
+		04B3C3FC278CBA3E000027B9 /* QuestionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FFB82789C27A00E0EF9D /* QuestionRow.swift */; };
+		04B3C3FD278CBA82000027B9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0495E30A2723426D00F53132 /* GoogleService-Info.plist */; };
+		04B3C3FE278CBA9B000027B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3DA278CB946000027B9 /* AppDelegate.swift */; };
+		04B3C400278CBAB7000027B9 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 04B3C3FF278CBAB7000027B9 /* FirebaseAnalytics */; };
+		04B3C402278CBAB7000027B9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 04B3C401278CBAB7000027B9 /* FirebaseAuth */; };
+		04B3C404278CBAB7000027B9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 04B3C403278CBAB7000027B9 /* FirebaseFirestore */; };
 		04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */; };
 		04F5FF83278618D600E0EF9D /* AuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF82278618D600E0EF9D /* AuthVM.swift */; };
 		04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8927861D2900E0EF9D /* UserVM.swift */; };
@@ -67,6 +108,11 @@
 		04B3C3C1278C7FA4000027B9 /* GuestsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestsVM.swift; sourceTree = "<group>"; };
 		04B3C3C3278C8201000027B9 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		04B3C3C5278C9840000027B9 /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
+		04B3C3CB278CB8CE000027B9 /* QuestionMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuestionMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04B3C3CD278CB8CE000027B9 /* QuestionMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionMacApp.swift; sourceTree = "<group>"; };
+		04B3C3D1278CB8CF000027B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		04B3C3D6278CB8CF000027B9 /* QuestionMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuestionMac.entitlements; sourceTree = "<group>"; };
+		04B3C3DA278CB946000027B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		04F5FF82278618D600E0EF9D /* AuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVM.swift; sourceTree = "<group>"; };
 		04F5FF8927861D2900E0EF9D /* UserVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVM.swift; sourceTree = "<group>"; };
@@ -99,6 +145,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		04B3C3C8278CB8CE000027B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04B3C400278CBAB7000027B9 /* FirebaseAnalytics in Frameworks */,
+				04B3C402278CBAB7000027B9 /* FirebaseAuth in Frameworks */,
+				04B3C404278CBAB7000027B9 /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -106,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				0495E2D52722F75800F53132 /* Question */,
+				04B3C3CC278CB8CE000027B9 /* QuestionMac */,
 				0495E2D42722F75800F53132 /* Products */,
 				04F5FFAA27898A1600E0EF9D /* Frameworks */,
 			);
@@ -115,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				0495E2D32722F75800F53132 /* Question.app */,
+				04B3C3CB278CB8CE000027B9 /* QuestionMac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -123,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				0495E2D62722F75800F53132 /* QuestionApp.swift */,
+				04B3C3DA278CB946000027B9 /* AppDelegate.swift */,
 				0495E2DA2722F75A00F53132 /* Assets.xcassets */,
 				0495E30A2723426D00F53132 /* GoogleService-Info.plist */,
 				04F5FF982786556F00E0EF9D /* General */,
@@ -162,6 +221,16 @@
 				04B3C3C1278C7FA4000027B9 /* GuestsVM.swift */,
 			);
 			path = GuestsView;
+			sourceTree = "<group>";
+		};
+		04B3C3CC278CB8CE000027B9 /* QuestionMac */ = {
+			isa = PBXGroup;
+			children = (
+				04B3C3CD278CB8CE000027B9 /* QuestionMacApp.swift */,
+				04B3C3D1278CB8CF000027B9 /* Assets.xcassets */,
+				04B3C3D6278CB8CF000027B9 /* QuestionMac.entitlements */,
+			);
+			path = QuestionMac;
 			sourceTree = "<group>";
 		};
 		04F5FF8427861C2900E0EF9D /* Authentication */ = {
@@ -314,6 +383,28 @@
 			productReference = 0495E2D32722F75800F53132 /* Question.app */;
 			productType = "com.apple.product-type.application";
 		};
+		04B3C3CA278CB8CE000027B9 /* QuestionMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04B3C3D7278CB8CF000027B9 /* Build configuration list for PBXNativeTarget "QuestionMac" */;
+			buildPhases = (
+				04B3C3C7278CB8CE000027B9 /* Sources */,
+				04B3C3C8278CB8CE000027B9 /* Frameworks */,
+				04B3C3C9278CB8CE000027B9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QuestionMac;
+			packageProductDependencies = (
+				04B3C3FF278CBAB7000027B9 /* FirebaseAnalytics */,
+				04B3C401278CBAB7000027B9 /* FirebaseAuth */,
+				04B3C403278CBAB7000027B9 /* FirebaseFirestore */,
+			);
+			productName = QuestionMac;
+			productReference = 04B3C3CB278CB8CE000027B9 /* QuestionMac.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -321,11 +412,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1300;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
 					0495E2D22722F75800F53132 = {
 						CreatedOnToolsVersion = 13.0;
+					};
+					04B3C3CA278CB8CE000027B9 = {
+						CreatedOnToolsVersion = 13.2.1;
 					};
 				};
 			};
@@ -346,6 +440,7 @@
 			projectRoot = "";
 			targets = (
 				0495E2D22722F75800F53132 /* Question */,
+				04B3C3CA278CB8CE000027B9 /* QuestionMac */,
 			);
 		};
 /* End PBXProject section */
@@ -357,6 +452,15 @@
 			files = (
 				0495E2DB2722F75A00F53132 /* Assets.xcassets in Resources */,
 				0495E30B2723426D00F53132 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04B3C3C9278CB8CE000027B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04B3C3FD278CBA82000027B9 /* GoogleService-Info.plist in Resources */,
+				04B3C3D2278CB8CF000027B9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +489,7 @@
 				04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */,
 				0495E2F42722F9C700F53132 /* Question.swift in Sources */,
 				04F5FFBB2789CCA300E0EF9D /* AnswerRow.swift in Sources */,
+				04B3C3DB278CB946000027B9 /* AppDelegate.swift in Sources */,
 				04F5FFC12789EE0700E0EF9D /* QuestionsView.swift in Sources */,
 				04B3C3C4278C8201000027B9 /* RootView.swift in Sources */,
 				04F5FFB32789AA7500E0EF9D /* SelectQuestionView.swift in Sources */,
@@ -401,6 +506,48 @@
 				0495E3122723462000F53132 /* SignUpView.swift in Sources */,
 				04F5FF9727864E2200E0EF9D /* QuestionVM.swift in Sources */,
 				04F5FF9A278655B500E0EF9D /* Row.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04B3C3C7278CB8CE000027B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04B3C3FE278CBA9B000027B9 /* AppDelegate.swift in Sources */,
+				04B3C3DC278CBA3E000027B9 /* Row.swift in Sources */,
+				04B3C3DD278CBA3E000027B9 /* AnswerUserRow.swift in Sources */,
+				04B3C3DE278CBA3E000027B9 /* ToggleShareButton.swift in Sources */,
+				04B3C3DF278CBA3E000027B9 /* CopyButton.swift in Sources */,
+				04B3C3E0278CBA3E000027B9 /* Countdown.swift in Sources */,
+				04B3C3E1278CBA3E000027B9 /* DismissButton.swift in Sources */,
+				04B3C3E2278CBA3E000027B9 /* RootView.swift in Sources */,
+				04B3C3E3278CBA3E000027B9 /* SignUpView.swift in Sources */,
+				04B3C3E4278CBA3E000027B9 /* AuthVM.swift in Sources */,
+				04B3C3E5278CBA3E000027B9 /* UserView.swift in Sources */,
+				04B3C3E6278CBA3E000027B9 /* UserVM.swift in Sources */,
+				04B3C3E7278CBA3E000027B9 /* RoomStatusButton.swift in Sources */,
+				04B3C3E8278CBA3E000027B9 /* GuestsView.swift in Sources */,
+				04B3C3E9278CBA3E000027B9 /* GuestRow.swift in Sources */,
+				04B3C3EA278CBA3E000027B9 /* GuestsVM.swift in Sources */,
+				04B3C3EB278CBA3E000027B9 /* RoomView.swift in Sources */,
+				04B3C3EC278CBA3E000027B9 /* RoomVM.swift in Sources */,
+				04B3C3ED278CBA3E000027B9 /* QuestionView.swift in Sources */,
+				04B3C3EE278CBA3E000027B9 /* MyQuestionView.swift in Sources */,
+				04B3C3EF278CBA3E000027B9 /* QuestionVM.swift in Sources */,
+				04B3C3F0278CBA3E000027B9 /* HapticsHelper.swift in Sources */,
+				04B3C3F1278CBA3E000027B9 /* FirebaseHelper.swift in Sources */,
+				04B3C3F2278CBA3E000027B9 /* FormattingHelper.swift in Sources */,
+				04B3C3F3278CBA3E000027B9 /* User.swift in Sources */,
+				04B3C3F4278CBA3E000027B9 /* Question.swift in Sources */,
+				04B3C3F5278CBA3E000027B9 /* Answer.swift in Sources */,
+				04B3C3F6278CBA3E000027B9 /* View.swift in Sources */,
+				04B3C3F7278CBA3E000027B9 /* SelectUserView.swift in Sources */,
+				04B3C3F8278CBA3E000027B9 /* SelectQuestionView.swift in Sources */,
+				04B3C3F9278CBA3E000027B9 /* AnswersView.swift in Sources */,
+				04B3C3FA278CBA3E000027B9 /* AnswerRow.swift in Sources */,
+				04B3C3FB278CBA3E000027B9 /* QuestionsView.swift in Sources */,
+				04B3C3FC278CBA3E000027B9 /* QuestionRow.swift in Sources */,
+				04B3C3CE278CB8CE000027B9 /* QuestionMacApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,6 +732,64 @@
 			};
 			name = Release;
 		};
+		04B3C3D8278CB8CF000027B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = QuestionMac/QuestionMac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = T4L8JBB88A;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = JackFinnis.QuestionMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		04B3C3D9278CB8CF000027B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = QuestionMac/QuestionMac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = T4L8JBB88A;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = JackFinnis.QuestionMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -602,6 +807,15 @@
 			buildConfigurations = (
 				0495E2E22722F75A00F53132 /* Debug */,
 				0495E2E32722F75A00F53132 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04B3C3D7278CB8CF000027B9 /* Build configuration list for PBXNativeTarget "QuestionMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04B3C3D8278CB8CF000027B9 /* Debug */,
+				04B3C3D9278CB8CF000027B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -626,6 +840,21 @@
 			productName = FirebaseAnalytics;
 		};
 		0495E3062723415800F53132 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0495E3012723415800F53132 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		04B3C3FF278CBAB7000027B9 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0495E3012723415800F53132 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		04B3C401278CBAB7000027B9 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0495E3012723415800F53132 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		04B3C403278CBAB7000027B9 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0495E3012723415800F53132 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;

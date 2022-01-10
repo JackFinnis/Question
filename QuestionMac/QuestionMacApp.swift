@@ -1,14 +1,14 @@
 //
-//  QuestionApp.swift
-//  Question
+//  QuestionMacApp.swift
+//  QuestionMac
 //
-//  Created by Jack Finnis on 22/10/2021.
+//  Created by Jack Finnis on 10/01/2022.
 //
 
 import SwiftUI
 
 @main
-struct QuestionApp: App {
+struct QuestionMacApp: App {
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
     var body: some Scene {
         WindowGroup {
