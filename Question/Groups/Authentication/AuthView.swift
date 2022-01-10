@@ -18,7 +18,9 @@ struct AuthView: View {
                 ProgressView("Signing in...")
             } else {
                 UserView(username: authVM.username!)
+                    .navigationBarTitleDisplayMode(.inline)
             }
         }
+        .navigationViewStyle(.stack)
     }
 }

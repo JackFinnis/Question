@@ -137,6 +137,5 @@ struct MyQuestionView: View {
                 }
             }
         }
-        .navigationViewStyle(.stack)
     }
 }

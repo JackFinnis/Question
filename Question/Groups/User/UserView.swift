@@ -31,12 +31,12 @@ struct UserView: View {
                                     .submitLabel(.join)
                                     .onSubmit {
                                         Task {
-                                            await userVM.submitJoinUser(username: username)
+                                            await userVM.submitJoinUser(username: username, usernamesBlockedYou: userVM.user!.usernamesBlockedYou)
                                         }
                                     }
                                 Button("Join") {
                                     Task {
-                                        await userVM.submitJoinUser(username: username)
+                                        await userVM.submitJoinUser(username: username, usernamesBlockedYou: userVM.user!.usernamesBlockedYou)
                                     }
                                 }
                             } header: {
@@ -64,11 +64,6 @@ struct UserView: View {
                                 Text(userVM.joinUsernameError ?? "")
                             }
                             .headerProminence(.increased)
-                            .fullScreenCover(isPresented: $userVM.showRoomView) {
-                                if let joinUsername = userVM.user?.liveJoinUsername {
-                                    RoomView(username: username, joinUsername: joinUsername)
-                                }
-                            }
                             
                             Section {
                                 TextEditor(text: $userVM.newQuestion)
@@ -89,11 +84,6 @@ struct UserView: View {
                                 Text(userVM.newQuestionError ?? "")
                             }
                             .headerProminence(.increased)
-                            .fullScreenCover(isPresented: $userVM.showMyQuestionView) {
-                                if let questionID = userVM.user?.liveQuestionID {
-                                    MyQuestionView(user: userVM.user!, username: username, questionID: questionID)
-                                }
-                            }
                         }
                         .frame(maxWidth: 700)
                     }
@@ -124,6 +114,15 @@ struct UserView: View {
                 }
             }
         }
-        .navigationViewStyle(.stack)
+        .fullScreenCover(isPresented: $userVM.showMyQuestionView) {
+            if let questionID = userVM.user?.liveQuestionID {
+                MyQuestionView(user: userVM.user!, username: username, questionID: questionID)
+            }
+        }
+        .fullScreenCover(isPresented: $userVM.showRoomView) {
+            if let joinUsername = userVM.user?.liveJoinUsername {
+                RoomView(username: username, joinUsername: joinUsername)
+            }
+        }
     }
 }
