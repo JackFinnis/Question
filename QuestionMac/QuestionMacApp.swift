@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct QuestionMacApp: App {
-    @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
+    init() {
+        FirebaseApp.configure()
+    }
+    
     var body: some Scene {
         WindowGroup {
             RootView()

@@ -15,8 +15,13 @@ struct CopyButton: View {
     var body: some View {
         if string != nil && !string!.isEmpty {
             Button {
+                #if os(macOS)
+                let pasteboard = NSPasteboard.general
+                pasteboard.setString(string!, forType: .string)
+                #else
                 let pasteboard = UIPasteboard.general
                 pasteboard.string = string!
+                #endif
                 haptics.success()
             } label: {
                 Label("Copy Answer", systemImage: "doc.on.doc")

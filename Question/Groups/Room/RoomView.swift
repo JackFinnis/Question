@@ -25,7 +25,9 @@ struct RoomView: View {
                 }
             }
             .navigationTitle(joinUsername)
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .onAppear {
                 roomVM.addUserListener(username: joinUsername)
                 Task {
@@ -39,7 +41,7 @@ struct RoomView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .destructiveAction) {
                     Button("Leave Room") {
                         Task {
                             await roomVM.helper.leaveLiveRoom(username: username)

@@ -22,7 +22,6 @@ struct RootView: View {
             } else {
                 UserView(username: authVM.username!)
                     .onChange(of: scenePhase) { newPhase in
-                        print(newPhase)
                         Task {
                             if newPhase == .active {
                                 await helper.joinRoom(username: authVM.username!)
@@ -33,6 +32,8 @@ struct RootView: View {
                     }
             }
         }
+        #if !os(macOS)
         .navigationViewStyle(.stack)
+        #endif
     }
 }

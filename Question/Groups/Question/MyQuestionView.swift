@@ -96,7 +96,9 @@ struct MyQuestionView: View {
                 }
             }
             .navigationTitle(username)
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .onAppear {
                 questionVM.addListeners(questionID: questionID, username: username)
                 questionVM.startTimer()
@@ -105,7 +107,7 @@ struct MyQuestionView: View {
                 questionVM.removeListeners()
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .destructiveAction) {
                     if questionVM.loading {
                         ProgressView()
                     } else if questionVM.isLive {
@@ -126,7 +128,7 @@ struct MyQuestionView: View {
                 ToolbarItem(placement: .principal) {
                     RoomStatusButton(user: user, username: username)
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .primaryAction) {
                     Countdown(questionVM: questionVM)
                 }
             }

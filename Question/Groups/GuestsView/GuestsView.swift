@@ -63,11 +63,18 @@ struct GuestsView: View {
                     .headerProminence(.increased)
                 }
             }
-            .searchable(text: $guestsVM.searchText.animation(), placement: .navigationBarDrawer)
-            .navigationTitle(username + "'s Room")
+            .searchable(text: $guestsVM.searchText.animation())
+            .navigationTitle(formatter.plural(properNoun: username) + " Room")
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .destructiveAction) {
+                    if guestsVM.loading {
+                        ProgressView()
+                    }
+                }
+                ToolbarItem(placement: .primaryAction) {
                     Button {
                         dismiss()
                     } label: {
@@ -75,13 +82,10 @@ struct GuestsView: View {
                             .bold()
                     }
                 }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    if guestsVM.loading {
-                        ProgressView()
-                    }
-                }
             }
         }
+        #if !os(macOS)
         .navigationViewStyle(.stack)
+        #endif
     }
 }

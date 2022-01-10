@@ -18,10 +18,12 @@ struct SignUpView: View {
                 Form {
                     Section {
                         TextField("Username", text: $authVM.createUsername)
-                            .textInputAutocapitalization(.words)
                             .disableAutocorrection(true)
+                            #if !os(macOS)
+                            .textInputAutocapitalization(.words)
                             .textContentType(.name)
                             .submitLabel(.join)
+                            #endif
                             .focused($focused)
                             .onSubmit {
                                 Task {
@@ -54,7 +56,9 @@ struct SignUpView: View {
                 DismissButton(focused1: _focused)
             }
             .navigationTitle("Sign Up")
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
         }
     }
 }

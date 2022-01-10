@@ -26,7 +26,9 @@ struct UserView: View {
                         Form {
                             Section {
                                 TextField("Enter Username", text: $userVM.joinUsername)
+                                    #if !os(macOS)
                                     .textInputAutocapitalization(.words)
+                                    #endif
                                     .disableAutocorrection(true)
                                     .focused($joinRoomFocused)
                                     .submitLabel(.join)
@@ -92,7 +94,9 @@ struct UserView: View {
                 }
             }
             .navigationTitle(username)
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .onAppear {
                 userVM.addListeners(username: username)
             }
@@ -100,7 +104,7 @@ struct UserView: View {
                 userVM.removeListeners()
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .destructiveAction) {
                     if userVM.loading && userVM.user != nil {
                         ProgressView()
                     }
@@ -112,6 +116,18 @@ struct UserView: View {
                 }
             }
         }
+        #if os(macOS)
+        .sheet(isPresented: $userVM.showMyQuestionView) {
+            if let questionID = userVM.user?.liveQuestionID {
+                MyQuestionView(user: userVM.user!, username: username, questionID: questionID)
+            }
+        }
+        .sheet(isPresented: $userVM.showRoomView) {
+            if let joinUsername = userVM.user?.liveJoinUsername {
+                RoomView(username: username, joinUsername: joinUsername)
+            }
+        }
+        #else
         .fullScreenCover(isPresented: $userVM.showMyQuestionView) {
             if let questionID = userVM.user?.liveQuestionID {
                 MyQuestionView(user: userVM.user!, username: username, questionID: questionID)
@@ -122,5 +138,6 @@ struct UserView: View {
                 RoomView(username: username, joinUsername: joinUsername)
             }
         }
+        #endif
     }
 }

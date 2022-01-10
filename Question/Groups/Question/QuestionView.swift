@@ -90,7 +90,9 @@ struct QuestionView: View {
             }
         }
         .navigationTitle(joinUsername)
-        .navigationBarTitleDisplayMode(.inline)
+        #if !os(macOS)
+            .navigationBarTitleDisplayMode(.inline)
+        #endif
         .onAppear {
             questionVM.addListeners(questionID: questionID, username: username)
             questionVM.startTimer()
@@ -99,14 +101,14 @@ struct QuestionView: View {
             questionVM.removeListeners()
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .destructiveAction) {
                 Button("Leave Room") {
                     Task {
                         await questionVM.helper.leaveLiveRoom(username: username)
                     }
                 }
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .primaryAction) {
                 Countdown(questionVM: questionVM)
             }
         }

@@ -6,18 +6,26 @@
 //
 
 import Foundation
-import UIKit
+#if !os(macOS)
+    import UIKit
+#endif
 
 struct HapticsHelper {
     // MARK: - Properties
-    let generator = UINotificationFeedbackGenerator()
+    #if !os(macOS)
+        let generator = UINotificationFeedbackGenerator()
+    #endif
     
     // MARK: - Methods
     func success() {
-        generator.notificationOccurred(.success)
+        #if !os(macOS)
+            generator.notificationOccurred(.success)
+        #endif
     }
     
     func error() {
-        generator.notificationOccurred(.error)
+        #if !os(macOS)
+            generator.notificationOccurred(.success)
+        #endif
     }
 }

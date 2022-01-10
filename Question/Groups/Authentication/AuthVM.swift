@@ -33,6 +33,7 @@ class AuthVM: ObservableObject {
     func createAccount() async {
         createUsernameError = nil
         loading = true
+        
         // Validate username
         if createUsername.isEmpty {
             createUsernameError = "Please enter a username."
