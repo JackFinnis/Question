@@ -14,7 +14,6 @@
 		0495E3032723415800F53132 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0495E3022723415800F53132 /* FirebaseAnalytics */; };
 		0495E3072723415800F53132 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0495E3062723415800F53132 /* FirebaseFirestore */; };
 		0495E30B2723426D00F53132 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0495E30A2723426D00F53132 /* GoogleService-Info.plist */; };
-		0495E30D2723439800F53132 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E30C2723439800F53132 /* AuthView.swift */; };
 		0495E3122723462000F53132 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E3112723462000F53132 /* SignUpView.swift */; };
 		0495E31627234E0500F53132 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E31527234E0500F53132 /* User.swift */; };
 		0495E3182724928100F53132 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E3172724928100F53132 /* UserView.swift */; };
@@ -24,8 +23,9 @@
 		04B3C3B4278C3B0E000027B9 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3B3278C3B0E000027B9 /* View.swift */; };
 		04B3C3B7278C3D0F000027B9 /* Countdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3B6278C3D0F000027B9 /* Countdown.swift */; };
 		04B3C3BB278C5364000027B9 /* GuestRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3BA278C5364000027B9 /* GuestRow.swift */; };
-		04B3C3C0278C6DD7000027B9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 04B3C3BF278C6DD7000027B9 /* FirebaseCrashlytics */; };
 		04B3C3C2278C7FA4000027B9 /* GuestsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3C1278C7FA4000027B9 /* GuestsVM.swift */; };
+		04B3C3C4278C8201000027B9 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3C3278C8201000027B9 /* RootView.swift */; };
+		04B3C3C6278C9840000027B9 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3C3C5278C9840000027B9 /* DismissButton.swift */; };
 		04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */; };
 		04F5FF83278618D600E0EF9D /* AuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF82278618D600E0EF9D /* AuthVM.swift */; };
 		04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5FF8927861D2900E0EF9D /* UserVM.swift */; };
@@ -55,7 +55,6 @@
 		0495E2F32722F9C700F53132 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		0495E2F52722FB9300F53132 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		0495E30A2723426D00F53132 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		0495E30C2723439800F53132 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		0495E3112723462000F53132 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		0495E31527234E0500F53132 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0495E3172724928100F53132 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
@@ -66,6 +65,8 @@
 		04B3C3B6278C3D0F000027B9 /* Countdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countdown.swift; sourceTree = "<group>"; };
 		04B3C3BA278C5364000027B9 /* GuestRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestRow.swift; sourceTree = "<group>"; };
 		04B3C3C1278C7FA4000027B9 /* GuestsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestsVM.swift; sourceTree = "<group>"; };
+		04B3C3C3278C8201000027B9 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		04B3C3C5278C9840000027B9 /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
 		04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		04F5FF82278618D600E0EF9D /* AuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVM.swift; sourceTree = "<group>"; };
 		04F5FF8927861D2900E0EF9D /* UserVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVM.swift; sourceTree = "<group>"; };
@@ -93,7 +94,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0495E3032723415800F53132 /* FirebaseAnalytics in Frameworks */,
-				04B3C3C0278C6DD7000027B9 /* FirebaseCrashlytics in Frameworks */,
 				04F5FFAC27898A1600E0EF9D /* FirebaseAuth in Frameworks */,
 				0495E3072723415800F53132 /* FirebaseFirestore in Frameworks */,
 			);
@@ -167,7 +167,7 @@
 		04F5FF8427861C2900E0EF9D /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				0495E30C2723439800F53132 /* AuthView.swift */,
+				04B3C3C3278C8201000027B9 /* RootView.swift */,
 				0495E3112723462000F53132 /* SignUpView.swift */,
 				04F5FF82278618D600E0EF9D /* AuthVM.swift */,
 			);
@@ -232,6 +232,7 @@
 				04F5FFB62789BB0400E0EF9D /* ToggleShareButton.swift */,
 				04F5FFCE278AFFEF00E0EF9D /* CopyButton.swift */,
 				04B3C3B6278C3D0F000027B9 /* Countdown.swift */,
+				04B3C3C5278C9840000027B9 /* DismissButton.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -308,7 +309,6 @@
 				0495E3022723415800F53132 /* FirebaseAnalytics */,
 				0495E3062723415800F53132 /* FirebaseFirestore */,
 				04F5FFAB27898A1600E0EF9D /* FirebaseAuth */,
-				04B3C3BF278C6DD7000027B9 /* FirebaseCrashlytics */,
 			);
 			productName = Question;
 			productReference = 0495E2D32722F75800F53132 /* Question.app */;
@@ -383,12 +383,13 @@
 				0495E31627234E0500F53132 /* User.swift in Sources */,
 				0495E3182724928100F53132 /* UserView.swift in Sources */,
 				04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */,
-				0495E30D2723439800F53132 /* AuthView.swift in Sources */,
 				0495E2F42722F9C700F53132 /* Question.swift in Sources */,
 				04F5FFBB2789CCA300E0EF9D /* AnswerRow.swift in Sources */,
 				04F5FFC12789EE0700E0EF9D /* QuestionsView.swift in Sources */,
+				04B3C3C4278C8201000027B9 /* RootView.swift in Sources */,
 				04F5FFB32789AA7500E0EF9D /* SelectQuestionView.swift in Sources */,
 				04B3C3B7278C3D0F000027B9 /* Countdown.swift in Sources */,
+				04B3C3C6278C9840000027B9 /* DismissButton.swift in Sources */,
 				04F5FF7F278613D800E0EF9D /* FirebaseHelper.swift in Sources */,
 				04F5FFB92789C27A00E0EF9D /* QuestionRow.swift in Sources */,
 				04B3C3C2278C7FA4000027B9 /* GuestsVM.swift in Sources */,
@@ -628,11 +629,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0495E3012723415800F53132 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
-		};
-		04B3C3BF278C6DD7000027B9 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0495E3012723415800F53132 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
 		};
 		04F5FFAB27898A1600E0EF9D /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

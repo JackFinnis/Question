@@ -13,7 +13,7 @@ struct QuestionApp: App {
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
     var body: some Scene {
         WindowGroup {
-            AuthView()
+            RootView()
         }
     }
 }

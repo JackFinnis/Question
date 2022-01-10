@@ -26,13 +26,15 @@ class GuestsVM: ObservableObject {
     func blockUser(username: String, guestUsername: String) async {
         await removeUser(guestUsername: guestUsername)
         loading = true
-        await helper.addElement(collection: "users", documentID: username, arrayName: "blockedUsernames", element: guestUsername)
+        await helper.addElement(collection: "users", documentID: username, arrayName: "usernamesYouBlocked", element: guestUsername)
+        await helper.addElement(collection: "users", documentID: guestUsername, arrayName: "usernamesBlockedYou", element: username)
         loading = false
     }
     
     func unblockUser(username: String, guestUsername: String) async {
         loading = true
-        await helper.removeElement(collection: "users", documentID: username, arrayName: "blockedUsernames", element: guestUsername)
+        await helper.removeElement(collection: "users", documentID: username, arrayName: "usernamesYouBlocked", element: guestUsername)
+        await helper.removeElement(collection: "users", documentID: guestUsername, arrayName: "usernamesBlockedYou", element: username)
         loading = false
     }
 }

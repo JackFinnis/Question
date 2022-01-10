@@ -19,7 +19,7 @@ class QuestionVM: ObservableObject {
     
     @Published var answer = ""
     @Published var answerError: String?
-    var oldAnswer = ""
+    @Published var oldAnswer = ""
     var unsavedChanges: Bool { answer.isEmpty || oldAnswer != answer }
     
     var updated = false
@@ -104,6 +104,7 @@ class QuestionVM: ObservableObject {
             haptics.error()
         } else {
             loading = true
+            oldAnswer = answer
             
             let newAnswerID = questionID + username
             await helper.addDocument(collection: "answers", documentID: newAnswerID, data: [
@@ -117,7 +118,6 @@ class QuestionVM: ObservableObject {
             await helper.addElement(collection: "users", documentID: username, arrayName: "answerIDs", element: newAnswerID)
             
             haptics.success()
-            oldAnswer = answer
             loading = false
         }
     }

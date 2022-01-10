@@ -83,8 +83,9 @@ struct QuestionView: View {
                                 .headerProminence(.increased)
                             }
                         }
+                        .frame(maxWidth: 700)
                     }
-                    .frame(maxWidth: 700)
+                    DismissButton(focused1: _focused)
                 }
             }
         }
@@ -106,12 +107,6 @@ struct QuestionView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Countdown(questionVM: questionVM)
-            }
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Done") {
-                    focused = false
-                }
             }
         }
     }

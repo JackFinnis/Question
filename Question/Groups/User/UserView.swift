@@ -32,12 +32,12 @@ struct UserView: View {
                                     .submitLabel(.join)
                                     .onSubmit {
                                         Task {
-                                            await userVM.submitJoinUser(username: username)
+                                            await userVM.submitJoinUser(username: username, usernamesBlockedYou: userVM.user!.usernamesBlockedYou)
                                         }
                                     }
                                 Button("Join") {
                                     Task {
-                                        await userVM.submitJoinUser(username: username)
+                                        await userVM.submitJoinUser(username: username, usernamesBlockedYou: userVM.user!.usernamesBlockedYou)
                                     }
                                 }
                             } header: {
@@ -46,7 +46,7 @@ struct UserView: View {
                                     Spacer()
                                     if !userVM.recentUsernames.isEmpty {
                                         Menu {
-                                            List(userVM.recentUsernames, id: \.self) { username in
+                                            ForEach(userVM.recentUsernames, id: \.self) { username in
                                                 Button {
                                                     withAnimation {
                                                         userVM.joinUsername = username
@@ -87,6 +87,7 @@ struct UserView: View {
                             .headerProminence(.increased)
                         }
                         .frame(maxWidth: 700)
+                        DismissButton(focused1: _joinRoomFocused, focused2: _newQuestionFocused)
                     }
                 }
             }
@@ -107,13 +108,6 @@ struct UserView: View {
                 ToolbarItem(placement: .principal) {
                     if let user = userVM.user {
                         RoomStatusButton(user: user, username: username)
-                    }
-                }
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("Done") {
-                        joinRoomFocused = false
-                        newQuestionFocused = false
                     }
                 }
             }

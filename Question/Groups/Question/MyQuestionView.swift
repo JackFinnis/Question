@@ -99,6 +99,7 @@ struct MyQuestionView: View {
                             }
                             .frame(maxWidth: 700)
                         }
+                        DismissButton(focused1: _focused)
                     }
                 }
             }

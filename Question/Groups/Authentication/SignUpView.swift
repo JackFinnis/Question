@@ -51,16 +51,10 @@ struct SignUpView: View {
                     }
                 }
                 .frame(maxWidth: 700)
+                DismissButton(focused1: _focused)
             }
             .navigationTitle("Sign Up")
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("Done") {
-                        focused = false
-                    }
-                }
-            }
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

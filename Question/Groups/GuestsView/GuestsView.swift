@@ -22,7 +22,7 @@ struct GuestsView: View {
     }
     
     var filteredBlockedGuestUsernames: [String] {
-        user.blockedUsernames.filter {
+        user.usernamesYouBlocked.filter {
             guestsVM.searchText.isEmpty ||
             $0.localizedCaseInsensitiveContains(guestsVM.searchText)
         }
@@ -42,7 +42,7 @@ struct GuestsView: View {
                 }
                 .headerProminence(.increased)
                 
-                if !user.blockedUsernames.isEmpty {
+                if !user.usernamesYouBlocked.isEmpty {
                     Section {
                         List(filteredBlockedGuestUsernames, id: \.self) { guestUsername in
                             Text(guestUsername)
@@ -58,12 +58,12 @@ struct GuestsView: View {
                                 }
                         }
                     } header: {
-                        Text(formatter.singularPlural(singularWord: "Blocked Guest", count: user.blockedUsernames.count))
+                        Text(formatter.singularPlural(singularWord: "Blocked User", count: user.usernamesYouBlocked.count))
                     }
                     .headerProminence(.increased)
                 }
             }
-            .searchable(text: $guestsVM.searchText.animation())
+            .searchable(text: $guestsVM.searchText.animation(), placement: .navigationBarDrawer)
             .navigationTitle(username + "'s Room")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -82,5 +82,6 @@ struct GuestsView: View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
     }
 }

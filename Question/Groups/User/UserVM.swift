@@ -124,13 +124,15 @@ class UserVM: ObservableObject {
         self.recentUsernames = recentUsernames
     }
     
-    func submitJoinUser(username: String) async {
+    func submitJoinUser(username: String, usernamesBlockedYou: [String]) async {
         loading = true
         joinUsernameError = nil
         if joinUsername.isEmpty {
             joinUsernameError = "Please enter a username"
         } else if joinUsername == username {
             joinUsernameError = "Please enter a different username"
+        } else if usernamesBlockedYou.contains(joinUsername) {
+            joinUsernameError = joinUsername + " has blocked you from joining their room"
         } else if await !helper.isInUse(username: joinUsername) {
             joinUsernameError = "User does not exist"
         } else {
@@ -138,6 +140,7 @@ class UserVM: ObservableObject {
                 "liveJoinUsername": joinUsername
             ])
             haptics.success()
+            joinUsername = ""
             loading = false
             return
         }
@@ -169,6 +172,7 @@ class UserVM: ObservableObject {
             ])
             
             haptics.success()
+            newQuestion = ""
             loading = false
         }
     }
