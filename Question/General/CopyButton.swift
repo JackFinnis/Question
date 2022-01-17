@@ -10,14 +10,12 @@ import SwiftUI
 struct CopyButton: View {
     let string: String?
     
-    let haptics = HapticsHelper()
+    let clipboardHelper = ClipboardHelper()
     
     var body: some View {
         if string != nil && !string!.isEmpty {
             Button {
-                let pasteboard = UIPasteboard.general
-                pasteboard.string = string!
-                haptics.success()
+                clipboardHelper.copy(string: string!)
             } label: {
                 Label("Copy Answer", systemImage: "doc.on.doc")
             }

@@ -17,7 +17,10 @@ struct Question: Identifiable, Hashable {
     let askerUsername: String?
     let sharedAnswerIDs: [String]
     
-    init(id: String, data: [String: Any]) {
+    init?(id: String, data: [String: Any]?) {
+        guard let data = data else {
+            return nil
+        }
         self.id = id
         self.minutes = data["minutes"] as? Int
         self.question = data["question"] as? String

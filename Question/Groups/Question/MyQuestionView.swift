@@ -86,6 +86,12 @@ struct MyQuestionView: View {
                                             .font(.none)
                                         }
                                     }
+                                } footer: {
+                                    if questionVM.answers.isNotEmpty {
+                                        Button("Export answers") {
+                                            questionVM.copyAnswers()
+                                        }
+                                    }
                                 }
                                 .headerProminence(.increased)
                             }

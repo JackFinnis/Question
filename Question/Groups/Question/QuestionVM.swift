@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import FirebaseFirestore
+import UIKit
 
 @MainActor
 class QuestionVM: ObservableObject {
@@ -46,6 +47,7 @@ class QuestionVM: ObservableObject {
     
     let helper = FirebaseHelper()
     let haptics = HapticsHelper()
+    let clipboard = ClipboardHelper()
     var timer: Cancellable?
     
     var questionListener: ListenerRegistration?
@@ -57,19 +59,15 @@ class QuestionVM: ObservableObject {
         questionListener?.remove()
         questionListener = helper.addDocumentListener(collection: "questions", documentID: questionID) { data in
             self.loading = false
-            if let data = data {
-                self.question = Question(id: questionID, data: data)
-                self.filterSharedAnswers(username: username)
-                // Update text editor
-                if !self.updated {
-                    self.updated = true
-                    self.newQuestion = self.question?.question ?? "No Question"
-                }
-                // Update countdown
-                self.timeIntervalRemaining = self.question?.end?.timeIntervalSinceNow ?? 0
-            } else {
-                self.question = nil
-                self.error = true
+            self.question = Question(id: questionID, data: data)
+            self.error = self.question == nil
+            self.filterSharedAnswers(username: username)
+            // Update countdown
+            self.timeIntervalRemaining = self.question?.end?.timeIntervalSinceNow ?? 0
+            // Update text editor
+            if !self.updated {
+                self.updated = true
+                self.newQuestion = self.question?.question ?? "No Question"
             }
         }
     }
@@ -77,7 +75,7 @@ class QuestionVM: ObservableObject {
     func addAnswersListener(questionID: String, username: String) {
         answersListener?.remove()
         answersListener = helper.addCollectionListener(collection: "answers", field: "questionID", isEqualTo: questionID) { documents in
-            self.answers = documents.map { document -> Answer in
+            self.answers = documents.compactMap { document in
                 Answer(id: document.documentID, data: document.data())
             }.sorted { $0.date < $1.date }
             self.filterSharedAnswers(username: username)
@@ -213,5 +211,11 @@ class QuestionVM: ObservableObject {
         if formattedTimeRemaining == "0" {
             haptics.error()
         }
+    }
+    
+    func copyAnswers() {
+        clipboard.copy(string: answers.reduce("") { current, answer in
+            current + (answer.answerUsername ?? "") + "\u{9}" + (answer.answer ?? "") + "\u{A}"
+        })
     }
 }

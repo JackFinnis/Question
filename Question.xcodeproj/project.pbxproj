@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04290E062795CC4200D611FA /* ClipboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04290E052795CC4200D611FA /* ClipboardHelper.swift */; };
+		04290E082795ECF500D611FA /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04290E072795ECF500D611FA /* Sequence.swift */; };
 		0495E2D72722F75800F53132 /* QuestionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E2D62722F75800F53132 /* QuestionApp.swift */; };
 		0495E2DB2722F75A00F53132 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0495E2DA2722F75A00F53132 /* Assets.xcassets */; };
 		0495E2F42722F9C700F53132 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0495E2F32722F9C700F53132 /* Question.swift */; };
@@ -49,6 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04290E052795CC4200D611FA /* ClipboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardHelper.swift; sourceTree = "<group>"; };
+		04290E072795ECF500D611FA /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		0495E2D32722F75800F53132 /* Question.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Question.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0495E2D62722F75800F53132 /* QuestionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionApp.swift; sourceTree = "<group>"; };
 		0495E2DA2722F75A00F53132 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				04B3C3B3278C3B0E000027B9 /* View.swift */,
+				04290E072795ECF500D611FA /* Sequence.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -198,6 +203,7 @@
 				04F5FFCC278AFD1000E0EF9D /* HapticsHelper.swift */,
 				04F5FF7E278613D800E0EF9D /* FirebaseHelper.swift */,
 				04F5FFB02789A19100E0EF9D /* FormattingHelper.swift */,
+				04290E052795CC4200D611FA /* ClipboardHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -369,6 +375,7 @@
 			files = (
 				04F5FF83278618D600E0EF9D /* AuthVM.swift in Sources */,
 				04F5FFCD278AFD1000E0EF9D /* HapticsHelper.swift in Sources */,
+				04290E082795ECF500D611FA /* Sequence.swift in Sources */,
 				04B3C3B4278C3B0E000027B9 /* View.swift in Sources */,
 				04F5FFCF278AFFEF00E0EF9D /* CopyButton.swift in Sources */,
 				04F5FFC7278A4BDD00E0EF9D /* GuestsView.swift in Sources */,
@@ -382,6 +389,7 @@
 				0495E32027254D7B00F53132 /* MyQuestionView.swift in Sources */,
 				0495E31627234E0500F53132 /* User.swift in Sources */,
 				0495E3182724928100F53132 /* UserView.swift in Sources */,
+				04290E062795CC4200D611FA /* ClipboardHelper.swift in Sources */,
 				04F5FF8A27861D2900E0EF9D /* UserVM.swift in Sources */,
 				0495E2F42722F9C700F53132 /* Question.swift in Sources */,
 				04F5FFBB2789CCA300E0EF9D /* AnswerRow.swift in Sources */,

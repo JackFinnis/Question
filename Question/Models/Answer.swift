@@ -16,7 +16,10 @@ struct Answer: Identifiable, Equatable {
     let askerUsername: String?
     let answerUsername: String?
     
-    init(id: String, data: [String: Any]) {
+    init?(id: String, data: [String: Any]?) {
+        guard let data = data else {
+            return nil
+        }
         self.id = id
         self.answer = data["answer"] as? String
         self.questionID = data["questionID"] as? String

@@ -71,7 +71,7 @@ class UserVM: ObservableObject {
     func addAnswersListener(username: String) {
         answersListener?.remove()
         answersListener = helper.addCollectionListener(collection: "answers", field: "answerUsername", isEqualTo: username) { documents in
-            self.answers = documents.map { document -> Answer in
+            self.answers = documents.compactMap { document in
                 Answer(id: document.documentID, data: document.data())
             }.sorted { $0.date > $1.date }
             self.filterAnswers()
@@ -81,7 +81,7 @@ class UserVM: ObservableObject {
     func addQuestionsListener(username: String) {
         questionsListener?.remove()
         questionsListener = helper.addCollectionListener(collection: "questions", field: "askerUsername", isEqualTo: username) { documents in
-            self.questions = documents.map { document -> Question in
+            self.questions = documents.compactMap { document in
                 Question(id: document.documentID, data: document.data())
             }.sorted { $0.end ?? Date() > $1.end ?? Date() }
             self.filterQuestions()
